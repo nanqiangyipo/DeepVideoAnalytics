@@ -1,5 +1,7 @@
 from __future__ import absolute_import
 import subprocess,sys,shutil,os,glob,time,logging
+
+from __builtin__ import file
 from django.conf import settings
 from dva.celery import app
 from .models import Video, Frame, Detection, TEvent, Query, IndexEntries,QueryResults, Annotation, VLabel, Export, VDNDataset, S3Export, S3Import, Clusters, ClusterCodes
@@ -264,7 +266,7 @@ def set_directory_labels(frames,dv):
 
 @app.task(name="extract_frames_by_id")
 def extract_frames(video_id,rescale=True):
-    start = TEvent()
+    start = TEvent() #任务状态记录
     start.video_id = video_id
     start.started = True
     start.operation = extract_frames.name

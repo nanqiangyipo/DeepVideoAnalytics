@@ -10,7 +10,7 @@ from .forms import UploadFileForm,YTVideoForm,AnnotationForm
 from .models import Video,Frame,Detection,Query,QueryResults,TEvent,IndexEntries,VDNDataset, Annotation, VLabel, Export, VDNServer, S3Export, S3Import, ClusterCodes, Clusters
 from .tasks import extract_frames
 from dva.celery import app
-import serializers
+from . import serializers
 from rest_framework import viewsets,mixins
 from django.contrib.auth.models import User
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
@@ -253,7 +253,7 @@ def annotate(request,query_pk=None,frame_pk=None,detection_pk=None):
                         create_annotation(form, label_name, label_dict, frame_pk, frame)
             return JsonResponse({'status': True})
         else:
-            raise ValueError,form.errors
+            raise ValueError(form.errors)
     return render(request, 'annotate.html', context)
 
 
@@ -357,7 +357,7 @@ def handle_uploaded_file(f,name,extract=True,user=None):
     primary_key = video.pk
     filename = f.name
     filename = filename.lower()
-    if filename.endswith('.dva_export.zip'):
+    if filename.endswith('.dva_export.zip'):#导出的数据再导入
         create_video_folders(video, create_subdirs=False)
         with open('{}/{}/{}.{}'.format(settings.MEDIA_ROOT,video.pk,video.pk,filename.split('.')[-1]), 'wb+') as destination:
             for chunk in f.chunks():
@@ -378,11 +378,12 @@ def handle_uploaded_file(f,name,extract=True,user=None):
         if extract:
             extract_frames.apply_async(args=[primary_key],queue=settings.Q_EXTRACTOR)
     else:
-        raise ValueError,"Extension {} not allowed".format(filename.split('.')[-1])
+        raise (ValueError,"Extension {} not allowed".format(filename.split('.')[-1]))
     return video
 
 
 class VideoList(ListView):
+    # 没有显示的设置使用哪个模板文件，django默认使用appname/model_list.html作为模板
     model = Video
     paginate_by = 100
 
@@ -502,7 +503,8 @@ def create_child_vdn_dataset(parent_video,server,headers):
         vdn_dataset.save()
         return vdn_dataset
     else:
-        raise ValueError,"{} {} {} {}".format("{}api/datasets/".format(server_url),headers,r.status_code,new_dataset)
+        raise ValueError(
+            "{} {} {} {}".format("{}api/datasets/".format(server_url), headers, r.status_code, new_dataset))
 
 
 

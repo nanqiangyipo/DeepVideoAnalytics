@@ -3,300 +3,392 @@
 {% block ng_control %}ng-controller="CanvasControls"{% endblock %}
 {% block status_bar %}
     <div id="status" ng-model="status" ng-show="checkStatus()" class="alert alert-dismissable"
-         ng-class="alert_status ? 'alert-warning' : 'alert-info'" xmlns="http://www.w3.org/1999/html"><h4 class="h4status">{[ status ]}</h4>
-    <button type="button" class="close" ng-click="disableStatus()" aria-hidden="true">x</button>
+         ng-class="alert_status ? 'alert-warning' : 'alert-info'" xmlns="http://www.w3.org/1999/html"><h4
+            class="h4status">{[ status ]}</h4>
+        <button type="button" class="close" ng-click="disableStatus()" aria-hidden="true">x</button>
     </div>
 {% endblock %}
 {% block page_content %}
-<section class="content-header" xmlns="http://www.w3.org/1999/html">
-</section>
-<section class="content">
+    <section class="content-header" xmlns="http://www.w3.org/1999/html">
+    </section>
+    <section class="content">
 
-<div class="row large-margin">
-    <div class="col-xs-1 col-sm-1 m-t" object-buttons-enabled="getSelected()" id="side_options">
-        <div class="outer">
-        <div class="middle">
-        <div class="inner">
-        <form id="image-form" style="width:100%;"  onsubmit="return false;">
-            <input type='file'  id='imgfile' style="display:none"/>
-            <a type='button' class="btn btn-primary btn-move" id='btnLoad' ng-click='load_image();'><i class="fa fa-image"></i>&nbsp;&nbsp;Add image</a>
-        </form>
-        <button type="button" class="btn btn-info  btn-move"  id="reset_zoom" ng-click="resetZoom()"><i class="fa fa-refresh"></i>&nbsp;Reset Zoom</button>
-        <button type="button" class="btn btn-danger  btn-move"  id="clear" ng-click="confirmClear()"><i class="fa fa-trash"></i>&nbsp;&nbsp;Clean editor</button>
-        <button type="button" class="btn btn-warning  btn-move"  id="clear_mask" ng-click="confirmClearMasks()"><i class="fa fa-trash"></i>&nbsp;Clear masks</button>
-        <button id="drawing-mode_b"
-          ng-click="setFreeDrawingMode(!getFreeDrawingMode(2),2)"
-          ng-class="{'btn-inverse': getFreeDrawingMode(2)}" class="btn btn-move btn-warning ">
-          <i class="fa fa-pencil"></i>&nbsp;&nbsp;Exclude </button>
-        <div ng-show="getFreeDrawingMode(1)" class="drawing-mode">
-            <button id="drawing-mode_x" ng-click="setFreeDrawingMode(!getFreeDrawingMode(1),1)" class="btn bg-red btn-move stop_btn"> <i class="fa fa-close"></i>&nbsp;&nbsp;Stop Drawing!</button>
-        </div>
-        <div ng-show="getFreeDrawingMode(2)" class="drawing-mode">
-            <button id="drawing-mode_x_2" ng-click="setFreeDrawingMode(!getFreeDrawingMode(2),2)" class="btn btn-warning btn-move stop_btn"> <i class="fa fa-close"></i>&nbsp;&nbsp;Stop Drawing!</button>
-        </div>
-        <div id="drawing-mode-wrapper"  class="drawing-mode">
-        <div id="drawing-mode-options"  ng-show="getFreeDrawingMode()">
-          <h5 style="text-align: center">Brush width</h5>
-          <input type="range" value="30" min="0" max="150" bind-value-to="drawingLineWidth">
-        </div>
-        </div>
-        <div ng-show="canvas.getActiveGroup()">
-            <button type="button" class="btn  btn-danger btn-object-action bg-maroon btn-move" id="remove-selected-group" ng-click="removeSelected()"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete</button>
-            <button type="button" class="btn  btn-object-action btn-move" id="deselect_group" ng-click="deselect()"><i class="fa fa-minus"></i>&nbsp;&nbsp;Deselect</button>
-        </div>
-        <div ng-show="canvas.getActiveObject()">
-            <button type="button" class="btn  btn-danger btn-object-action bg-maroon btn-move" id="remove-selected" ng-click="removeSelected()"><i class="fa fa-minus"></i>&nbsp;&nbsp;Delete</button>
-            <button type="button" class="btn  btn-info btn-object-action btn-move" id="duplicate" ng-click="duplicate()"><i class="fa fa-copy"></i>&nbsp;&nbsp;Duplicate</button>
-            <button id="send-backwards" class="btn btn-info  btn-object-action btn-move" ng-click="sendBackwards()"><i class="fa fa-step-backward"></i>&nbsp;&nbsp;Move back</button>
-            <button id="bring-forward" class="btn btn-info  btn-object-action btn-move"  ng-click="bringForward()"><i class="fa fa-step-forward"></i>&nbsp;&nbsp;Move forward</button>
-            <button id="send-to-back" class="btn btn-info  btn-object-action btn-move"  ng-click="sendToBack()"><i class="fa fa-backward"></i>&nbsp;&nbsp;Send to back</button>
-            <button id="bring-to-front" class="btn btn-info  btn-object-action btn-move"  ng-click="bringToFront()"><i class="fa fa-forward"></i>&nbsp;&nbsp;Bring to front</button>
-            <h5 style="text-align: center">Scale</h5>
-            <input value="100" max="200" type="range" bind-value-to="scale">
-            <div id="color-opacity-controls" ng-show="canvas.getActiveObject()">
-                <h5 style="text-align: center">Opacity</h5>
-                <input value="100" type="range" bind-value-to="opacity">
-            </div>
-            <button type="button" class="btn  btn-object-action bg-yellow btn-move" id="deselect" ng-click="deselect()"><i class="fa fa-minus"></i>&nbsp;&nbsp;Deselect</button>
-        </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4  m-t input">
-        <div id="canvas-wrapper">
-            <canvas id="canvas"  width="500" height="500"></canvas>
-        </div>
-        <div class="m-t row">
-            <div class="col-xs-4 text-right">
-                <h5 style="font-weight:bold">Selected indexers: </h5>
-            </div>
-            <div class="col-xs-8">
-            <select class="js-example-basic-multiple" multiple="multiple" id="indexer_list" style="width:100%">
-            {% for index_name,vindex in indexes.items %}
-                <option value="{{ index_name }}" selected="selected">{{ index_name }}</option>
-            {% endfor %}
-            </select>
-            </div>
-        </div>
-        <div class="m-t row">
-            <div class="col-xs-4 text-right">
-                <h5 style="font-weight:bold">Exclude index entries: </h5>
-            </div>
-            <div class="col-xs-8">
-            <select class="js-example-basic-multiple" multiple="multiple" id="excluded_index_entries" style="width:100%">
-            {% for v in index_entries %}
-                <option value="{{ v.pk }}">{{ v.detection_name }} in {{ v.video.name }} by {{ v.algorithm }}</option>
-            {% endfor %}
-            </select>
-            </div>
-        </div>
-        <div>
-            <label for="result_count">Result count</label>
-            <input style="display:inline-block; margin-right:10px;width:50px;" type="number" name="result_count"  id="result_count" value="20" class="checkbox text-right index_name">
-            <label for="entire_image">Send entire image (ignore zoom/pan)</label>
-            <input style="display:inline-block; margin-right:5px" type="checkbox" ng-model="send_entire_image" class="checkbox">
-        </div>
-        <div>
-            <button href="" class="btn btn-info" id="segment" ng-click="search()"><i class="fa fa-search-plus"></i>&nbsp;&nbsp;Approximate Search</button>
-            <button href="" class="btn btn-primary" id="search_quick" ng-click="search()"><i class="fa fa-search"></i>&nbsp;&nbsp;Exact Search</button>
-        </div>
-    </div>
-    <div class=" col-xs-12 col-sm-12 col-md-6 col-lg-4 m-t uploadmenu">
-            <div class="row">
-            <div class="col-lg-6">
-                <div class="box box-primary">
-                    <div class="box-body with_border">
-                        <h4 class="text-center">Upload video / dataset</h4>
-                        <p class="text-center"><a data-toggle="modal" data-target="#allowed" href="#" >Compatible files</a></p>
-                        <div class="modal fade" tabindex="-1" role="dialog" id="allowed">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span></button><h4 class="modal-title">Compatible files</h4></div>
-                            <div class="modal-body">
-                                <p>An .mp4 video file or multiple images in a single zip file <a href="https://github.com/AKSHAYUBHAT/DeepVideoAnalytics/blob/master/tests/exampledataset.zip" target="_blank">(example of a zip file)</a> or an exported ".dva_export.zip".</p>
+        <div class="row large-margin">
+            <div class="col-xs-1 col-sm-1 m-t" object-buttons-enabled="getSelected()" id="side_options">
+                <div class="outer">
+                    <div class="middle">
+                        <div class="inner">
+                            <form id="image-form" style="width:100%;" onsubmit="return false;">
+                                <input type='file' id='imgfile' style="display:none"/>
+                                <a type='button' class="btn btn-primary btn-move" id='btnLoad' ng-click='load_image();'><i
+                                        class="fa fa-image"></i>&nbsp;&nbsp;Add image</a>
+                            </form>
+                            <button type="button" class="btn btn-info  btn-move" id="reset_zoom" ng-click="resetZoom()">
+                                <i class="fa fa-refresh"></i>&nbsp;Reset Zoom
+                            </button>
+                            <button type="button" class="btn btn-danger  btn-move" id="clear" ng-click="confirmClear()">
+                                <i class="fa fa-trash"></i>&nbsp;&nbsp;Clean editor
+                            </button>
+                            <button type="button" class="btn btn-warning  btn-move" id="clear_mask"
+                                    ng-click="confirmClearMasks()"><i class="fa fa-trash"></i>&nbsp;Clear masks
+                            </button>
+                            <button id="drawing-mode_b"
+                                    ng-click="setFreeDrawingMode(!getFreeDrawingMode(2),2)"
+                                    ng-class="{'btn-inverse': getFreeDrawingMode(2)}" class="btn btn-move btn-warning ">
+                                <i class="fa fa-pencil"></i>&nbsp;&nbsp;Exclude
+                            </button>
+                            <div ng-show="getFreeDrawingMode(1)" class="drawing-mode">
+                                <button id="drawing-mode_x" ng-click="setFreeDrawingMode(!getFreeDrawingMode(1),1)"
+                                        class="btn bg-red btn-move stop_btn"><i class="fa fa-close"></i>&nbsp;&nbsp;Stop
+                                    Drawing!
+                                </button>
                             </div>
+                            <div ng-show="getFreeDrawingMode(2)" class="drawing-mode">
+                                <button id="drawing-mode_x_2" ng-click="setFreeDrawingMode(!getFreeDrawingMode(2),2)"
+                                        class="btn btn-warning btn-move stop_btn"><i class="fa fa-close"></i>&nbsp;&nbsp;Stop
+                                    Drawing!
+                                </button>
                             </div>
-                        </div>
-                        </div>
-                        <form role="form"  method="post" enctype="multipart/form-data" action="#" >
-                            <div class="form-group">
-                            <input id="id_name" name="name" class="form-control" type="text" required="" placeholder="provide a name">
-                            </div>
-                            <div class="form-group">
-                            <label class="" for="id_file">Video (.mp4) or zip file:</label><input id="id_file" name="file" class="btn btn-file" type="file" required="">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-primary btn-block">Upload</button>
-                            </div>
-                        </form>
-                        <h4 class="text-center">Or Submit youtube video url</h4>
-                        <p class="text-center"><a data-toggle="modal" data-target="#ytdisclaimer" href="#" >legal disclaimer</a></p>
-                        <div class="modal fade" tabindex="-1" role="dialog" id="ytdisclaimer">
-                        <div class="modal-dialog" role="document"><div class="modal-content">
-                            <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title">Youtube legal disclaimer</h4></div>
-                            <div class="modal-body"><p>We use <a target="_blank" href="https://rg3.github.io/youtube-dl/">youtube-dl</a>. Its your responsibility to abide by laws governing <a target="_blank" href="https://www.youtube.com/static?template=terms">Youtube TOS</a> in your jurisdiction.</p></div></div>
-                        </div>
-                        </div>
-
-                        <form role="form"  method="post" action="/youtube" >
-                                <div class="form-group">
-                                    <input id="id_ytname" name="name" class="form-control" type="text" required="" placeholder="provide a name">
+                            <div id="drawing-mode-wrapper" class="drawing-mode">
+                                <div id="drawing-mode-options" ng-show="getFreeDrawingMode()">
+                                    <h5 style="text-align: center">Brush width</h5>
+                                    <input type="range" value="30" min="0" max="150" bind-value-to="drawingLineWidth">
                                 </div>
-                                <div class="form-group">
-                                    <input id="id_yturl" name="url" class="form-control" type="text" required="" placeholder="url of youtube video">
+                            </div>
+                            <div ng-show="canvas.getActiveGroup()">
+                                <button type="button" class="btn  btn-danger btn-object-action bg-maroon btn-move"
+                                        id="remove-selected-group" ng-click="removeSelected()"><i
+                                        class="fa fa-trash"></i>&nbsp;&nbsp;Delete
+                                </button>
+                                <button type="button" class="btn  btn-object-action btn-move" id="deselect_group"
+                                        ng-click="deselect()"><i class="fa fa-minus"></i>&nbsp;&nbsp;Deselect
+                                </button>
+                            </div>
+                            <div ng-show="canvas.getActiveObject()">
+                                <button type="button" class="btn  btn-danger btn-object-action bg-maroon btn-move"
+                                        id="remove-selected" ng-click="removeSelected()"><i class="fa fa-minus"></i>&nbsp;&nbsp;Delete
+                                </button>
+                                <button type="button" class="btn  btn-info btn-object-action btn-move" id="duplicate"
+                                        ng-click="duplicate()"><i class="fa fa-copy"></i>&nbsp;&nbsp;Duplicate
+                                </button>
+                                <button id="send-backwards" class="btn btn-info  btn-object-action btn-move"
+                                        ng-click="sendBackwards()"><i class="fa fa-step-backward"></i>&nbsp;&nbsp;Move
+                                    back
+                                </button>
+                                <button id="bring-forward" class="btn btn-info  btn-object-action btn-move"
+                                        ng-click="bringForward()"><i class="fa fa-step-forward"></i>&nbsp;&nbsp;Move
+                                    forward
+                                </button>
+                                <button id="send-to-back" class="btn btn-info  btn-object-action btn-move"
+                                        ng-click="sendToBack()"><i class="fa fa-backward"></i>&nbsp;&nbsp;Send to back
+                                </button>
+                                <button id="bring-to-front" class="btn btn-info  btn-object-action btn-move"
+                                        ng-click="bringToFront()"><i class="fa fa-forward"></i>&nbsp;&nbsp;Bring to
+                                    front
+                                </button>
+                                <h5 style="text-align: center">Scale</h5>
+                                <input value="100" max="200" type="range" bind-value-to="scale">
+                                <div id="color-opacity-controls" ng-show="canvas.getActiveObject()">
+                                    <h5 style="text-align: center">Opacity</h5>
+                                    <input value="100" type="range" bind-value-to="opacity">
                                 </div>
-                                <div class="form-group">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-primary btn-block">submit</button>
-                                </div>
-                        </form>
-                        <h4 class="text-center">Or Import from AWS S3</h4>
-                        <p class="text-center"><a data-toggle="modal" data-target="#awscreds" href="#" >Providing AWS credentials</a></p>
-                        <div class="modal fade" tabindex="-1" role="dialog" id="awscreds">
-                        <div class="modal-dialog" role="document"><div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span></button><h4 class="modal-title">AWS credentials</h4></div>
-                            <div class="modal-body" style="text-align:left">
-                                <p>We suggest setting AWS authentication credentials using one of following methods.</p>
-                                    <ul>
-                                        <li>In an aws config file.</li>
-                                        <li>Via Environment variables inside your docker-compose .yml</li>
-                                        <li>Using IAM Roles (instance metadata discovery service) when running DVA on AWS.</li>
-                                    </ul>
-                                <p>We do not provide a method to enter AWS credentials via web interface.</p>
-                            </div></div>
+                                <button type="button" class="btn  btn-object-action bg-yellow btn-move" id="deselect"
+                                        ng-click="deselect()"><i class="fa fa-minus"></i>&nbsp;&nbsp;Deselect
+                                </button>
+                            </div>
                         </div>
-                        </div>
-
-                        <form role="form"  method="post" action="/import_s3" >
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-sm-6"><input id="id_s3_region" name="region" class="form-control" type="text" required="" placeholder="S3 region" value="us-east-1"></div>
-                                        <div class="col-sm-6"><input id="id_s3_bucket" name="bucket" class="form-control" type="text" required="" placeholder="S3 bucket"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4  m-t input">
+                <div id="canvas-wrapper">
+                    <canvas id="canvas" width="500" height="500"></canvas>
+                </div>
+                <div class="m-t row">
+                    <div class="col-xs-4 text-right">
+                        <h5 style="font-weight:bold">Selected indexers: </h5>
+                    </div>
+                    <div class="col-xs-8">
+                        <select class="js-example-basic-multiple" multiple="multiple" id="indexer_list"
+                                style="width:100%">
+                            {% for index_name,vindex in indexes.items %}
+                                <option value="{{ index_name }}" selected="selected">{{ index_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="m-t row">
+                    <div class="col-xs-4 text-right">
+                        <h5 style="font-weight:bold">Exclude index entries: </h5>
+                    </div>
+                    <div class="col-xs-8">
+                        <select class="js-example-basic-multiple" multiple="multiple" id="excluded_index_entries"
+                                style="width:100%">
+                            {% for v in index_entries %}
+                                <option value="{{ v.pk }}">{{ v.detection_name }} in {{ v.video.name }}
+                                    by {{ v.algorithm }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label for="result_count">Result count</label>
+                    <input style="display:inline-block; margin-right:10px;width:50px;" type="number" name="result_count"
+                           id="result_count" value="20" class="checkbox text-right index_name">
+                    <label for="entire_image">Send entire image (ignore zoom/pan)</label>
+                    <input style="display:inline-block; margin-right:5px" type="checkbox" ng-model="send_entire_image"
+                           class="checkbox">
+                </div>
+                <div>
+                    <button href="" class="btn btn-info" id="segment" ng-click="search()"><i
+                            class="fa fa-search-plus"></i>&nbsp;&nbsp;Approximate Search
+                    </button>
+                    <button href="" class="btn btn-primary" id="search_quick" ng-click="search()"><i
+                            class="fa fa-search"></i>&nbsp;&nbsp;Exact Search
+                    </button>
+                </div>
+            </div>
+            <div class=" col-xs-12 col-sm-12 col-md-6 col-lg-4 m-t uploadmenu">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="box box-primary">
+                            <div class="box-body with_border">
+                                <h4 class="text-center">Upload video / dataset</h4>
+                                <p class="text-center"><a data-toggle="modal" data-target="#allowed" href="#">Compatible
+                                    files</a></p>
+                                <div class="modal fade" tabindex="-1" role="dialog" id="allowed">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title">Compatible files</h4></div>
+                                            <div class="modal-body">
+                                                <p>An .mp4 video file or multiple images in a single zip file <a
+                                                        href="https://github.com/AKSHAYUBHAT/DeepVideoAnalytics/blob/master/tests/exampledataset.zip"
+                                                        target="_blank">(example of a zip file)</a> or an exported
+                                                    ".dva_export.zip".</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <input id="id_s3_key" name="key" class="form-control" type="text" required="" placeholder="S3 key">
+                                <form role="form" method="post" enctype="multipart/form-data" action="#">
+                                    <div class="form-group">
+                                        <input id="id_name" name="name" class="form-control" type="text" required=""
+                                               placeholder="provide a name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="" for="id_file">Video (.mp4) or zip file:</label><input
+                                            id="id_file" name="file" class="btn btn-file" type="file" required="">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-primary btn-block">Upload</button>
+                                    </div>
+                                </form>
+                                <h4 class="text-center">Or Submit youtube video url</h4>
+                                <p class="text-center"><a data-toggle="modal" data-target="#ytdisclaimer" href="#">legal
+                                    disclaimer</a></p>
+                                <div class="modal fade" tabindex="-1" role="dialog" id="ytdisclaimer">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close"><span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <h4 class="modal-title">Youtube legal disclaimer</h4></div>
+                                            <div class="modal-body"><p>We use <a target="_blank"
+                                                                                 href="https://rg3.github.io/youtube-dl/">youtube-dl</a>.
+                                                Its your responsibility to abide by laws governing <a target="_blank"
+                                                                                                      href="https://www.youtube.com/static?template=terms">Youtube
+                                                    TOS</a> in your jurisdiction.</p></div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    {% csrf_token %}
-                                <button type="submit" class="btn btn-primary btn-block">Import</button>
+
+                                <form role="form" method="post" action="/youtube">
+                                    <div class="form-group">
+                                        <input id="id_ytname" name="name" class="form-control" type="text" required=""
+                                               placeholder="provide a name">
+                                    </div>
+                                    <div class="form-group">
+                                        <input id="id_yturl" name="url" class="form-control" type="text" required=""
+                                               placeholder="url of youtube video">
+                                    </div>
+                                    <div class="form-group">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-primary btn-block">submit</button>
+                                    </div>
+                                </form>
+                                <h4 class="text-center">Or Import from AWS S3</h4>
+                                <p class="text-center"><a data-toggle="modal" data-target="#awscreds" href="#">Providing
+                                    AWS credentials</a></p>
+                                <div class="modal fade" tabindex="-1" role="dialog" id="awscreds">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title">AWS credentials</h4></div>
+                                            <div class="modal-body" style="text-align:left">
+                                                <p>We suggest setting AWS authentication credentials using one of
+                                                    following methods.</p>
+                                                <ul>
+                                                    <li>In an aws config file.</li>
+                                                    <li>Via Environment variables inside your docker-compose .yml</li>
+                                                    <li>Using IAM Roles (instance metadata discovery service) when
+                                                        running DVA on AWS.
+                                                    </li>
+                                                </ul>
+                                                <p>We do not provide a method to enter AWS credentials via web
+                                                    interface.</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                        </form>
+
+                                <form role="form" method="post" action="/import_s3">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-sm-6"><input id="id_s3_region" name="region"
+                                                                         class="form-control" type="text" required=""
+                                                                         placeholder="S3 region" value="us-east-1">
+                                            </div>
+                                            <div class="col-sm-6"><input id="id_s3_bucket" name="bucket"
+                                                                         class="form-control" type="text" required=""
+                                                                         placeholder="S3 bucket"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input id="id_s3_key" name="key" class="form-control" type="text" required=""
+                                               placeholder="S3 key">
+                                    </div>
+                                    <div class="form-group">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-primary btn-block">Import</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 hidden-md">
+                        <div class="box box-primary">
+                            <div class="box-body">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Data</th>
+                                        <th>Count</th>
+                                        <th>View</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Videos / Datasets</td>
+                                        <td class="text-right">{{ video_count }}</td>
+                                        <td class="text-center"><a href="/videos/">view</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Frames</td>
+                                        <td class="text-right">{{ frame_count }}</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Detections</td>
+                                        <td class="text-right">{{ detection_count }}</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Annotations</td>
+                                        <td class="text-right">{{ annotation_count }}</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Queries</td>
+                                        <td class="text-right">{{ query_count }}</td>
+                                        <td class="text-center"><a href="/queries/">view</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Index entries</td>
+                                        <td class="text-right">{{ index_entries_count }}</td>
+                                        <td class="text-center"><a href="/indexes/">view</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Task events</td>
+                                        <td class="text-right">{{ task_events_count }}</td>
+                                        <td class="text-center"><a href="/tasks/">view</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>VDN datasets</td>
+                                        <td class="text-right">{{ external_datasets_count }}</td>
+                                        <td class="text-center"><a href="/external/">view</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>VDN servers</td>
+                                        <td class="text-right">{{ external_servers_count }}</td>
+                                        <td class="text-center"><a href="/external/">view</a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 hidden-md">
-                <div class="box box-primary">
-                    <div class="box-body">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>Data</th>
-                                <th>Count</th>
-                                <th>View</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Videos / Datasets</td>
-                                    <td class="text-right">{{video_count}}</td>
-                                    <td class="text-center"><a href="/videos/">view</a></td>
-                                </tr>
-                                <tr>
-                                    <td>Frames</td>
-                                    <td class="text-right">{{frame_count}}</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>Detections</td>
-                                    <td class="text-right">{{detection_count}}</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>Annotations</td>
-                                    <td class="text-right">{{annotation_count}}</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>Queries</td>
-                                    <td class="text-right">{{ query_count }}</td>
-                                    <td class="text-center"><a href="/queries/">view</a></td>
-                                </tr>
-                                <tr>
-                                    <td>Index entries</td>
-                                    <td class="text-right">{{ index_entries_count }}</td>
-                                    <td class="text-center"><a href="/indexes/">view</a></td>
-                                </tr>
-                                <tr>
-                                    <td>Task events</td>
-                                    <td class="text-right">{{ task_events_count }}</td>
-                                    <td class="text-center"><a href="/tasks/">view</a></td>
-                                </tr>
-                                <tr>
-                                    <td>VDN datasets</td>
-                                    <td class="text-right">{{ external_datasets_count }}</td>
-                                    <td class="text-center"><a href="/external/">view</a></td>
-                                </tr>
-                                <tr>
-                                    <td>VDN servers</td>
-                                    <td class="text-right">{{ external_servers_count }}</td>
-                                    <td class="text-center"><a href="/external/">view</a></td>
-                                </tr>
-                            </tbody>
-                        </table>
+        </div>
+        <div class="row m-t">
+            <div class="col-lg-6">
+                <div class="box">
+                    <div class="box-header">
+                        <h3>Inception results: <span style="float:right;display:inline-block;font-size:16px"><a
+                                href="/queries/">View results from past {{ query_count }} queries</a></span></h3>
+                    </div>
+                </div>
+                <div ng-repeat="row in results" class="row m-t">
+                    <div ng-repeat="item in row" class="col-lg-3 col-sm-3 col-xs-6">
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h4>{[ item.rank ]} : {[ item.type ]}</h4>
+                                <p>In <a href="/videos/{[ item.video_primary_key ]}"> video </a> at {[ item.frame_index
+                                    ]} found by {[ item.algo ]}</p>
+                            </div>
+                            <div class="box-body">
+                                <a href="/frames/{[ item.frame_primary_key ]}"><img
+                                        class="img-responsive img-bordered-sm"
+                                        style="width:80%;margin-left:auto;margin-right:auto"
+                                        ng-src="{[ item.url ]}"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="box">
+                    <div class="box-header">
+                        <h3>Facenet results: <span style="float:right;display:inline-block;font-size:16px"><a
+                                href="/queries/">View results from past {{ query_count }} queries</a></span></h3>
+                    </div>
+                </div>
+                <div ng-repeat="row in results_detections" class="row m-t">
+                    <div ng-repeat="item in row" class="col-lg-3 col-sm-3 col-xs-6">
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h4>{[ item.rank ]} : {[ item.type ]}</h4>
+                                <p>In <a href="/videos/{[ item.video_primary_key ]}"> video </a> at {[ item.frame_index
+                                    ]} found by {[ item.algo ]}</p>
+                            </div>
+                            <div class="box-body">
+                                <a href="/frames/{[ item.frame_primary_key ]}"><img
+                                        class="img-responsive img-bordered-sm"
+                                        style="width:80%;margin-left:auto;margin-right:auto"
+                                        ng-src="{[ item.url ]}"></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<div class="row m-t">
-    <div class="col-lg-6">
-    <div class="box">
-    <div class="box-header">
-        <h3>Inception results: <span style="float:right;display:inline-block;font-size:16px"><a href="/queries/">View results from past {{query_count}} queries</a></span> </h3>
-    </div>
-    </div>
-    <div ng-repeat="row in results" class="row m-t" >
-        <div ng-repeat="item in row" class="col-lg-3 col-sm-3 col-xs-6" >
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h4>{[ item.rank ]} : {[ item.type ]}</h4>
-                    <p>In  <a href="/videos/{[ item.video_primary_key ]}"> video </a> at {[ item.frame_index ]} found by {[ item.algo ]}</p>
-                </div>
-                <div class="box-body">
-                    <a href="/frames/{[ item.frame_primary_key ]}"><img class="img-responsive img-bordered-sm" style="width:80%;margin-left:auto;margin-right:auto" ng-src="{[ item.url ]}"></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-    <div class="col-lg-6">
-    <div class="box">
-    <div class="box-header">
-        <h3>Facenet results: <span style="float:right;display:inline-block;font-size:16px"><a href="/queries/">View results from past {{query_count}} queries</a></span> </h3>
-    </div>
-    </div>
-    <div ng-repeat="row in results_detections" class="row m-t" >
-        <div ng-repeat="item in row" class="col-lg-3 col-sm-3 col-xs-6" >
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h4>{[ item.rank ]} : {[ item.type ]}</h4>
-                    <p>In  <a href="/videos/{[ item.video_primary_key ]}"> video </a> at {[ item.frame_index ]} found by {[ item.algo ]}</p>
-                </div>
-                <div class="box-body">
-                    <a href="/frames/{[ item.frame_primary_key ]}"><img class="img-responsive img-bordered-sm" style="width:80%;margin-left:auto;margin-right:auto" ng-src="{[ item.url ]}"></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-</div>
-</section>
+    </section>
 {% endblock %}
 
 
@@ -308,14 +400,14 @@
 
         var csrf_token = "{% csrf_token %}";
         {% if initial_url %}
-            var initial_url="{{ initial_url }}";
+            var initial_url = "{{ initial_url }}";
         {% else %}
-            var initial_url=null;
+            var initial_url = null;
         {% endif %}
-    var indexer_selector = $("#indexer_list");
-    indexer_selector.select2({theme: "bootstrap"});
-    var excluded_index_entries = $("#excluded_index_entries");
-    excluded_index_entries.select2({theme: "bootstrap"});
+        var indexer_selector = $("#indexer_list");
+        indexer_selector.select2({theme: "bootstrap"});
+        var excluded_index_entries = $("#excluded_index_entries");
+        excluded_index_entries.select2({theme: "bootstrap"});
     </script>
     <script src="/static/plugins/jquery.mousewheel.min.js"></script>
     <script src="/static/plugins/underscore-min.js"></script>

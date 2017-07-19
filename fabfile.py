@@ -52,6 +52,7 @@ def start_container():
     :return:
     """
     local('sleep 20')
+    # 初始化数据模型
     migrate()
     launch_queues_env()
     if 'LAUNCH_SERVER' in os.environ:
@@ -271,7 +272,7 @@ def startq(queue_name):
     import django, os
     sys.path.append(os.path.dirname(__file__))
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dva.settings")
-    django.setup()
+    django.setup()#之所以需要setup是因为，下面要使用setting文件，setup之后就可以使用django加载成对象的setting来进行配置
     from django.conf import settings
     if queue_name in settings.QUEUES:
         if queue_name == settings.Q_EXTRACTOR:
@@ -281,7 +282,7 @@ def startq(queue_name):
         logging.info(command)
         os.system(command)
     else:
-        raise ValueError, "Queue {} not found".format(queue_name)
+        raise (ValueError, "Queue {} not found".format(queue_name))
 
 
 

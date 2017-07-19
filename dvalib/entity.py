@@ -1,7 +1,7 @@
 import shlex,json,os,zipfile,glob,logging
 import subprocess as sp
 import numpy as np
-import pyscenecustom
+# import pyscenecustom
 
 
 class WQuery(object):
@@ -23,7 +23,7 @@ class WQuery(object):
 class WVideo(object):
 
     def __init__(self,dvideo,media_dir,rescaled_width=600):
-        self.dvideo = dvideo
+        self.dvideo = dvideo#Video对象，一条可以追溯文件存放路径的记录
         self.primary_key = self.dvideo.pk
         self.media_dir = media_dir
         self.local_path = "{}/{}/video/{}.mp4".format(self.media_dir,self.primary_key,self.primary_key)
@@ -53,7 +53,7 @@ class WVideo(object):
             self.width = float(self.metadata['streams'][0]['width'])
             self.height = float(self.metadata['streams'][0]['height'])
         except:
-            raise ValueError,str(self.metadata)
+            raise ValueError(str(self.metadata))
 
     def extract_frames(self,rescale=True):
         frames = []

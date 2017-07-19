@@ -10,7 +10,7 @@ except ImportError:
     logging.warning("Could not import torch")
 from scipy import spatial
 from tensorflow.python.platform import gfile
-from facenet import facenet
+from .facenet import facenet
 import tensorflow as tf
 import time
 from collections import namedtuple
@@ -44,7 +44,7 @@ class BaseIndexer(object):
         query_vector = self.apply(image_path)
         temp = []
         dist = []
-        for k in xrange(self.index.shape[0]):
+        for k in range(self.index.shape[0]):
             temp.append(self.index[k])
             if (k+1) % 50000 == 0:
                 temp = np.transpose(np.dstack(temp)[0])

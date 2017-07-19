@@ -1,6 +1,6 @@
 from rest_framework import serializers, viewsets
 from django.contrib.auth.models import User
-from models import Video, VLabel, Frame, Annotation, Detection, Query, QueryResults, TEvent, IndexEntries, VDNDataset, VDNServer
+from .models import Video, VLabel, Frame, Annotation, Detection, Query, QueryResults, TEvent, IndexEntries, VDNDataset, VDNServer
 import os, json, logging, glob
 
 
