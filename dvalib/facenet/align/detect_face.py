@@ -664,7 +664,7 @@ def generateBoundingBox(imap, reg, scale, t):
     dy1 = np.transpose(reg[:,:,1])
     dx2 = np.transpose(reg[:,:,2])
     dy2 = np.transpose(reg[:,:,3])
-    y, x = np.where(imap >= t)
+    y, x = np.where(imap >= t) # find the coordinate on the condition where value is larger than t
     if y.shape[0]==1:
         dx1 = np.flipud(dx1)
         dy1 = np.flipud(dy1)
@@ -675,7 +675,7 @@ def generateBoundingBox(imap, reg, scale, t):
     if reg.size==0:
         reg = np.empty((0,3))
     bb = np.transpose(np.vstack([y,x]))
-    q1 = np.fix((stride*bb+1)/scale)
+    q1 = np.fix((stride*bb+1)/scale) #
     q2 = np.fix((stride*bb+cellsize-1+1)/scale)
     boundingbox = np.hstack([q1, q2, np.expand_dims(score,1), reg])
     return boundingbox, reg

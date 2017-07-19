@@ -368,6 +368,7 @@ def handle_uploaded_file(f,name,extract=True,user=None):
         app.send_task(name=task_name, args=[primary_key,], queue=settings.TASK_NAMES_TO_QUEUE[task_name])
     elif filename.endswith('.mp4') or filename.endswith('.flv') or filename.endswith('.zip'):
         create_video_folders(video,create_subdirs=True)
+        # save file. can't upload more than one video
         with open('{}/{}/video/{}.{}'.format(settings.MEDIA_ROOT,video.pk,video.pk,filename.split('.')[-1]), 'wb+') as destination:
             for chunk in f.chunks():
                 destination.write(chunk)

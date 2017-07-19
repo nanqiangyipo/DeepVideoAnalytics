@@ -14,7 +14,10 @@ class WQuery(object):
         self.visual_index = visual_index
 
     def find(self,n):
+        # n is the number of the  result searching from indexs
         results = {}
+        # nearest function can be fund in dvalib/indexer.py,which has a class called BaseIndexer. All
+        # model use the same algorithm to matchc query image to indexs
         results[self.visual_index.name] = self.visual_index.nearest(image_path=self.local_path,n=n)
         return results
 
@@ -23,8 +26,8 @@ class WQuery(object):
 class WVideo(object):
 
     def __init__(self,dvideo,media_dir,rescaled_width=600):
-        self.dvideo = dvideo
-        self.primary_key = self.dvideo.pk
+        self.dvideo = dvideo #
+        self.primary_key = self.dvideo.pk #video pk in video table
         self.media_dir = media_dir
         self.local_path = "{}/{}/video/{}.mp4".format(self.media_dir,self.primary_key,self.primary_key)
         self.duration = None
@@ -145,6 +148,7 @@ class WVideo(object):
             }
             paths.append("{}/{}/detections/{}.jpg".format(self.media_dir, self.primary_key, d.pk))
             entries.append(entry)
+        # get the featured picture
         features = visual_index.index_paths(paths)
         feat_fname = "{}/{}/indexes/{}_{}.npy".format(self.media_dir, self.primary_key,detection_name, visual_index.name)
         entries_fname = "{}/{}/indexes/{}_{}.json".format(self.media_dir, self.primary_key,detection_name, visual_index.name)

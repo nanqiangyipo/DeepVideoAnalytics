@@ -14,8 +14,6 @@ from time import sleep
 # from __future__ import absolute_import
 # from __future__ import division
 # from __future__ import print_function
-
-
 VOC_LABELS = {
     'none': (0, 'Background'),
     'aeroplane': (1, 'Vehicle'),

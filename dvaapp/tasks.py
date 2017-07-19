@@ -35,12 +35,13 @@ class IndexerTask(celery.Task):
                                            'facenet': indexer.FacenetIndexer(),
                                            'alexnet': indexer.AlexnetIndexer()}
         return IndexerTask._visual_indexer
-
+    # this is used to update indexes to index property.
     def refresh_index(self,index_name):
         index_entries = IndexEntries.objects.all()
         visual_index = self.visual_indexer[index_name]
-        for index_entry in index_entries:
+        for index_entry in index_entries:# all index in table
             if index_entry.pk not in visual_index.loaded_entries and index_entry.algorithm == index_name:
+                # features_file_name is a npy type file
                 fname = "{}/{}/indexes/{}".format(settings.MEDIA_ROOT, index_entry.video_id, index_entry.features_file_name)
                 vectors = indexer.np.load(fname)
                 vector_entries = json.load(file("{}/{}/indexes/{}".format(settings.MEDIA_ROOT, index_entry.video_id, index_entry.entries_file_name)))
@@ -153,6 +154,7 @@ def inception_query_by_image(query_id):
     start.operation = inception_query_by_image.name
     start.save()
     start_time = time.time()
+    # update new indexes to index property
     inception_query_by_image.refresh_index('inception')
     inception = inception_query_by_image.visual_indexer['inception']
     Q = entity.WQuery(dquery=dq, media_dir=settings.MEDIA_ROOT,visual_index=inception)
@@ -294,7 +296,7 @@ def extract_frames(video_id,rescale=True):
             df.subdir = f.subdir.replace('/',' ')
         df.save()
         f.primary_key = df.pk
-    set_directory_labels(frames,dv)
+    set_directory_labels(frames,dv) #mark
     process_video_next(video_id,start.operation)
     start.completed = True
     start.seconds = time.time() - start_time

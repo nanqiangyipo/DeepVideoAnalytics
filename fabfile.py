@@ -275,7 +275,7 @@ def startq(queue_name):
     if queue_name in settings.QUEUES:
         if queue_name == settings.Q_EXTRACTOR:
             command = 'celery -A dva worker -l info -c {} -Q {} -n {}.%h -f logs/{}.log'.format(1, queue_name,queue_name,queue_name)
-        else:
+        else:#-l log-level -c number of child processes processing the queue
             command = 'celery -A dva worker -l info -P solo -c {} -Q {} -n {}.%h -f logs/{}.log'.format(1, queue_name,queue_name,queue_name)
         logging.info(command)
         os.system(command)

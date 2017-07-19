@@ -41,15 +41,20 @@ class BaseIndexer(object):
             logging.info(self.index.shape)
 
     def nearest(self,image_path,n=12):
+        # apply function has loaded different model and return the featured image
         query_vector = self.apply(image_path)
         temp = []
         dist = []
+        # index is loaded by refresh function
+        count=0
         for k in xrange(self.index.shape[0]):
             temp.append(self.index[k])
-            if (k+1) % 50000 == 0:
+            if (k+1) % 1 == 0:
+                count+=1
                 temp = np.transpose(np.dstack(temp)[0])
                 dist.append(spatial.distance.cdist(query_vector,temp))
                 temp = []
+        logging.info(u"total {} indexs, searched {} :haha".format(self.index.shape[0],count))
         if temp:
             temp = np.transpose(np.dstack(temp)[0])
             dist.append(spatial.distance.cdist(query_vector,temp))
@@ -144,6 +149,7 @@ class InceptionIndexer(BaseIndexer):
             image_path = image_path.replace('.png','.jpg')
             bg.save(image_path)
         pool3 = self.session.graph.get_tensor_by_name('incept/pool_3:0')
+        # use the incept network to get the featured image
         pool3_features = self.session.run(pool3,{'incept/DecodeJpeg/contents:0': file(image_path).read()})
         return np.atleast_2d(np.squeeze(pool3_features))
 
