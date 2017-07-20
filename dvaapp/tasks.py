@@ -1,5 +1,5 @@
 from __future__ import absolute_import
-import subprocess, sys, shutil, os, glob, time, logging
+import subprocess, sys, shutil, os, glob, time, logging, copy
 import PIL
 from django.conf import settings
 from dva.celery import app
@@ -25,12 +25,35 @@ from celery import group
 from celery.result import allow_join_result
 
 
-def perform_substitution(args,dt):
-    for k,v in args.get('filters',{}).items():
-        if v == '__parent__':
-            args['filters'][k] = dt.pk
-        elif v == '__grand_parent__':
-            args['filters'][k] = dt.parent.pk
+def get_queue_name(operation,args):
+    if operation in settings.TASK_NAMES_TO_QUEUE:
+        return settings.TASK_NAMES_TO_QUEUE[operation]
+    elif 'index' in args:
+        return settings.VISUAL_INDEXES[args['index']]['indexer_queue']
+    else:
+        raise NotImplementedError,"{}, {}".format(operation,args)
+
+
+def perform_substitution(args,parent_task):
+    """
+    Its important to do a deep copy of args before executing any mutations.
+    :param args:
+    :param parent_task:
+    :return:
+    """
+    args = copy.deepcopy(args) # IMPORTANT otherwise the first task to execute on the worker will fill the filters
+    filters = args.get('filters',{})
+    parent_args = json.loads(parent_task.arguments_json)
+    if filters == '__parent__':
+        parent_filters = parent_args.get('filters',{})
+        logging.info('using filters from parent arguments: {}'.format(parent_args))
+        args['filters'] = parent_filters
+    elif filters:
+        for k,v in args.get('filters',{}).items():
+            if v == '__parent__':
+                args['filters'][k] = parent_task.pk
+            elif v == '__grand_parent__':
+                args['filters'][k] = parent_task.parent.pk
     return args
 
 
@@ -38,15 +61,17 @@ def process_next(task_id):
     dt = TEvent.objects.get(pk=task_id)
     logging.info("next tasks for {}".format(dt.operation))
     for k in settings.POST_OPERATION_TASKS.get(dt.operation,[]):
-        args = json.dumps(perform_substitution(k['arguments'], dt))
+        args = perform_substitution(k['arguments'], dt)
+        jargs = json.dumps(args)
         logging.info("launching {}, {} with args {} as specified in config".format(dt.operation, k['task_name'], args))
-        next_task = TEvent.objects.create(video=dt.video,operation=k['task_name'],arguments_json=args,parent=dt)
-        app.send_task(k['task_name'], args=[next_task.pk, ], queue=settings.TASK_NAMES_TO_QUEUE[k['task_name']])
+        next_task = TEvent.objects.create(video=dt.video,operation=k['task_name'],arguments_json=jargs,parent=dt)
+        app.send_task(k['task_name'], args=[next_task.pk, ], queue=get_queue_name(k['task_name'],args))
     for k in json.loads(dt.arguments_json).get('next_tasks',[]):
-        args = json.dumps(perform_substitution(k['arguments'], dt))
+        args = perform_substitution(k['arguments'], dt)
+        jargs = json.dumps(args)
         logging.info("launching {}, {} with args {} as specified in next_tasks".format(dt.operation, k['task_name'], args))
-        next_task = TEvent.objects.create(video=dt.video,operation=k['task_name'], arguments_json=args,parent=dt)
-        app.send_task(k['task_name'], args=[next_task.pk, ], queue=settings.TASK_NAMES_TO_QUEUE[k['task_name']])
+        next_task = TEvent.objects.create(video=dt.video,operation=k['task_name'], arguments_json=jargs,parent=dt)
+        app.send_task(k['task_name'], args=[next_task.pk, ], queue=get_queue_name(k['task_name'],args))
 
 
 def celery_40_bug_hack(start):
@@ -61,57 +86,27 @@ def celery_40_bug_hack(start):
     return start.started
 
 
-@app.task(track_started=True, name="vgg_index_by_id", base=IndexerTask)
-def vgg_index_by_id(task_id):
+@app.task(track_started=True, name="perform_indexing", base=IndexerTask)
+def perform_indexing(task_id):
     start = TEvent.objects.get(pk=task_id)
     if celery_40_bug_hack(start):
         return 0
-    start.task_id = vgg_index_by_id.request.id
+    start.task_id = perform_indexing.request.id
     start.started = True
-    start.operation = vgg_index_by_id.name
-    start.save()
-    video_id = start.video_id
-    start_time = time.time()
-    dv = Video.objects.get(id=video_id)
-    video = WVideo(dv, settings.MEDIA_ROOT)
-    frames = Frame.objects.all().filter(video=dv)
-    visual_index = vgg_index_by_id.visual_indexer['vgg']
-    index_name, index_results, feat_fname, entries_fname = video.index_frames(frames, visual_index,start.pk)
-    i = IndexEntries()
-    i.video = dv
-    i.count = len(index_results)
-    i.contains_frames = True
-    i.detection_name = 'Frame'
-    i.algorithm = index_name
-    i.entries_file_name = entries_fname.split('/')[-1]
-    i.features_file_name = feat_fname.split('/')[-1]
-    i.source = start
-    i.save()
-    process_next(task_id)
-    start.completed = True
-    start.seconds = time.time() - start_time
-    start.save()
-
-
-@app.task(track_started=True, name="inception_index", base=IndexerTask)
-def inception_index(task_id):
-    start = TEvent.objects.get(pk=task_id)
-    if celery_40_bug_hack(start):
-        return 0
-    start.task_id = inception_index.request.id
-    start.started = True
-    start.operation = inception_index.name
+    start.operation = perform_indexing.name
     video_id = start.video_id
     dv = Video.objects.get(id=video_id)
-    target = json.loads(start.arguments_json).get('target','frames')
-    arguments = json.loads(start.arguments_json).get('filters',{})
+    json_args = json.loads(start.arguments_json)
+    target = json_args.get('target','frames')
+    arguments = json_args.get('filters',{})
+    index_name = json_args['index']
     start.save()
     start_time = time.time()
     video = WVideo(dv, settings.MEDIA_ROOT)
     arguments['video_id'] = dv.pk
+    visual_index = perform_indexing.visual_indexer[index_name]
     if target == 'frames':
         frames = Frame.objects.all().filter(**arguments)
-        visual_index = inception_index.visual_indexer['inception']
         index_name, index_results, feat_fname, entries_fname = video.index_frames(frames, visual_index,start.pk)
         detection_name = 'Frames_subset_by_{}'.format(start.pk)
         contains_frames = True
@@ -119,8 +114,7 @@ def inception_index(task_id):
     elif target == 'regions':
         detections = Region.objects.all().filter(**arguments)
         logging.info("Indexing {} Regions".format(detections.count()))
-        visual_index = inception_index.visual_indexer['inception']
-        detection_name = 'Regions_subset_by_{}'.format(start.pk)
+        detection_name = 'Faces_subset_by_{}'.format(start.pk) if index_name == 'facenet' else 'Regions_subset_by_{}'.format(start.pk)
         index_name, index_results, feat_fname, entries_fname = video.index_regions(detections, detection_name, visual_index)
         contains_frames = False
         contains_detections = True
@@ -136,6 +130,7 @@ def inception_index(task_id):
     i.entries_file_name = entries_fname.split('/')[-1]
     i.features_file_name = feat_fname.split('/')[-1]
     i.source = start
+    i.source_filter_json = json.dumps(arguments)
     i.save()
     start.completed = True
     start.seconds = time.time() - start_time
@@ -256,27 +251,18 @@ def segment_video(task_id):
     v.get_metadata()
     v.segment_video()
     decodes = []
-    for ds in Segment.objects.all().filter(video=dv):
-        next_args = json.dumps({'rescale':args['rescale'],'rate':args['rate'],'segment_id':ds.pk})
-        next_task = TEvent.objects.create(video=dv, operation='decode_segment', arguments_json=next_args, parent=start)
-        if 'sync' in args and args['sync']:
-            decode_segment(next_task.pk) # decode it synchronously for testing in Travis
-        else:
+    if args.get('sync',False):
+        next_args = json.dumps({'rescale': args['rescale'], 'rate': args['rate']})
+        next_task = TEvent.objects.create(video=dv, operation='decode_video', arguments_json=next_args, parent=start)
+        decode_video(next_task.pk)  # decode it synchronously for testing in Travis
+    else:
+        for ds in Segment.objects.all().filter(video=dv):
+            next_args = json.dumps({'rescale':args['rescale'],'rate':args['rate'],'filters':{'segment_index':ds.segment_index}})
+            next_task = TEvent.objects.create(video=dv, operation='decode_video', arguments_json=next_args, parent=start)
             decodes.append(next_task.pk)
-    if decodes:
-        result = group([decode_segment.s(i).set(queue=settings.TASK_NAMES_TO_QUEUE['decode_segment']) for i in decodes]).apply_async()
+        result = group([decode_video.s(i).set(queue=settings.TASK_NAMES_TO_QUEUE['decode_video']) for i in decodes]).apply_async()
         with allow_join_result():
             result.join()
-    step = 10
-    for gte,lt in [(k,k+step) for k in range(0,dv.segments,step)]:
-        if lt < dv.segments:
-            next_args = json.dumps({'filters': {'segment_index__gte':gte,'segment_index__lt':lt}})
-        else: # ensures off by one error does not happes
-            next_args = json.dumps({'filters': {'segment_index__gte': gte}})
-        operation = 'perform_ssd_detection_by_id'
-        next_task = TEvent.objects.create(video=dv, operation=operation, arguments_json=next_args, parent=start)
-        logging.info('launching {} with args {}'.format(operation,next_args))
-        app.send_task(operation, args=[next_task.pk, ], queue=settings.TASK_NAMES_TO_QUEUE[operation])
     process_next(task_id)
     start.completed = True
     start.seconds = time.time() - start_time
@@ -284,22 +270,24 @@ def segment_video(task_id):
     return 0
 
 
-@app.task(track_started=True,name="decode_segment",ignore_result=False)
-def decode_segment(task_id):
+@app.task(track_started=True,name="decode_video",ignore_result=False)
+def decode_video(task_id):
     start = TEvent.objects.get(pk=task_id)
     if celery_40_bug_hack(start):
         return 0
-    start.task_id = decode_segment.request.id
+    start.task_id = decode_video.request.id
     start.started = True
-    start.operation = decode_segment.name
+    start.operation = decode_video.name
     args = json.loads(start.arguments_json)
     start.save()
     start_time = time.time()
     video_id = start.video_id
     dv = Video.objects.get(id=video_id)
-    ds = Segment.objects.get(id=args['segment_id'])
+    kwargs = args.get('filters',{})
+    kwargs['video_id'] = video_id
     v = WVideo(dvideo=dv, media_dir=settings.MEDIA_ROOT)
-    v.decode_segment(ds=ds,denominator=args['rate'],rescale=args['rescale'])
+    for ds in Segment.objects.filter(**kwargs):
+        v.decode_segment(ds=ds,denominator=args['rate'],rescale=args['rescale'])
     process_next(task_id)
 start.completed = True
     start.seconds = time.time() - start_time
@@ -355,6 +343,7 @@ def perform_ssd_detection_by_id(task_id):
         kwargs = args['filters']
         kwargs['video_id'] = video_id
         frames = Frame.objects.all().filter(**kwargs)
+        logging.info("Performing SSD Using filters {}".format(kwargs))
     else:
         frames = Frame.objects.all().filter(video=dv)
     dd_list = []
@@ -456,7 +445,10 @@ def perform_face_detection(task_id):
         logging.info("loading detection model")
         detector.load()
     input_paths = {}
-    for df in Frame.objects.all().filter(video_id=video_id):
+    args = json.loads(start.arguments_json)
+    filters_kwargs = args.get('filters',{})
+    filters_kwargs['video_id'] = video_id
+    for df in Frame.objects.all().filter(**filters_kwargs):
         input_paths["{}/{}/frames/{}.jpg".format(settings.MEDIA_ROOT,video_id,df.frame_index)] = df.pk
     faces_dir = '{}/{}/regions'.format(settings.MEDIA_ROOT, video_id)
     aligned_paths = {}
@@ -473,6 +465,8 @@ def perform_face_detection(task_id):
             d.confidence = 100.0
             d.frame_id = input_paths[path]
             d.object_name = "MTCNN_face"
+            d.materialized = True
+            d.event = start
             d.y = v['y']
             d.x = v['x']
             d.w = v['w']
@@ -484,45 +478,6 @@ def perform_face_detection(task_id):
             im.save(output_filename)
             faces.append(face_path)
             faces_to_pk[face_path] = d.pk
-    process_next(task_id)
-    start.completed = True
-    start.seconds = time.time() - start_time
-    start.save()
-    return 0
-
-
-@app.task(track_started=True, name="perform_face_indexing",base=IndexerTask)
-def perform_face_indexing(task_id):
-    start = TEvent.objects.get(pk=task_id)
-    if celery_40_bug_hack(start):
-        return 0
-    start.task_id = perform_face_indexing.request.id
-    start.started = True
-    start.operation = perform_face_indexing.name
-    start.save()
-    start_time = time.time()
-    video_id = start.video_id
-    visual_index = perform_face_indexing.visual_indexer['facenet']
-    dv = Video.objects.get(id=video_id)
-    faces = []
-    f_to_pk = {}
-    for dd in Region.objects.all().filter(object_name='MTCNN_face',video=dv):
-        path = '{}/{}/regions/{}.jpg'.format(settings.MEDIA_ROOT,video_id,dd.pk)
-        faces.append(path)
-        f_to_pk[path] = dd.pk
-    if faces:
-        indexes_dir = '{}/{}/indexes'.format(settings.MEDIA_ROOT, video_id)
-        path_count, emb , entries, feat_fname, entries_fname = visual_index.index_faces(faces, f_to_pk, indexes_dir, video_id)
-        i = IndexEntries()
-        i.video = dv
-        i.count = len(entries)
-        i.contains_frames = False
-        i.contains_detections = True
-        i.detection_name = "Face"
-        i.algorithm = 'facenet'
-        i.entries_file_name = entries_fname.split('/')[-1]
-        i.features_file_name = feat_fname.split('/')[-1]
-        i.save()
     process_next(task_id)
     start.completed = True
     start.seconds = time.time() - start_time
