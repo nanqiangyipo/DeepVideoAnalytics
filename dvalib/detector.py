@@ -1,9 +1,6 @@
 import os,logging,subprocess, time
 import tensorflow as tf
 import PIL
-from dvalib.ssd.nets import ssd_vgg_300, np_methods
-from dvalib.ssd.preprocessing import ssd_vgg_preprocessing
-from collections import defaultdict
 import numpy as np
 from scipy import misc
 from collections import defaultdict
@@ -11,32 +8,13 @@ from .facenet import facenet
 from .facenet.align import detect_face
 import random
 from time import sleep
-# from __future__ import absolute_import
-# from __future__ import division
-# from __future__ import print_function
-VOC_LABELS = {
-    'none': (0, 'Background'),
-    'aeroplane': (1, 'Vehicle'),
-    'bicycle': (2, 'Vehicle'),
-    'bird': (3, 'Animal'),
-    'boat': (4, 'Vehicle'),
-    'bottle': (5, 'Indoor'),
-    'bus': (6, 'Vehicle'),
-    'car': (7, 'Vehicle'),
-    'cat': (8, 'Animal'),
-    'chair': (9, 'Indoor'),
-    'cow': (10, 'Animal'),
-    'diningtable': (11, 'Indoor'),
-    'dog': (12, 'Animal'),
-    'horse': (13, 'Animal'),
-    'motorbike': (14, 'Vehicle'),
-    'person': (15, 'Person'),
-    'pottedplant': (16, 'Indoor'),
-    'sheep': (17, 'Animal'),
-    'sofa': (18, 'Indoor'),
-    'train': (19, 'Vehicle'),
-    'tvmonitor': (20, 'Indoor'),
-}
+
+
+def _parse_function(filename):
+    image_string = tf.read_file(filename)
+    image_decoded = tf.image.decode_image(image_string,channels=3)
+    return tf.expand_dims(image_decoded, 0), filename
+
 
 
 def pil_to_array(pilImage):
@@ -102,153 +80,115 @@ class BaseDetector(object):
         pass
 
 
-class YOLODetector(object):
+class TFDetector(BaseDetector):
 
-    def __init__(self):
-        self.name = "YOLO9000"
+    def __init__(self,model_path,class_index_to_string):
+        super(TFDetector, self).__init__()
+        self.model_path = model_path
+        self.class_index_to_string = class_index_to_string
+        self.session = None
+        self.dataset = None
+        self.filenames_placeholder = None
+        self.image = None
+        self.fname = None
 
-    def detect(self,wframes):
-        darknet_path = os.path.join(os.path.abspath(__file__).split('detector.py')[0],'../darknet/')
-        list_path = "{}/{}_list.txt".format(darknet_path, os.getpid())
-        output_path = "{}/{}_output.txt".format(darknet_path, os.getpid())
-        logging.info(darknet_path)
-        path_to_pk = {}
-        with open(list_path, 'w') as framelist:
-            for frame in wframes:
-                framelist.write('{}\n'.format(frame.local_path()))
-                path_to_pk[frame.local_path()] = frame.primary_key
-        # ./darknet detector test cfg/combine9k.data cfg/yolo9000.cfg yolo9000.weights data/list.txt
-        with open(output_path, 'w') as output:
-            args = ["./darknet", 'detector', 'test', 'cfg/combine9k.data', 'cfg/yolo9000.cfg', 'yolo9000.weights',list_path]
-            logging.info(args)
-            returncode = subprocess.call(args, cwd=darknet_path, stdout=output)
-        if returncode == 0:
-            detections = defaultdict(list)
-            for line in file(output_path):
-                if line.strip():
-                    temp = {}
-                    frame_path, name, confidence, left, right, top, bot = line.strip().split('\t')
-                    if frame_path not in path_to_pk:
-                        raise ValueError, frame_path
-                    temp['top'] = int(top)
-                    temp['left'] = int(left)
-                    temp['right'] = int(right)
-                    temp['bot'] = int(bot)
-                    temp['confidence'] = float(confidence)
-                    temp['name'] = "{}_{}".format(self.name,name.replace(' ', '_'))
-                    detections[path_to_pk[frame_path]].append(temp)
-            return detections
-        else:
-            raise ValueError,returncode
-
-
-class SSDetector(BaseDetector):
-
-    def __init__(self):
-        self.isess = None
-        self.name = "SSD"
-        self.classnames =  {v[0]:k for k,v in VOC_LABELS.iteritems()}
-        logging.info("Detector created")
+    def detect(self,image_path,min_score=0.20):
+        self.session.run(self.iterator.initializer, feed_dict={self.filenames_placeholder: [image_path,]})
+        (fname, boxes, scores, classes, num_detections) = self.session.run(
+            [self.fname,self.boxes, self.scores, self.classes, self.num_detections])
+        detections = []
+        for i, _ in enumerate(boxes[0]):
+            plimg = PIL.Image.open(image_path)
+            frame_width, frame_height = plimg.size
+            shape = (frame_height,frame_width)
+            if scores[0][i] > min_score:
+                top,left = (int(boxes[0][i][0] * shape[0]), int(boxes[0][i][1] * shape[1]))
+                bot,right = (int(boxes[0][i][2] * shape[0]), int(boxes[0][i][3] * shape[1]))
+                detections.append({
+                    'x': left,
+                    'y':top,
+                    'w':right-left,
+                    'h':bot-top,
+                    'score': scores[0][i],
+                    'object_name': self.class_index_to_string[int(classes[0][i])]
+                })
+        return detections
 
     def load(self):
-        slim = tf.contrib.slim
-        net_shape = (300, 300)
-        data_format = 'NHWC' # NCHW not defined
-        self.img_input = tf.placeholder(tf.uint8, shape=(None, None, 3))
-        self.image_pre, self.labels_pre, self.bboxes_pre, self.bbox_img = ssd_vgg_preprocessing.preprocess_for_eval(self.img_input, None, None,net_shape, data_format, resize=ssd_vgg_preprocessing.Resize.WARP_RESIZE)
-        self.image_4d = tf.expand_dims(self.image_pre, 0)
-        self.ssd_net = ssd_vgg_300.SSDNet()
-        with slim.arg_scope(self.ssd_net.arg_scope(data_format=data_format)):
-            self.predictions, self.localisations, _, _ = self.ssd_net.net(self.image_4d, is_training=False, reuse=None) # ask paul about reuse = None
-        network_path = os.path.abspath(__file__).split('detector.py')[0] + 'ssd/checkpoints/ssd_300_vgg.ckpt'
-        config = tf.ConfigProto()
-        config.gpu_options.allow_growth = True
-        self.isess = tf.InteractiveSession(config=config)
-        self.isess.run(tf.global_variables_initializer())
-        saver = tf.train.Saver()
-        saver.restore(self.isess, network_path)
-        self.ssd_anchors = self.ssd_net.anchors(net_shape)
-
-    def detect(self,wframes, select_threshold=0.5, nms_threshold=.45, net_shape=(300, 300)):
-        detections = defaultdict(list)
-        if self.isess is None:
-            self.load()
-        for wf in wframes:
-            plimg = PIL.Image.open(wf.local_path()).convert('RGB')
-            img = pil_to_array(plimg)
-            rimg, rpredictions, rlocalisations, rbbox_img = self.isess.run([self.image_4d, self.predictions, self.localisations, self.bbox_img],feed_dict={self.img_input: img})
-            rclasses, rscores, rbboxes = np_methods.ssd_bboxes_select(rpredictions, rlocalisations, self.ssd_anchors,select_threshold=select_threshold, img_shape=net_shape, num_classes=21, decode=True)
-            rbboxes = np_methods.bboxes_clip(rbbox_img, rbboxes)
-            rclasses, rscores, rbboxes = np_methods.bboxes_sort(rclasses, rscores, rbboxes, top_k=400)
-            rclasses, rscores, rbboxes = np_methods.bboxes_nms(rclasses, rscores, rbboxes, nms_threshold=nms_threshold)
-            rbboxes = np_methods.bboxes_resize(rbbox_img, rbboxes)
-            shape = img.shape
-            for i,bbox in enumerate(rbboxes):
-                top,left = (int(bbox[0] * shape[0]), int(bbox[1] * shape[1]))
-                bot,right = (int(bbox[2] * shape[0]), int(bbox[3] * shape[1]))
-                detections[wf.primary_key].append({
-                    'top':top,
-                    'bot':bot,
-                    'left':left,
-                    'right':right,
-                    'confidence':100*rscores[i],
-                    'name':"{}_{}".format(self.name,self.classnames[rclasses[i]])})
-        return detections
+        self.detection_graph = tf.Graph()
+        with self.detection_graph.as_default():
+            self.filenames_placeholder = tf.placeholder("string")
+            dataset = tf.contrib.data.Dataset.from_tensor_slices(self.filenames_placeholder)
+            dataset = dataset.map(_parse_function)
+            self.iterator = dataset.make_initializable_iterator()
+            self.od_graph_def = tf.GraphDef()
+            with tf.gfile.GFile(self.model_path, 'rb') as fid:
+                serialized_graph = fid.read()
+                self.od_graph_def.ParseFromString(serialized_graph)
+                self.image, self.fname = self.iterator.get_next()
+                tf.import_graph_def(self.od_graph_def, name='',input_map={'image_tensor': self.image})
+            config = tf.ConfigProto()
+            config.gpu_options.per_process_gpu_memory_fraction = 0.15
+            self.session = tf.Session(graph=self.detection_graph,config=config)
+            self.boxes = self.detection_graph.get_tensor_by_name('detection_boxes:0')
+            self.scores = self.detection_graph.get_tensor_by_name('detection_scores:0')
+            self.classes = self.detection_graph.get_tensor_by_name('detection_classes:0')
+            self.num_detections = self.detection_graph.get_tensor_by_name('num_detections:0')
 
 
 class FaceDetector():
 
-    def __init__(self):
+    def __init__(self,session=None):
         self.image_size = 182
         self.margin = 44
-        self.gpu_memory_fraction = 0.2
+        self.gpu_memory_fraction = 0.15
+        self.session = session
+        self.minsize = 20
+        self.threshold = [0.6, 0.7, 0.7]
+        self.factor = 0.709
 
-    def detect(self,wframes):
-        sleep(random.random())
+    def load(self):
         logging.info('Creating networks and loading parameters')
         with tf.Graph().as_default():
             gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=self.gpu_memory_fraction)
-            sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options, log_device_placement=False))
-            with sess.as_default():
-                pnet, rnet, onet = detect_face.create_mtcnn(sess, None)
-        minsize = 20  # minimum size of face
-        threshold = [0.6, 0.7, 0.7]  # three steps's threshold
-        factor = 0.709  # scale factor
-        random_key = np.random.randint(0, high=99999)
-        aligned_paths = defaultdict(list)
-        nrof_images_total = 0
-        nrof_successfully_aligned = 0
-        for frame in wframes:
-            image_path = frame.local_path()
-            nrof_images_total += 1
-            try:
-                img = misc.imread(image_path)
-            except (IOError, ValueError, IndexError) as e:
-                errorMessage = '{}: {}'.format(image_path, e)
-                logging.info(errorMessage)
-            else:
-                if img.ndim < 2:
-                    logging.info('Unable to align "%s"' % image_path)
-                    continue
-                if img.ndim == 2:
-                    img = facenet.to_rgb(img)
-                img = img[:, :, 0:3]
-                bounding_boxes, _ = detect_face.detect_face(img, minsize, pnet, rnet, onet, threshold, factor)
-                nrof_faces = bounding_boxes.shape[0]
-                if nrof_faces > 0:
-                    det_all = bounding_boxes[:, 0:4]
-                    img_size = np.asarray(img.shape)[0:2]
-                    for boxindex in range(nrof_faces):
-                        det = np.squeeze(det_all[boxindex, :])
-                        bb = np.zeros(4, dtype=np.int32)
-                        bb[0] = np.maximum(det[0] - self.margin / 2, 0)
-                        bb[1] = np.maximum(det[1] - self.margin / 2, 0)
-                        bb[2] = np.minimum(det[2] + self.margin / 2, img_size[1])
-                        bb[3] = np.minimum(det[3] + self.margin / 2, img_size[0])
-                        cropped = img[bb[1]:bb[3], bb[0]:bb[2], :]
-                        scaled = misc.imresize(cropped, (self.image_size, self.image_size), interp='bilinear')
-                        nrof_successfully_aligned += 1
-                        aligned_paths[image_path].append((scaled,bb))
-        logging.info('Total number of images: %d' % nrof_images_total)
-        logging.info('Number of successfully aligned images: %d' % nrof_successfully_aligned)
-        return aligned_paths
+            self.session = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options, log_device_placement=False))
+            with self.session.as_default():
+                self.pnet, self.rnet, self.onet = detect_face.create_mtcnn(self.session, None)
+
+    def detect(self,image_path):
+        aligned = []
+        try:
+            img = misc.imread(image_path)
+        except (IOError, ValueError, IndexError) as e:
+            errorMessage = '{}: {}'.format(image_path, e)
+            logging.info(errorMessage)
+        else:
+            if img.ndim < 2:
+                logging.info('Unable to align "%s"' % image_path)
+                return []
+            if img.ndim == 2:
+                img = facenet.to_rgb(img)
+            img = img[:, :, 0:3]
+            bounding_boxes, _ = detect_face.detect_face(img, self.minsize, self.pnet, self.rnet, self.onet, self.threshold, self.factor)
+            nrof_faces = bounding_boxes.shape[0]
+            if nrof_faces > 0:
+                det_all = bounding_boxes[:, 0:4]
+                img_size = np.asarray(img.shape)[0:2]
+                for boxindex in range(nrof_faces):
+                    det = np.squeeze(det_all[boxindex, :])
+                    bb = np.zeros(4, dtype=np.int32)
+                    bb[0] = np.maximum(det[0] - self.margin / 2, 0)
+                    bb[1] = np.maximum(det[1] - self.margin / 2, 0)
+                    bb[2] = np.minimum(det[2] + self.margin / 2, img_size[1])
+                    bb[3] = np.minimum(det[3] + self.margin / 2, img_size[0])
+                    cropped = img[bb[1]:bb[3], bb[0]:bb[2], :]
+                    scaled = misc.imresize(cropped, (self.image_size, self.image_size), interp='bilinear')
+                    left, top, right, bottom = bb[0], bb[1], bb[2], bb[3]
+                    aligned.append({
+                        'scaled':scaled,
+                        'x': left,
+                        'y':top,
+                        'w':right-left,
+                        'h':bottom-top,
+                    })
+            return aligned

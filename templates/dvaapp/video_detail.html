@@ -15,8 +15,8 @@
                     <th class="text-center">name</th>
                     <th class="text-center">duration</th>
                     <th class="text-center">frames</th>
-                    <th class="text-center">detections</th>
-                    <th class="text-center">annotations</th>
+                    <th class="text-center">segments</th>
+                    <th class="text-center">regions</th>
                     <th class="text-center">labels</th>
                     <th class="text-center">height</th>
                     <th class="text-center">width</th>
@@ -32,8 +32,8 @@
                         <td>{{ object.name }} </td>
                         <td class="text-right">{{ object.length_in_seconds }} </td>
                         <td class="text-right">{{ object.frames }} </td>
-                        <td class="text-right">{{ object.detections }} </td>
-                        <td class="text-right">{{ annotation_count }} </td>
+                        <td class="text-right">{{ object.segments }} </td>
+                        <td class="text-right">{{ region_count }} </td>
                         <td class="text-right">{{ label_count }} </td>
                         <td class="text-right">{{ object.height }} </td>
                         <td class="text-right">{{ object.width }} </td>
@@ -94,19 +94,24 @@
 <div class="col-lg-6">
     <div class="box box-primary" >
         <div class="box-body">
+            <div class="text-center"><h5 >Delete currently requires retrieval workers to be restarted to purge index loaded in memory (a fix is pending)</h5></div>
             <div class="row">
-                <div class="col-sm-9"><h4>Export video / dataset as a file</h4></div>
-                <div class="col-sm-3">
+                <div class="col-sm-6 text-center">
                     <form action="/export_video" method="post"><input type="hidden" value="{{ object.pk }}" name="video_id"><input type="hidden" value="file" name="export_method">{% csrf_token %}
-                        <button type="submit" class="btn btn-primary"><i class="fa fa-download"></i> Export</button>
+                        <button type="submit" class="btn btn-info"><i class="fa fa-download"></i> Export video / dataset as a file</button>
+                    </form>
+                </div>
+                <div class="col-sm-6 text-center">
+                    <form action="/delete_video" method="post"><input type="hidden" value="{{ object.pk }}" name="video_id">{% csrf_token %}
+                        <button type="submit" class="btn btn-danger"><i class="fa fa-delete"></i> Delete video / dataset (only staff users)</button>
                     </form>
                 </div>
             </div>
             <form action="/export_video" method="post">
             <div class="row m-t" style="margin-top:25px">
-                <div class="col-sm-3"><label for="bucket">S3 Bucket <input name="bucket" type="text" placeholder="bucket" required="required" class="form-control" /></label></div>
-                <div class="col-sm-3"><label for="key">S3 Key <input name="key" type="text" placeholder="key_prefix" required="required" class="form-control" /></label></div>
-                <div class="col-sm-3"><label for="region">Region <input name="region" type="text" placeholder="region" required="required" value="us-east-1" class="form-control" /></label></div>
+                <div class="col-sm-3"><div class="form-group"><label for="bucket">S3 Bucket <input name="bucket" type="text" placeholder="bucket" required="required" class="form-control" /></label></div></div>
+                <div class="col-sm-3"><div class="form-group"><label for="key">S3 Key <input name="key" type="text" placeholder="key_prefix" required="required" class="form-control" /></label></div></div>
+                <div class="col-sm-3"><div class="form-group"><label for="region">Region <input name="region" type="text" placeholder="region" required="required" value="us-east-1" class="form-control" /></label></div></div>
                 <div class="col-sm-3">{% csrf_token %}
                     <input type="hidden" value="{{ object.pk }}" name="video_id">
                     <input type="hidden" value="s3" name="export_method">
@@ -130,7 +135,7 @@
                     <tr>
                         <td>{{ e.started }}</td>
                         <td class="text-center">{{ e.completed }}</td>
-                        <td class="text-center">{% if e.file_name %}<a href="/media/exports/{{ e.file_name }}">click to download</a>{% endif %}</td>
+                        <td class="text-center">{% if e.file_name %}<a href="{{ MEDIA_URL }}exports/{{ e.file_name }}">click to download</a>{% endif %}</td>
                     </tr>
                 {% endfor %}
                 {% for e in s3_exports %}
@@ -143,6 +148,9 @@
                 </tbody>
             </table>
             {% endif %}
+        </div></div>
+        <div class="box box-primary" >
+        <div class="box-body">
         <div class="row">
             {% if not video.vdn_dataset %}
                 <div class="col-sm-12 text-center">
@@ -174,8 +182,8 @@
             <div class="box-body">
                 {% if frame_first and frame_last %}
                 <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-6 text-center" style="height:200px"><a href="/frames/{{ frame_first.pk }}"><img style="height:70%"  src="/media/{{ object.pk }}/frames/{{ frame_first.frame_index }}.jpg"><h4>Frame {{ frame_first.frame_index }}</h4></a></div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 text-center" style="height:200px"><a href="/frames/{{ frame_last.pk }}"><img style="height:70%" src="/media/{{ object.pk }}/frames/{{ frame_last.frame_index }}.jpg"><h4>Frame {{ frame_last.frame_index }}</h4></a></div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 text-center" style="height:200px"><a href="/frames/{{ frame_first.pk }}"><img style="height:70%"  src="{{ MEDIA_URL }}{{ object.pk }}/frames/{{ frame_first.frame_index }}.jpg"><h4>Frame {{ frame_first.frame_index }}</h4></a></div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 text-center" style="height:200px"><a href="/frames/{{ frame_last.pk }}"><img style="height:70%" src="{{ MEDIA_URL }}{{ object.pk }}/frames/{{ frame_last.frame_index }}.jpg"><h4>Frame {{ frame_last.frame_index }}</h4></a></div>
                 </div>
                 {% endif %}
                 <table class="table dataTables">
@@ -183,13 +191,13 @@
                 <tr>
                         <th class="text-center">type</th>
                         <th class="text-center">file / annotation / object name</th>
-                        <th class="text-center">label</th>
                         <th class="text-center">confidence</th>
                         <th class="text-center">size in pixels</th>
                         <th class="text-center">x</th>
                         <th class="text-center">y</th>
                         <th class="text-center">w</th>
                         <th class="text-center">h</th>
+                        {% if not object.dataset %}<th class="text-center">segment</th>{% endif %}
                         <th class="text-center">frame index</th>
                         <th class="text-center">view</th>
                 </tr>
@@ -199,13 +207,13 @@
                     <tr>
                         <td>{% if object.dataset %} image {% else %} video frame {% endif %}</td>
                         <td class="text-left">{% if object.dataset %}  {{ f.name }} {% endif %}</td>
-                        <td></td>
                         <td class="text-right"> 100.0 %</td>
                         <td class="text-right">{% widthratio object.height 1 object.width %}</td>
                         <td class="text-right">{{ 0 }}</td>
                         <td class="text-right">{{ 0 }}</td>
-                        <td class="text-right">{{ 0 }}</td>
-                        <td class="text-right">{{ 0 }}</td>
+                        <td class="text-right">{{ f.w }}</td>
+                        <td class="text-right">{{ f.h }}</td>
+                        {% if not object.dataset %}<td class="text-right"><a href="/segments/by_index/{{ object.pk }}/{{ f.segment_index }}">{{ f.segment_index }}</a></td>{% endif %}
                         <td class="text-right">{{ f.frame_index }} </td>
                         <td class="text-center"><a href="/frames/{{ f.pk }}">view</a></td>
                     </tr>
@@ -214,13 +222,13 @@
                     <tr>
                         <td>detection</td>
                         <td class="text-left">{{ d.object_name }} </td>
-                        <td></td>
                         <td class="text-right"> {{ d.confidence|floatformat }} %</td>
                         <td class="text-right">{% widthratio d.h 1 d.w %}</td>
                         <td class="text-right">{{ d.x }}</td>
                         <td class="text-right">{{ d.y }}</td>
                         <td class="text-right">{{ d.w }}</td>
                         <td class="text-right">{{ d.h }}</td>
+                        {% if not object.dataset %}<td class="text-right"><a href="/segments/by_index/{{ object.pk }}/{{ d.parent_segment_index }}">{{ d.parent_segment_index }}</a></td>{% endif %}
                         <td class="text-right">{{ d.parent_frame_index }} </td>
                         <td class="text-center"><a href="/frames/{{ d.frame_id }}">view</a></td>
                     </tr>
@@ -228,14 +236,14 @@
                 {% for d in annotation_list %}
                     <tr>
                         <td>annotation</td>
-                        <td class="text-left">{{ d.name }}</td>
-                        <td>{{ d.label }}</td>
+                        <td class="text-left">{{ d.object_name }}</td>
                         <td class="text-right"> 100 %</td>
                         <td class="text-right">{% widthratio d.h 1 d.w %}</td>
                         <td class="text-right">{{ d.x }}</td>
                         <td class="text-right">{{ d.y }}</td>
                         <td class="text-right">{{ d.w }}</td>
                         <td class="text-right">{{ d.h }}</td>
+                        {% if not object.dataset %}<td class="text-right"><a href="/segments/by_index/{{ object.pk }}/{{ d.parent_segment_index }}">{{ d.parent_segment_index }}</a></td>{% endif %}
                         <td class="text-right">{{ d.parent_frame_index }} </td>
                         <td class="text-center"><a href="/frames/{{ d.frame_id }}">view</a></td>
                     </tr>
@@ -251,14 +259,12 @@
     <div class="col-lg-6">
         <div class="box box-primary">
         <div class="box-body with-border">
-            <h4>Create new annotation labels</h4>
-            <form role="form"  method="post" action="/create_labels" >
+            <h4>Assign label to entire video</h4>
+            <form role="form"  method="post" action="/assign_video_labels" >
                     <div class="form-group">
-                        <input id="label_name" style="margin:10px auto" name="name" class="form-control" type="text-area" rows="3" width="80%" required="" placeholder="provide a single label name, or a comma separated list of multiple labels and check box below">
+                        <input id="labels" style="margin:10px auto" name="labels" class="form-control" type="text-area" rows="3" width="80%" required="" placeholder="provide a single label name, or a comma separated list">
                     </div>
-                        <label for="multiple">Multiple labels:</label>
-                        <input id="multiple" name="multiple" type="checkbox">
-                        <input id="label_name" name="video_pk" class="form-control" type="hidden" value="{{ object.pk }}">
+                        <input name="video_pk" class="form-control" type="hidden" value="{{ object.pk }}">
                     <div class="form-group">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-primary pull-right">submit</button>
@@ -266,50 +272,6 @@
             </form>
         </div>
         </div>
-        {% if label_count_warning %}
-            <div class="box">
-            <div class="box-body">
-            <h4 class="text-center"><a class="btn btn-warning" href="?show_all_labels=1"> There are {{ label_count }} labels, click here to reload and view all</a></h4>
-            </div></div>
-        {% else %}
-            <form role="form"  method="post" action="/delete_labels" >
-            <div class="box">
-            <div class="box-body">
-                <h3>Labels</h3>
-                    <input id="label_name" name="video_pk" class="form-control" type="hidden" value="{{ object.pk }}">
-                    <table class="table dataTables">
-                    <thead><tr>
-                        <th class="text-center">label name</th>
-                        <th class="text-center">source</th>
-                        <th class="text-center">annotations</th>
-                        <th class="text-center">VDN</th>
-                        <th class="text-center">created</th>
-                        <th class="text-center">Delete</th>
-                    </tr></thead>
-                    <tbody>
-                        {% for k in label_list %}
-                        <tr>
-                        <td>{{ k.label_name }}</td>
-                        <td>{{ k.source }}</td>
-                        <td class="text-center">{{ k.count }}</td>
-                        <td class="text-center">{% if k.vdn_dataset %}<a href="/external_dataset/{{ k.vdn_dataset.pk }}">VDN source</a>{%  endif %}</td>
-                        <td>{{ k.created }}</td>
-                        <td class="text-center"><input type="checkbox" name="delete_label_pk_{{ k.pk }}" /></td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                    </table>
-
-            </div>
-            <div class="box-footer">
-                    <div class="form-group">
-                    {% csrf_token %}
-                        <button type="submit" class="btn btn-danger pull-right"><i class="fa fa-trash"></i> Delete selected labels, and associated annotations</button>
-                    </div>
-            </div>
-        </div>
-        </form>
-        {% endif %}
     </div>
     <div class="col-lg-6">
             <div class="box">

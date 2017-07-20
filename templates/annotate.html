@@ -2,8 +2,8 @@
 {% load staticfiles %}
 {% block ng_control %}ng-controller="CanvasControls"{% endblock %}
 {% block page_css %}
-    <link rel="stylesheet" href="/static/app/app.css">
-    <link rel="stylesheet" href="/static/jsoneditor/jsoneditor.min.css">
+    <link rel="stylesheet" href={% static 'app/app.css' %}>
+    <link rel="stylesheet" href={% static 'jsoneditor/jsoneditor.min.css' %}>
     <style>
     .canvas-container { margin:0 auto ;  }
     </style>
@@ -22,7 +22,7 @@
             <h4>Annotate frame <a href="/frames/{{ frame.pk }}">{{ frame.frame_index }}</a> in <a href="/videos/{{ frame.video.pk }}">{{ frame.video.name }}</a> </h4>
             {% if previous_frame %}<a style="display: inline-block;margin-right:15px" href="/annotate_frame/{{ previous_frame.0.pk }}" class="btn btn-success"><i class="fa fa-backward "></i> Previous</a> {% endif %}
             <a style="display: inline-block;margin-right:15px" href="/query_frame/{{ frame.pk }}/" class="btn btn-info"><i class="fa fa-search"></i> Query using this frame</a>
-            <a style="display: inline-block;margin-right:15px" type='button' class="btn btn-info" id='btnLoad' ng-click='add_bounding_box();'><i class="fa fa-square"></i>&nbsp;Add bounding box or frame level annotation</a>
+            <a style="display: inline-block;margin-right:15px" type='button' class="btn btn-info" id='btnLoad' ng-click='add_bounding_box();'><i class="fa fa-square"></i>&nbsp;Add bounding box annotation</a>
             {% if next_frame %}<a style="display: inline-block;margin-right:15px" href="/annotate_frame/{{ next_frame.0.pk }}" class="btn btn-success"><i class="fa fa-forward"></i> Next</a>{% endif %}
             {% endif %}
     </div>
@@ -56,27 +56,22 @@
                         </div>
                         <div class="col-xs-5">
                             <div class="form-group">
-                                <label for="top">Text metadata</label>
-                                <textarea name="metadata" id="{[ box.id ]}_metadata" class="form-control" rows="2" required="" placeholder="metadata" ></textarea>
+                                <label for="top">Text metadata (indexed for full text search)</label>
+                                <textarea name="metadata_text" id="{[ box.id ]}_metadata_text" class="form-control" rows="1" required="" placeholder="metadata_text" ></textarea>
                             </div>
-                            <label style="font-weight:bold">Assign tags/labels (Define new tags <a href="/videos/{{ frame.video.pk }}">here</a>) :</label>
-                            <select class="js-example-basic-multiple" multiple="multiple" id="{[ box.id ]}_tags" style="width:100%">
-                            {% for tag in available_tags %}
-                                <option value="{{ tag }}">{{ tag }}</option>
-                            {% endfor %}
-                            </select>
+                            <div class="form-group">
+                                <label for="top">JSON metadata</label>
+                                <textarea name="metadata_json" id="{[ box.id ]}_metadata_json" class="form-control" rows="1" required="" placeholder="metadata_json" ></textarea>
+                            </div>
                         </div>
                         <div class="col-xs-5">
-                            <label style="font-weight:bold">Associate with a detection:</label>
-                            <select class="js-example-basic" id="{[ box.id ]}_detection" style="width:100%">
-                            <option value="-1" selected="selected">None</option>
-                            {% for d in detections %}
-                                <option value="{{ d.pk }}">detection {{ d.object_name }} {{ d.pk }}</option>
-                            {% endfor %}
-                            </select>
-                            <div class="form-group" style="margin-top:8px">
-                                <label for="{[ box.id ]}_frame_level"> Entire frame (ignore bounding box)</label>
-                                <input name="{[ box.id ]}_frame_level" id="{[ box.id ]}_frame_level" class="checkbox" type="checkbox" style="display:inline-block">
+                            <div class="form-group">
+                                <label for="name" style="font-weight:bold">Name</label>
+                                <input name="name" class="form-control" value="UI_annotation"  id="{[ box.id ]}_object_name" required="required" />
+                            </div>
+                            <div class="form-group">
+                                <label for="labels" style="font-weight:bold">Assign labels :</label>
+                                <textarea name="labels" class="form-control" placeholder="specify multiple by seperating with a comma"  rows="1" id="{[ box.id ]}_tags" ></textarea>
                             </div>
                             <div style="margin-top:26px">
                                 <button ng-click="submit_annotation(box.id)" id="{[ box.id ]}_submit" class="btn btn-primary btn-block">submit</button>
@@ -125,10 +120,13 @@
 <div class="row">
         <div style="margin-left:auto;margin-right:auto;width:1100px;">
         <div class="box box-info">
+        <div class="box-header text-center">
+            <h3>Existing annotations and detections (refresh the page to reload new annotations)</h3>
+            <h4> Show /Hide all <input type="checkbox" ng-checked="{[ visible_all ]}" ng-click="toggle_all()"></h4>
+        </div>
         <div class="box-body text-center" >
         <table class="table table-bordered">
         <thead><tr>
-            <th>id</th>
             <th>type</th>
             <th>label / name</th>
             <th>top</th>
@@ -136,13 +134,11 @@
             <th>height</th>
             <th>width</th>
             <th>full frame</th>
-            <th>detection</th>
             <th>visible</th>
             <th>delete</th>
         </tr></thead>
         <tbody>
         <tr ng-repeat="box in existing_boxes" >
-            <td class="text-center">{[ box.pk]}</td>
             <td>{[ box.box_type]}</td>
             <td>{[ box.label]}</td>
             <td class="text-right">{[ box.top]}</td>
@@ -150,12 +146,10 @@
             <td class="text-right">{[ box.height*box.scaleY ]}</td>
             <td class="text-right">{[ box.width*box.scaleX ]}</td>
             <td class="text-center">{[ box.full_frame ]}</td>
-            <td class="text-center">{[ box.detection_pk ]}</td>
-            <td class="text-center"><input type="checkbox" ng-checked="{[box.visible]}" ng-click="toggle_visibility(box.id)"></td>
+            <td class="text-center"><input type="checkbox" ng-model="box.visible" ng-click="toggle_visibility(box.id)"></td>
             <td class="text-center"><a ng-show="{[ box.annotation ]}" class="btn btn-warning" ng-click="delete_object(box.id,box.pk,box.box_type)"><i class="fa fa-trash"></i> Delete</a></td>
         </tr>
         </tbody>
-        <caption class="text-center"><h4>Existing annotations and detections (refresh the page to reload new annotations)</h4></caption>
         </table>
         </div>
     </div>
@@ -166,7 +160,7 @@
 
 
 {% block page_js %}
-    <script src="/static/jsoneditor/jsoneditor.min.js"></script>
+    <script src={% static 'jsoneditor/jsoneditor.min.js' %}></script>
     <script>
         var status = "Please add bounding box to annotate.";
         var payload = "{{ payload }}";
@@ -180,18 +174,18 @@
             var initial_url=null;
         {% endif %}
     </script>
-    <script src="/static/plugins/jquery.mousewheel.min.js"></script>
-    <script src="/static/plugins/underscore-min.js"></script>
-    <script src="/static/fabric/fabric.js"></script>
-    <script type="text/javascript" src="/static/vision/jsfeat-min.js"></script>
-    <script type="text/javascript" src="/static/vision/slic-segmentation.js"></script>
-    <script type="text/javascript" src="/static/vision/pf-segmentation.js"></script>
-    <script type="text/javascript" src="/static/vision/compatibility.js"></script>
-    <script type="text/javascript" src="/static/vision/dat.gui.min.js"></script>
+    <script src={% static 'plugins/jquery.mousewheel.min.js' %}></script>
+    <script src={% static 'plugins/underscore-min.js' %}></script>
+    <script src={% static 'fabric/fabric.js' %}></script>
+    <script type="text/javascript" src={% static 'vision/jsfeat-min.js' %}></script>
+    <script type="text/javascript" src={% static 'vision/slic-segmentation.js' %}></script>
+    <script type="text/javascript" src={% static 'vision/pf-segmentation.js' %}></script>
+    <script type="text/javascript" src={% static 'vision/compatibility.js' %}></script>
+    <script type="text/javascript" src={% static 'vision/dat.gui.min.js' %}></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.min.js"></script>
-    <script src="/static/app/utils.js"></script>
-    <script src="/static/app/app_config.js"></script>
-    <script src="/static/app/controller.js"></script>
-    <script src="/static/app/app.js"></script>
+    <script src={% static 'app/utils.js' %}></script>
+    <script src={% static 'app/app_config.js' %}></script>
+    <script src={% static 'app/controller.js' %}></script>
+    <script src={% static 'app/app.js' %}></script>
 {% endblock %}
 {% block ngblock %}ng-app="cveditor"{% endblock %}

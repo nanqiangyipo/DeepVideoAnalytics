@@ -1,19 +1,35 @@
 from django.contrib import admin
-from .models import Video,Frame,Detection,TEvent,IndexEntries,QueryResults,Query,Annotation,VLabel,VDNServer,VDNDataset,Export, S3Export, S3Import
+from .models import Video, Frame, TEvent, IndexEntries, QueryResults, Query, AppliedLabel, VDNServer,\
+    VDNDataset, ClusterCodes, Clusters, Region, Tube, CustomDetector, Segment, IndexerQuery, DeletedVideo
 
 
-@admin.register(VLabel)
-class AnnotationTagAdmin(admin.ModelAdmin):
+@admin.register(IndexerQuery)
+class IndexerQueryAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(Annotation)
-class AnnotationAdmin(admin.ModelAdmin):
+@admin.register(Segment)
+class SegmentAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(AppliedLabel)
+class AppliedLabelAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Region)
+class RegionAdmin(admin.ModelAdmin):
     pass
 
 
 @admin.register(Video)
 class VideoAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(DeletedVideo)
+class DeletedVideoAdmin(admin.ModelAdmin):
     pass
 
 
@@ -36,11 +52,6 @@ class IndexEntriesAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(Detection)
-class DetectionAdmin(admin.ModelAdmin):
-    pass
-
-
 @admin.register(VDNServer)
 class VDNServerAdmin(admin.ModelAdmin):
     pass
@@ -56,18 +67,22 @@ class TEventAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(Export)
-class ExportAdmin(admin.ModelAdmin):
+@admin.register(Clusters)
+class ClustersAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(S3Export)
-class S3ExportAdmin(admin.ModelAdmin):
+@admin.register(ClusterCodes)
+class ClusterCodesAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(S3Import)
-class S3ImportAdmin(admin.ModelAdmin):
+@admin.register(Tube)
+class TubeAdmin(admin.ModelAdmin):
     pass
 
+
+@admin.register(CustomDetector)
+class CustomDetectorAdmin(admin.ModelAdmin):
+    pass
 

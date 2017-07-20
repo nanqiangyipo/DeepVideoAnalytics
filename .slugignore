@@ -1,0 +1,11 @@
+/experiments/*
+/docker/*
+/faiss/*
+/generator/*
+/logs/*
+/notes/*
+/repos/*
+/tests/*
+/darknet/*
+/tests/*
+/dvalib/data/*

@@ -1,5 +1,7 @@
 sudo: required
 
+group: deprecated-2017Q2
+
 language: python
 
 branches:
@@ -14,42 +16,61 @@ services:
   - postgresql
   - rabbitmq
 
+addons:
+  postgresql: "9.6"
+
 virtualenv:
   system_site_packages: true
 
 env:
   global:
     - YOLO_ENABLE=1
+    - AUTH_DISABLED=1
 
 before_install:
   - sudo add-apt-repository ppa:mc3man/trusty-media -y
-  - sudo apt-get update -q
-  - sudo apt-get install -y ffmpeg
-  - sudo apt-get install -y pkg-config python-dev python-opencv unzip swig3.0 libopencv-dev python-pip libav-tools libjpeg-dev  libpng-dev  libtiff-dev  libjasper-dev  python-numpy python-scipy  python-pycurl  python-opencv
+  - sudo apt-get -qq update
+  - sudo apt-get -qq install -y --allow-unauthenticated ffmpeg
+  - sudo apt-get -qq install -y pkg-config python-dev unzip swig3.0 libopencv-dev libhdf5-dev python-pip libav-tools libjpeg-dev  libpng-dev  libtiff-dev  libjasper-dev  python-numpy python-scipy  python-pycurl  python-opencv
   - sudo dpkg -L python-opencv
-  - sudo wget https://yt-dl.org/downloads/latest/youtube-dl -O /bin/youtube-dl
+  - sudo wget --quiet https://yt-dl.org/downloads/latest/youtube-dl -O /bin/youtube-dl
   - sudo chmod a+rx /bin/youtube-dl
   - youtube-dl -U
-
-install: "pip install -r requirements.txt > /dev/null"
+  - pip install -q --only-binary=numpy,scipy numpy scipy
+  - pip install -q https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.2.0-cp27-none-linux_x86_64.whl
+  - pip install -q --no-deps keras
+  - pip install -q --no-deps h5py
+  - pip install -q --no-cache-dir http://download.pytorch.org/whl/cu75/torch-0.1.12.post2-cp27-none-linux_x86_64.whl
+  - pip install -q torchvision
+install: "pip install -q -r requirements.txt > /dev/null"
 
 
 before_script:
-  - cd darknet && wget https://www.dropbox.com/s/0zopjpswug5rjqy/yolo9000.weights && make && cd ..
+  - cd repos/lopq/python && python setup.py install && cd ../../..
   - python manage.py migrate
   - python manage.py runserver 8000 &
-  - cd dvalib/ssd/checkpoints && unzip ssd_300_vgg.ckpt.zip && cd ../../..
-  - cd dvalib/facenet/facenet_model && wget https://www.dropbox.com/s/2unad9skmc7msel/model-20170306-150500.ckpt-250000.data-00000-of-00001 && cd ../../..
-  - cd dvalib/facenet/facenet_model && wget https://www.dropbox.com/s/j8ky6bl0jgpygp6/model-20170306-150500.ckpt-250000.index && cd ../../..
-  - cd dvalib/facenet/facenet_model && wget https://www.dropbox.com/s/tnebmpku7xtzwnv/model-20170306-150500.meta && cd ../../..
+  - cd dvalib/data/2016_08 && wget --quiet https://www.dropbox.com/s/umo0xtljm9an90x/model.ckpt && wget --quiet https://www.dropbox.com/s/f93axdtlb3ltj40/model.ckpt.meta && cd ../../..
+  - cd dvalib/data && wget --quiet https://www.dropbox.com/s/jytpgw8et09ede9/facenet.pb && cd ../..
+  - cd tests && wget --quiet https://www.dropbox.com/s/xwbk5g1qit5s9em/WorldIsNotEnough.mp4 && cd ..
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3 # give xvfb some time to start
 
 script:
+  - fab add_default_vdn_server
   - fab ci
-  - wget localhost:8000
-  - wget localhost:8000/videos/
-  - wget localhost:8000/videos/1/
-  - wget localhost:8000/status
-  - wget localhost:8000/queries/
+  - fab ci_face
+  - wget --quiet localhost:8000
+  - wget --quiet localhost:8000/videos/
+  - wget --quiet localhost:8000/videos/1/
+  - wget --quiet localhost:8000/status
+  - wget --quiet localhost:8000/queries/
+  - wget --quiet localhost:8000/queries/1/
+  - wget --quiet localhost:8000/tasks/
+  - wget --quiet localhost:8000/clustering/
+  - wget --quiet localhost:8000/textsearch/
+  - wget --quiet localhost:8000/detectors/
+  - wget --quiet localhost:8000/status
+  - wget --quiet http://www.visualdata.network/vdn/api/
+  - wget --quiet http://www.visualdata.network/vdn/
+  - wget --quiet http://www.visualdata.network/vdn/get_token/

@@ -18,6 +18,37 @@
        - RABBITMQ_DEFAULT_PASS=localpass
      volumes:
        - dvarabbit:/var/lib/rabbitmq
+   dva:
+     build: .
+     image: akshayubhat/dva-auto:latest
+     container_name: dva-server
+     environment:
+       - DOCKER_MODE=true
+       - RABBIT_HOST=rabbit
+       - RABBIT_USER=dvauser
+       - RABBIT_PASS=localpass
+       - DB_HOST=db
+       - DB_NAME=postgres
+       - DB_USER=pgdbuser
+       - DB_PASS=pgdbpass
+       - LAUNCH_SERVER=1
+       - LAUNCH_Q_qindexer=1
+       - LAUNCH_Q_qretriever=1
+       - LAUNCH_Q_qextract=1
+       - TEST=1
+       - LAUNCH_Q_qdetector=1
+       - LAUNCH_Q_qfaceretriever=1
+       - LAUNCH_Q_qfacedetector=1
+       - LAUNCH_Q_qclusterer=1
+       - AUTH_DISABLED=1
+     command: bash -c "youtube-dl -U && git pull && fab start_container"
+     ports:
+       - "8000:8000"
+     depends_on:
+       - db
+       - rabbit
+     volumes:
+       - dvadata:/root/DVA/dva/media
  volumes:
   dvapgdata:
   dvarabbit:

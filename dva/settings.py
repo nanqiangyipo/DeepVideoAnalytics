@@ -10,69 +10,130 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
-import os,dj_database_url,sys
+import os, dj_database_url, sys
 from .worker_config import *
 
+VDN_ENABLE = 'VDN_ENABLE' in os.environ
+DVA_PRIVATE_ENABLE = 'DVA_PRIVATE_ENABLE' in os.environ
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
+MEDIA_BUCKET = os.environ.get('MEDIA_BUCKET', '')
+HEROKU_DEPLOY = 'HEROKU_DEPLOY' in os.environ
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-if 'SECRET_KEY' in os.environ:
+if 'SECRET_KEY' in os.environ or HEROKU_DEPLOY:
     SECRET_KEY = os.environ['SECRET_KEY']
+    AUTH_DISABLED = False
 else:
-    SECRET_KEY = 'changemeabblasdasbdbrp2$j&^' # change this in prod
+    SECRET_KEY = 'changemeabblasdasbdbrp2$j&^'  # change this in prod
+    AUTH_DISABLED = os.environ.get('AUTH_DISABLED', False)
+
+INTERNAL_IPS = ['localhost','127.0.0.1']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if 'DISABLE_DEBUG' in os.environ:
+if 'DISABLE_DEBUG' in os.environ or HEROKU_DEPLOY:
     DEBUG = False
 else:
     DEBUG = True
 
-ALLOWED_HOSTS = ["*"] # Dont use this in prod
+if sys.platform == 'darwin':
+    MACOS = True
+else:
+    MACOS = False
+
+if HEROKU_DEPLOY:
+    ALLOWED_HOSTS = [k.strip() for k in os.environ['ALLOWED_HOSTS'].split(',') if k.strip()]
+    # SESSION_COOKIE_SECURE = True
+    # CSRF_COOKIE_SECURE = True
+    # SECURE_SSL_REDIRECT = True
+    # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https') # Confirm this cannot be spoofed for heroku
+    # SECURE_REDIRECT_EXEMPT = [r'^vdn/.']
+else:
+    ALLOWED_HOSTS = ["*"]  # Dont use this in prod
 
 #: Only add pickle to this list if your broker is secured
 #: from unwanted access (see userguide/security.html)
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
-
-
-# Application definition
+CELERY_RESULT_BACKEND = 'django-db'
+WSGI_APPLICATION = 'dva.wsgi.application'
+ROOT_URLCONF = 'dva.urls'
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'dvaapp',
-    'djcelery',
-    'rest_framework',
-    'crispy_forms'
-]
+                     'django.contrib.admin',
+                     'django.contrib.auth',
+                     'django.contrib.contenttypes',
+                     'django.contrib.sessions',
+                     'django.contrib.messages',
+                     'django.contrib.staticfiles',
+                     'dvaapp',
+                     'django.contrib.humanize',
+                     'django.contrib.postgres',
+                     'django_celery_results',
+                     'corsheaders',
+                     'rest_framework',
+                     'django_filters',
+                     'vdnapp',
+                     'crispy_forms',
+                     'rest_framework.authtoken'
+                 ] + (['dvap', ] if DVA_PRIVATE_ENABLE else [])+ (['debug_toolbar','explorer',] if MACOS and DEBUG else [])
 
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
+if VDN_ENABLE:
+    MIDDLEWARE_CLASSES = [
+        'corsheaders.middleware.CorsMiddleware',
+        'django.middleware.security.SecurityMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    ]
+    if MACOS and DEBUG:
+        MIDDLEWARE_CLASSES = ['debug_toolbar.middleware.DebugToolbarMiddleware',] +MIDDLEWARE_CLASSES
+    CORS_ORIGIN_ALLOW_ALL = True
+    CORS_URLS_REGEX = r'^vdn/api/.*$'
+    CORS_ALLOW_METHODS = ('POST', 'GET',)
+    CORS_ALLOW_CREDENTIALS = True
+    REST_FRAMEWORK = {
+        'PAGE_SIZE': 10,
+        'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
+        'DEFAULT_PERMISSION_CLASSES': (
+            'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+        ),
+        'DEFAULT_AUTHENTICATION_CLASSES': (
+            'rest_framework.authentication.BasicAuthentication',
+            'rest_framework.authentication.SessionAuthentication',
+            'rest_framework.authentication.TokenAuthentication',
+        )
+    }
+else:
+    MIDDLEWARE = [
+        'django.middleware.security.SecurityMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    ]
+    if MACOS and DEBUG:
+        MIDDLEWARE = ['debug_toolbar.middleware.DebugToolbarMiddleware',] + MIDDLEWARE
+    REST_FRAMEWORK = {
+        'PAGE_SIZE': 10,
+        'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
+    }
 
-ROOT_URLCONF = 'dva.urls'
 PATH_PROJECT = os.path.realpath(os.path.dirname(__file__))
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'templates/'),],
+        'DIRS': [os.path.join(BASE_DIR, 'templates/'), ],
         'APP_DIRS': True,
         'OPTIONS': {
             'debug': True,
@@ -81,23 +142,21 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'dva.wsgi.application'
-
-REST_FRAMEWORK = {
-    'PAGE_SIZE': 10,
-    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
-}
-
-
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-if sys.platform == 'darwin':
-    BROKER_URL = 'amqp://{}:{}@localhost//'.format('dvauser','localpass')
+if HEROKU_DEPLOY:
+    DATABASES = {}
+    db_from_env = dj_database_url.config(conn_max_age=500)
+    DATABASES['default'] = db_from_env
+    BROKER_URL = os.environ['CLOUDAMQP_URL']
+elif sys.platform == 'darwin':
+    BROKER_URL = 'amqp://{}:{}@localhost//'.format('dvauser', 'localpass')
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -119,22 +178,29 @@ elif 'CONTINUOUS_INTEGRATION' in os.environ:
             'PORT': '',
         }
     }
-    BROKER_URL = 'amqp://{}:{}@localhost//'.format('guest','guest')
+    BROKER_URL = 'amqp://{}:{}@localhost//'.format('guest', 'guest')
 elif 'DOCKER_MODE' in os.environ:
-    # different platform has different broker_url
-    BROKER_URL = 'amqp://{}:{}@{}//'.format(os.environ.get('RABBIT_USER','dvauser'),os.environ.get('RABBIT_PASS','localpass'),os.environ.get('RABBIT_HOST','rabbit'))
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': os.environ.get('DB_NAME','postgres'),
-            'USER': os.environ.get('DB_USER','postgres'),
-            'PASSWORD': os.environ.get('DB_PASS','postgres'),
-            'HOST': os.environ.get('DB_HOST','db'),
-            'PORT': 5432,
+    if 'BROKER_URL' in os.environ:
+        BROKER_URL = os.environ['BROKER_URL']
+    else:
+        BROKER_URL = 'amqp://{}:{}@{}//'.format(os.environ.get('RABBIT_USER', 'dvauser'),
+                                                os.environ.get('RABBIT_PASS', 'localpass'),
+                                                os.environ.get('RABBIT_HOST', 'rabbit'))
+    if 'DATABASE_URL' in os.environ:
+        DATABASES = {}
+        db_from_env = dj_database_url.config(conn_max_age=500)
+        DATABASES['default'] = db_from_env
+    else:
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql_psycopg2',
+                'NAME': os.environ.get('DB_NAME', 'postgres'),
+                'USER': os.environ.get('DB_USER', 'postgres'),
+                'PASSWORD': os.environ.get('DB_PASS', 'postgres'),
+                'HOST': os.environ.get('DB_HOST', 'db'),
+                'PORT': 5432,
+            }
         }
-    }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -154,7 +220,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
@@ -169,32 +234,34 @@ USE_L10N = True
 
 USE_TZ = True
 
-
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-STATIC_URL = '/static/'
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-MEDIA_ROOT = '/Users/aub3/media/' if sys.platform == 'darwin' else os.path.join(PROJECT_ROOT, 'media')
-MEDIA_URL = '/media/'
-DATA_UPLOAD_MAX_MEMORY_SIZE=26214400
+if HEROKU_DEPLOY:
+    STATIC_URL = os.environ['STATIC_URL']  # ENV to set static URL on cloud UI platform
+    MEDIA_URL = os.environ.get('MEDIA_URL', '')  # ENV to set static URL on cloud UI platform
+    MEDIA_ROOT = '/tmp/'
+else:
+    STATIC_URL = '/static/'
+    MEDIA_ROOT = '/Users/aub3/media/' if sys.platform == 'darwin' else os.path.join(PROJECT_ROOT, 'media')
+    MEDIA_URL = '/media/'
+    for create_dirname in ['queries', 'exports', 'detectors','indexers','annotators']:
+        if not os.path.isdir("{}/{}".format(MEDIA_ROOT, create_dirname)):
+            try:
+                os.mkdir("{}/{}".format(MEDIA_ROOT, create_dirname))
+            except:
+                pass
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 26214400
 
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, 'static'),
 )
 
-
 STATICFILES_FINDERS = (
-'django.contrib.staticfiles.finders.FileSystemFinder',
-'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
-
-
-for create_dirname in ['queries','external']:
-    if not os.path.isdir("{}/{}".format(MEDIA_ROOT,create_dirname)):
-        try:
-            os.mkdir("{}/{}".format(MEDIA_ROOT,create_dirname))
-        except:
-            pass

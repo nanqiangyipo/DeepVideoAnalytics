@@ -13,7 +13,7 @@
                         {% if page_obj.has_previous %}
                             <a class="btn btn-info" style="float:left" href=".?page={{ page_obj.previous_page_number }}"><i class="fa fa-backward"></i>  Go back</a>
                         {% endif %}
-                        <span class="page-current ">
+                        <span class="page-current " style="font-size:24pt;font-weight:bold">
                             {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
                         </span>
                         {% if page_obj.has_next %}
@@ -38,7 +38,7 @@
                     <th class="text-center">name</th>
                     <th class="text-center">duration</th>
                     <th class="text-center">frames</th>
-                    <th class="text-center">detections</th>
+                    <th class="text-center">segments</th>
                     <th class="text-center">height</th>
                     <th class="text-center">width</th>
                     <th class="text-center">created</th>
@@ -55,7 +55,7 @@
                         <td>{{ v.name }} </td>
                         <td class="text-right">{{ v.length_in_seconds }} </td>
                         <td class="text-right">{{ v.frames }} </td>
-                        <td class="text-right">{{ v.detections }} </td>
+                        <td class="text-right">{{ v.segments }} </td>
                         <td class="text-right">{{ v.height }} </td>
                         <td class="text-right">{{ v.width }} </td>
                         <td class="text-center">{{ v.created }}</td>
@@ -89,7 +89,7 @@
                                 <td>{{ e.video.name }}</td>
                                 <td>{{ e.started }}</td>
                                 <td class="text-center">{{ e.completed }}</td>
-                                <td class="text-center">{% if e.completed %}<a href="/media/exports/{{ e.file_name }}">click to download</a>{% endif %}</td>
+                                <td class="text-center">{% if e.completed %}<a href="{{ MEDIA_URL }}exports/{{ e.file_name }}">click to download</a>{% endif %}</td>
                             </tr>
                         {% endfor %}
                         {% for e in s3_exports %}

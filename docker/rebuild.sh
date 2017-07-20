@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
-docker build -t akshayubhat/dva:cpu .
+set -xe
+docker build -t akshayubhat/dva-auto:latest .

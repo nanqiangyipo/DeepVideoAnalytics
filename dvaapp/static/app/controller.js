@@ -307,8 +307,6 @@ $scope.add_bounding_box = function (){
     $scope.boxes.push(rect);
     canvas.add(rect);
     $scope.$apply();
-    $('#'+current_id+'_tags').select2({theme: "bootstrap"});
-    $('#'+current_id+'_detection').select2({theme: "bootstrap"});
 };
 
 
@@ -412,7 +410,24 @@ $scope.toggle_visibility = function(box_index){
     canvas.deactivateAll().renderAll();
 };
 
-$scope.search = function () {
+$scope.toggle_all = function(){
+    for(box_index in $scope.existing_boxes)
+    {
+        box = $scope.existing_boxes[box_index];
+        if(box.visible){
+            box.opacity = 0.0;
+            box.visible = false;
+        }
+        else{
+            box.opacity = 0.5;
+            box.visible = true;
+        }
+    }
+    $scope.visible_all = !$scope.visible_all;
+    canvas.deactivateAll().renderAll();
+};
+
+$scope.search = function (approximate) {
     debugger;
     var image_data = null;
     console.log($scope.send_entire_image);
@@ -431,14 +446,18 @@ $scope.search = function () {
     $scope.clear_results();
     $scope.setFreeDrawingMode(false,$scope.current_mode);
     $scope.check_movement();
-    $scope.status = "Starting Exact Search can take up to a minute";
+    if (approximate){
+        $scope.status = "Starting Approximate Search";
+    }
+    else{
+        $scope.status = "Starting Exact Search can take up to a minute";
+    }
     if(canvas.isDrawingMode){
         canvas.isDrawingMode = false;
         canvas.deactivateAll().renderAll();
     }
     $scope.alert_status = true;
-    $scope.results = [];
-    $scope.results_detections = [];
+    $scope.results = {};
     $scope.$apply();
     $scope.$$phase || $scope.$digest();
     $scope.refreshData();
@@ -452,16 +471,16 @@ $scope.search = function () {
         data: {
             'image_url': image_data,
             'count': $('#result_count').val(),
+            'approximate':approximate,
             'selected_indexers':selected_indexers,
             'excluded_index_entries':excluded_index_entries,
             'csrfmiddlewaretoken':$(csrf_token).val()
         },
         success: function (response) {
-            $scope.status = "Exact Search Completed";
+            $scope.status = "Search Completed";
             $scope.alert_status = false;
             console.log(response);
-            $scope.results = chunk(response.results, 4);
-            $scope.results_detections = chunk(response.results_detections, 4);
+            $scope.results = response.results;
             $scope.$$phase || $scope.$digest();
         }
     });
@@ -496,20 +515,20 @@ $scope.submit_annotation = function(box_id){
     console.log(box_id);
     box = $scope.boxes[box_id];
     var high_level = $('#'+box.id+'_frame_level');
-    var detection = $('#' + box.id + '_detection');
     $.ajax({
         type: "POST",
         url: '.',
         data: {
             'csrfmiddlewaretoken': $(csrf_token).val(),
             'h': box.height * box.scaleY,
-            'y': box.top,
+            'y': box.top - canvas.getObjects()[0].top,
             'w': box.width * box.scaleX,
-            'x': box.left,
-            'high_level':high_level.prop('checked'),
-            'detection':detection.val(),
-            'tags': JSON.stringify($('#' + box.id + '_tags').val()),
-            'metadata': $('#' + box.id + '_metadata').val()
+            'x': box.left - canvas.getObjects()[0].left,
+            'high_level':false,
+            'tags': $('#' + box.id + '_tags').val(),
+            'object_name': $('#' + box.id + '_object_name').val(),
+            'metadata_text': $('#' + box.id + '_metadata_text').val(),
+            'metadata_json': $('#' + box.id + '_metadata_json').val()
         },
         dataType: 'json',
         async: true,
@@ -580,12 +599,12 @@ cveditor.controller('CanvasControls', function($scope) {
     $scope.alert_status = false;
     $scope.status = status;
     $scope.current_mode = null;
-    $scope.results = [];
+    $scope.results = {};
     $scope.boxes = [];
     $scope.existing_boxes = [];
-    $scope.results_detections = [];
     $scope.high_level_alert = "Add frame level annotation";
     $scope.send_entire_image = false;
+    $scope.visible_all = true;
     $scope.selected_detection = -1;
     if(annotation_mode)
     {
