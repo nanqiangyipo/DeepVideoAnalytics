@@ -34,7 +34,7 @@ def get_queue_name(operation,args):
         raise NotImplementedError,"{}, {}".format(operation,args)
 
 
-def perform_substitution(args,parent_task):
+def perform_substitution(args,parent_task,inject_filters):
     """
     Its important to do a deep copy of args before executing any mutations.
     :param args:
@@ -50,24 +50,29 @@ def perform_substitution(args,parent_task):
         args['filters'] = parent_filters
     elif filters:
         for k,v in args.get('filters',{}).items():
-            if v == '__parent__':
+            if v == '__parent_event__':
                 args['filters'][k] = parent_task.pk
-            elif v == '__grand_parent__':
+            elif v == '__grand_parent_event__':
                 args['filters'][k] = parent_task.parent.pk
+    if inject_filters:
+        if 'filters' not in args:
+            args['filters'] = inject_filters
+        else:
+            args['filters'].update(inject_filters)
     return args
 
 
-def process_next(task_id):
+def process_next(task_id,inject_filters=None):
     dt = TEvent.objects.get(pk=task_id)
     logging.info("next tasks for {}".format(dt.operation))
     for k in settings.POST_OPERATION_TASKS.get(dt.operation,[]):
-        args = perform_substitution(k['arguments'], dt)
+        args = perform_substitution(k['arguments'], dt,inject_filters)
         jargs = json.dumps(args)
         logging.info("launching {}, {} with args {} as specified in config".format(dt.operation, k['task_name'], args))
         next_task = TEvent.objects.create(video=dt.video,operation=k['task_name'],arguments_json=jargs,parent=dt)
         app.send_task(k['task_name'], args=[next_task.pk, ], queue=get_queue_name(k['task_name'],args))
     for k in json.loads(dt.arguments_json).get('next_tasks',[]):
-        args = perform_substitution(k['arguments'], dt)
+        args = perform_substitution(k['arguments'], dt,inject_filters)
         jargs = json.dumps(args)
         logging.info("launching {}, {} with args {} as specified in next_tasks".format(dt.operation, k['task_name'], args))
         next_task = TEvent.objects.create(video=dt.video,operation=k['task_name'], arguments_json=jargs,parent=dt)
@@ -219,7 +224,16 @@ def extract_frames(task_id):
         create_video_folders(dv)
     v = WVideo(dvideo=dv, media_dir=settings.MEDIA_ROOT)
     v.extract(args=args,start=start)
-    process_next(task_id)
+    if args.get('sync',False):
+        process_next(task_id) # No need to inject just process everything together
+    else:
+        step = args.get("frames_batch_size",settings.DEFAULT_FRAMES_BATCH_SIZE)
+        for gte, lt in [(k, k + step) for k in range(0, dv.frames, step)]:
+            if lt < dv.frames: # to avoid off by one error
+                filters = {'frame_index__gte': gte, 'frame_index__lt': lt}
+            else:
+                filters = {'frame_index__gte': gte}
+            process_next(task_id,inject_filters=filters)
     start.completed = True
     start.seconds = time.time() - start_time
     start.save()
@@ -256,13 +270,28 @@ def segment_video(task_id):
         next_task = TEvent.objects.create(video=dv, operation='decode_video', arguments_json=next_args, parent=start)
         decode_video(next_task.pk)  # decode it synchronously for testing in Travis
     else:
-        for ds in Segment.objects.all().filter(video=dv):
-            next_args = json.dumps({'rescale':args['rescale'],'rate':args['rate'],'filters':{'segment_index':ds.segment_index}})
+        step = args.get("segments_batch_size",settings.DEFAULT_SEGMENTS_BATCH_SIZE)
+        for gte, lt in [(k, k + step) for k in range(0, dv.segments, step)]:
+            if lt < dv.segments:
+                next_args = json.dumps({
+                    'rescale':args['rescale'],
+                    'rate':args['rate'],
+                    'filters': {'segment_index__gte': gte, 'segment_index__lt': lt}
+                })
+            else:
+                # ensures off by one error does not happens [gte->
+                next_args = json.dumps({
+                    'rescale':args['rescale'],
+                    'rate':args['rate'],
+                    'filters': {'segment_index__gte': gte}
+                })
             next_task = TEvent.objects.create(video=dv, operation='decode_video', arguments_json=next_args, parent=start)
             decodes.append(next_task.pk)
         result = group([decode_video.s(i).set(queue=settings.TASK_NAMES_TO_QUEUE['decode_video']) for i in decodes]).apply_async()
-        with allow_join_result():
-            result.join()
+        # Do not wait for all segments to decode this risks creating a deadlock,
+        # e.g. when number of videos being segmented == number of qextract worker processes
+        # with allow_join_result():
+        #     result.join()
     process_next(task_id)
     start.completed = True
     start.seconds = time.time() - start_time
@@ -825,7 +854,7 @@ def import_video_from_s3(s3_import_id):
             start.seconds = time.time() - start_time
             start.save()
             raise ValueError, start.error_message
-        handle_downloaded_file("{}/{}".format(settings.MEDIA_ROOT, fname), start.video, fname)
+        handle_downloaded_file("{}/{}".format(settings.MEDIA_ROOT, fname), start.video, "s3://{}/{}".format(start.bucket,start.key))
         start.completed = True
         start.seconds = time.time() - start_time
         start.save()
@@ -901,6 +930,13 @@ def perform_clustering(cluster_task_id, test=False):
 
 @app.task(track_started=True, name="sync_bucket_video_by_id")
 def sync_bucket_video_by_id(task_id):
+    """
+    TODO: Determine a way to rate limit consecutive sync bucket for a given
+    (video,directory). As an alternative perform sync at a more granular level,
+    e.g. individual files. This is most important when syncing regions and frames.
+    :param task_id:
+    :return:
+    """
     start = TEvent.objects.get(pk=task_id)
     if celery_40_bug_hack(start):
         return 0

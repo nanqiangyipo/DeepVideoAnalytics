@@ -1,6 +1,82 @@
 import numpy as np
 import os,logging,json
-   def nearest(self, image_path, n=12, query_vector=None):
+from scipy import spatial
+try:
+    from tensorflow.python.platform import gfile
+    from facenet import facenet
+    import tensorflow as tf
+except ImportError:
+    logging.warning("Could not import Tensorflow assuming operating in either frontend or caffe/pytorch mode")
+import time
+from collections import namedtuple
+
+
+IndexRange = namedtuple('IndexRange',['start','end'])
+
+
+def _parse_function(filename):
+    image_string = tf.read_file(filename)
+    image_decoded = tf.image.decode_image(image_string,channels=3)
+    return image_decoded, filename
+
+
+def _parse_resize_inception_function(filename):
+    image_string = tf.read_file(filename)
+    image_decoded = tf.image.decode_png(image_string,channels=3)
+    # Cannot use decode_image but decode_png decodes both jpeg as well as png
+    # https://github.com/tensorflow/tensorflow/issues/8551
+    image_scaled = tf.image.resize_images(image_decoded, [299, 299])
+    return image_scaled, filename
+
+
+def _parse_resize_vgg_function(filename):
+    """
+    # TODO: Verify if image channel order and mean image subtraction is done in the imported model
+    :param filename:
+    :return:
+    """
+    image_string = tf.read_file(filename)
+    image_decoded = tf.image.decode_png(image_string,channels=3)
+    # First convert the range to 0-1 and then scale the image otherwise
+    # https://github.com/tensorflow/tensorflow/issues/1763
+    image_ranged= tf.image.convert_image_dtype(image_decoded, dtype=tf.float32)
+    image_scaled = tf.image.resize_images(image_ranged, [224, 224])
+    return image_scaled, filename
+
+
+def _parse_scale_standardize_function(filename):
+    image_string = tf.read_file(filename)
+    image_decoded = tf.image.decode_png(image_string,channels=3)
+    # Cannot use decode_image but decode_png decodes both jpeg as well as png
+    # https://github.com/tensorflow/tensorflow/issues/8551
+    image_scaled = tf.image.resize_images(image_decoded, [160, 160])
+    image_standardized = tf.image.per_image_standardization(image_scaled)
+    return image_standardized, filename
+
+
+class BaseIndexer(object):
+
+    def __init__(self):
+        self.name = "base"
+        self.net = None
+        self.loaded_entries = {}
+        self.index, self.files, self.findex = None, {}, 0
+        self.support_batching = False
+        self.batch_size = 100
+
+    def load_index(self,numpy_matrix,entries):
+        temp_index = [numpy_matrix, ]
+        for i, e in enumerate(entries):
+            self.files[self.findex] = e
+            self.findex += 1
+        if self.index is None:
+            self.index = np.atleast_2d(np.concatenate(temp_index).squeeze())
+            logging.info(self.index.shape)
+        else:
+            self.index = np.concatenate([self.index, np.atleast_2d(np.concatenate(temp_index).squeeze())])
+            logging.info(self.index.shape)
+
+    def nearest(self, image_path, n=12, query_vector=None):
         if query_vector is None:
             query_vector = self.apply(image_path)
         temp = []
@@ -18,13 +94,14 @@ import os,logging,json
         if temp:
             temp = np.transpose(np.dstack(temp)[0])
             dist.append(spatial.distance.cdist(query_vector,temp))
-        dist = np.hstack(dist)
-        ranked = np.squeeze(dist.argsort())
         results = []
-        for i, k in enumerate(ranked[:n]):
-            temp = {'rank':i+1,'algo':self.name,'dist':float(dist[0,k])}
-            temp.update(self.files[k])
-            results.append(temp)
+        if dist:
+            dist = np.hstack(dist)
+            ranked = np.squeeze(dist.argsort())
+            for i, k in enumerate(ranked[:n]):
+                temp = {'rank':i+1,'algo':self.name,'dist':float(dist[0,k])}
+                temp.update(self.files[k])
+                results.append(temp)
         return results # Next also return computed query_vector
 
     def apply(self,path):

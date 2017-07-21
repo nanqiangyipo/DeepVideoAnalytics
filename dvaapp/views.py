@@ -151,6 +151,55 @@ class VideoList(UserPassesTestMixin, ListView):
         return user_check(self.request.user)
 
 
+class TEventList(UserPassesTestMixin, ListView):
+    model = TEvent
+    paginate_by = 500
+
+    def get_queryset(self):
+        kwargs = {}
+        if self.kwargs.get('pk',None):
+            kwargs['video_id']=self.kwargs['pk']
+        if self.kwargs.get('status',None):
+            if self.kwargs['status'] == 'running':
+                kwargs['seconds__lt'] = 0
+                kwargs['started'] = True
+                kwargs['completed'] = False
+                kwargs['errored'] = False
+            elif self.kwargs['status'] == 'successful':
+                kwargs['completed'] = True
+            elif self.kwargs['status'] == 'pending':
+                kwargs['seconds__lt'] = 0
+                kwargs['started'] = False
+                kwargs['errored'] = False
+            elif self.kwargs['status'] == 'failed':
+                kwargs['errored'] = True
+        new_context = TEvent.objects.filter(**kwargs).order_by('-created')
+        return new_context
+
+    def get_context_data(self, **kwargs):
+        refresh_task_status()
+        context = super(TEventList, self).get_context_data(**kwargs)
+        context['header'] = ""
+        if self.kwargs.get('pk',None):
+            context['video'] = Video.objects.get(pk=self.kwargs['pk'])
+            context['header'] = "video/dataset : {}".format(context['video'].name)
+        if self.kwargs.get('status',None):
+            context['header'] += " with status {}".format(self.kwargs['status'])
+        context['settings_queues'] = set(settings.TASK_NAMES_TO_QUEUE.values())
+        task_list = []
+        for k, v in settings.TASK_NAMES_TO_TYPE.iteritems():
+            task_list.append({'name': k,
+                              'type': v,
+                              'queue': settings.TASK_NAMES_TO_QUEUE[k],
+                              'edges': settings.POST_OPERATION_TASKS[k] if k in settings.POST_OPERATION_TASKS else []
+                              })
+        context['task_list'] = task_list
+        return context
+
+    def test_func(self):
+        return user_check(self.request.user)
+
+
 class VideoDetail(UserPassesTestMixin, DetailView):
     model = Video
 
@@ -201,6 +250,10 @@ class VideoDetail(UserPassesTestMixin, DetailView):
                                               range(int(math.ceil(max_frame_index / float(delta))))]
         context['frame_first'] = context['frame_list'].first()
         context['frame_last'] = context['frame_list'].last()
+        context['pending_tasks'] = TEvent.objects.all().filter(video=self.object,started=False).count()
+        context['running_tasks'] = TEvent.objects.all().filter(video=self.object,started=True, completed=False, errored=False).count()
+        context['successful_tasks'] = TEvent.objects.all().filter(video=self.object,completed=True).count()
+        context['errored_tasks'] = TEvent.objects.all().filter(video=self.object,errored=True).count()
         if context['limit'] > max_frame_index:
             context['limit'] = max_frame_index
         context['max_frame_index'] = max_frame_index
@@ -513,7 +566,6 @@ def export_video(request):
         if video:
             if export_method == 's3':
                 key = request.POST.get('key')
-                region = request.POST.get('region')
                 bucket = request.POST.get('bucket')
                 s3export = TEvent()
                 s3export.event_type = TEvent.S3EXPORT
@@ -610,36 +662,12 @@ def push(request, video_id):
 
 
 @user_passes_test(user_check)
-def render_tasks(request, context):
-    refresh_task_status()
-    context['events'] = TEvent.objects.all()
-    context['settings_queues'] = set(settings.TASK_NAMES_TO_QUEUE.values())
-    task_list = []
-    for k, v in settings.TASK_NAMES_TO_TYPE.iteritems():
-        task_list.append({'name': k,
-                          'type': v,
-                          'queue': settings.TASK_NAMES_TO_QUEUE[k],
-                          'edges': settings.POST_OPERATION_TASKS[k] if k in settings.POST_OPERATION_TASKS else []
-                          })
-    context['task_list'] = task_list
-    context["videos"] = Video.objects.all().filter(parent_query__isnull=True)
-    context['manual_tasks'] = settings.MANUAL_VIDEO_TASKS
-    return render(request, 'tasks.html', context)
-
-
-@user_passes_test(user_check)
 def status(request):
     context = {}
     context['logs'] = []
     for fname in glob.glob('logs/*.log'):
         context['logs'].append((fname,file(fname).read()))
     return render(request, 'status.html', context)
-
-
-@user_passes_test(user_check)
-def tasks(request):
-    context = {}
-    return render_tasks(request, context)
 
 
 @user_passes_test(user_check)
@@ -963,7 +991,7 @@ def retry_task(request):
                                queue=settings.TASK_NAMES_TO_QUEUE[event.operation])
         context['alert'] = "Operation {} on {} submitted".format(event.operation, event.video.name,
                                                                  queue=settings.TASK_NAMES_TO_QUEUE[event.operation])
-        return render_tasks(request, context)
+        return redirect('tasks')
     elif settings.TASK_NAMES_TO_TYPE[event.operation] == settings.QUERY_TASK:
         return redirect("/requery/{}/".format(event.video.parent_query_id))
     else:
@@ -985,6 +1013,19 @@ def delete_video(request):
     if request.user.is_staff: # currently only staff can delete
         video_pk = request.POST.get('video_id')
         delete_video_object(video_pk,request.user)
+        return redirect('video_list')
+    else:
+        return redirect('accounts/login/')
+
+
+@user_passes_test(user_check)
+def rename_video(request):
+    if request.user.is_staff: # currently only staff can rename
+        video_pk = request.POST.get('video_id')
+        name = request.POST.get('name')
+        v = Video.objects.get(pk=int(video_pk))
+        v.name = name
+        v.save()
         return redirect('video_list')
     else:
         return redirect('accounts/login/')
