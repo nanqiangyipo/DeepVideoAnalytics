@@ -318,7 +318,7 @@ def decode_video(task_id):
     for ds in Segment.objects.filter(**kwargs):
         v.decode_segment(ds=ds,denominator=args['rate'],rescale=args['rescale'])
     process_next(task_id)
-start.completed = True
+    start.completed = True
     start.seconds = time.time() - start_time
     start.save()
     return task_id

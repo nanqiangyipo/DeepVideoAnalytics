@@ -19,9 +19,8 @@
      volumes:
        - dvarabbit:/var/lib/rabbitmq
    dva:
-     build: .
-#     image: akshayubhat/dva-auto:latest
-     image: dva/cpu:latest
+#     build: .
+     image: dva/cpu
      container_name: dva-server
      environment:
        - DOCKER_MODE=true
@@ -43,14 +42,14 @@
        - LAUNCH_Q_qclusterer=1
        - AUTH_DISABLED=1
 #     command: bash -c "youtube-dl -U && git pull && fab start_container"
-     command: bash -c "fab start_container"
+#     command: bash -c "fab start_container"
      ports:
        - "8000:8000"
      depends_on:
        - db
        - rabbit
-     volumes:
-       - /home/czm/workingDirectory/dva:/root/DVA
+#     volumes:
+#       - /home/czm/workingDirectory/dva:/root/DVA
 #       - dvadata:/root/DVA/dva/media
  volumes:
 #  dvadata:
