@@ -196,7 +196,7 @@ def execute_index_subquery(query_id):
     # execute_index_subquery inherits IndexerTask which has "static" indexer objects. This ensures that
     # the network is only loaded once. A similar pattern can also be observed in inception_index_by_id .
     qp.execute_sub_query(iq,iq.algorithm,execute_index_subquery)
-    start_time = time.time()
+    start_time = time.time()#instead of django.utils.timezone
     start.completed = True
     start.seconds = time.time() - start_time
     start.save()
