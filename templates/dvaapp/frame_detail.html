@@ -1,13 +1,14 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load staticfiles %}
 {% block page_content %}
 <section class="content-header" style="padding-top:0px" xmlns="http://www.w3.org/1999/html">
 <div class="row">
     <div class="box box-info">
         <div class="box-header">
-            <h4>Details for <a href="/videos/{{ object.video.pk }}">{{ object.video.name }}</a>
-                {% if object.video.dataset %} file named: {{ object.name }} {% else %} at {{ object.frame_index }}
-                <a href="/segments/by_index/{{ object.video.pk }}/{{ object.segment_index }}"> in Segment {{ object.segment_index }} </a>
+            <h4>{% trans "Details for" %} <a href="/videos/{{ object.video.pk }}">{{ object.video.name }}</a>
+                {% if object.video.dataset %} {% trans "file named: " %}{{ object.name }} {% else %} {% blocktrans with frame_index=object.frame_index %}at {{ frame_index }}{% endblocktrans %}
+                <a href="/segments/by_index/{{ object.video.pk }}/{{ object.segment_index }}">{% blocktrans with tran_si=object.segment_index %} in Segment{{ tran_si }}{% endblocktrans %} </a>
                 {% endif %}
             </h4>
         </div>
@@ -19,31 +20,31 @@
     <div class="col-lg-6">
         <div class="box box-primary">
         <div class="box-header with-borders text-center">
-            {% if previous_frame %}<a href="/frames/{{ previous_frame.0.pk }}" class="btn btn-success pull-left"><i class="fa fa-backward "></i> Previous</a> {% endif %}
+            {% if previous_frame %}<a href="/frames/{{ previous_frame.0.pk }}" class="btn btn-success pull-left"><i class="fa fa-backward "></i> {% trans "Previous" %}</a> {% endif %}
 
-            <a href="/query_frame/{{ object.pk }}/" class="btn btn-info"><i class="fa fa-search"></i> Query using this frame</a>
-            {% if next_frame %}<a href="/frames/{{ next_frame.0.pk }}" class="btn btn-success pull-right"><i class="fa fa-forward"></i> Next</a>{% endif %}
+            <a href="/query_frame/{{ object.pk }}/" class="btn btn-info"><i class="fa fa-search"></i> {% trans "Query using this frame" %}</a>
+            {% if next_frame %}<a href="/frames/{{ next_frame.0.pk }}" class="btn btn-success pull-right"><i class="fa fa-forward"></i> {% trans "Next" %}</a>{% endif %}
         </div>
         <div class="box-body">
             <img src="{{ url }}" style="width:100%" />
         </div>
         <div class="box-footer">
-            <div class="text-center"><a href="/annotate_frame/{{ object.pk }}/" class="btn btn-warning"><i class="fa fa-edit"></i> Add & edit annotations for bouding box</a></div>
-            <h4 class="text-center" style="margin-top:15px"> Or assign metadata & labels to entire frame/image below</h4>
+            <div class="text-center"><a href="/annotate_frame/{{ object.pk }}/" class="btn btn-warning"><i class="fa fa-edit"></i> {% trans "Add & edit annotations for bouding box" %}</a></div>
+            <h4 class="text-center" style="margin-top:15px"> {% trans "Or assign metadata & labels to entire frame/image below" %}</h4>
             <form action="/annotate_entire_frame/{{ object.pk }}/" method="post">
                 <div class="row">
                 <div class="col-sm-6"><div class="form-group">
-                    <label for="metadat_json">Metadata Text</label>
-                    <textarea class="form-control" rows="2" placeholder="metadata_json" name="metadata_text"></textarea>
+                    <label for="metadat_json">{% trans "Metadata Text" %}</label>
+                    <textarea class="form-control" rows="2" placeholder="{% trans "Metadata Text" %}" name="metadata_text"></textarea>
                 </div></div>
                 <div class="col-sm-6"><div class="form-group">
-                    <label for="metadat_json">Metadata JSON</label>
-                    <textarea class="form-control" rows="2" placeholder="metadata_json" name="metadata_json"></textarea>
+                    <label for="metadat_json">{% trans "Metadata JSON" %}</label>
+                    <textarea class="form-control" rows="2" placeholder="{% trans "Metadata JSON" %}" name="metadata_json"></textarea>
                 </div></div>
                 <div class="col-sm-12">
-                    <label style="font-weight:bold">Name</label>
+                    <label style="font-weight:bold">{% trans "Name" %}</label>
                     <input type="text" class="form-control" placeholder="optional otherwise frame_metadata is used" name="object_name" id="object_name" />
-                    <label style="font-weight:bold">Assign tags/labels</label>
+                    <label style="font-weight:bold">{% trans "Assign tags/labels" %}</label>
                     <textarea class="form-control" name="tags" id="tags" rows="2" placeholder="you can seperate multiple labels using a comma" style="width:100%"></textarea>
                 </div>
                 <div class="col-sm-4 col-sm-offset-4" style="margin-top:15px">
@@ -54,7 +55,7 @@
                         <input type="hidden" name="h" value="0" />
                         <input type="hidden" name="w" value="0" />
                         <input type="hidden" name="high_level" value="true" />
-                        <div class="text-center"><button id="submit" class="btn btn-primary form-control">Submit</button></div>
+                        <div class="text-center"><button id="submit" class="btn btn-primary form-control">{% trans "Submit" %}</button></div>
                     </div>
                 </div>
                 </div>
@@ -64,16 +65,16 @@
     </div>
     <div class="col-lg-6">
         <div class="box box-primary">
-            <div class="box-header"><h4> Annotations for entire frame / image</h4></div>
+            <div class="box-header"><h4> {% trans "Annotations for entire frame / image" %}</h4></div>
             <div class="box-body">
                 {% if annotation_list %}
                 <table class="table">
                 <thead>
                 <tr>
-                        <th>Annotation</th>
-                        <th>User</th>
-                        <th>Metadata</th>
-                        <th>Delete</th>
+                        <th>{% trans "Annotation" %}</th>
+                        <th>{% trans "User" %}</th>
+                        <th>{% trans "Metadata" %}</th>
+                        <th>{% trans "Delete" %}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -82,8 +83,8 @@
                     <tr>
                         <td>{{ d.object_name }} </td>
                         <td>{{ d.user }} </td>
-                        <td class="text-center"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{ d.pk }}">view metadata</button></td>
-                        <td class="text-center"><button type="button" class="btn btn-danger" onclick="delete_annotation({{ d.pk }})" ><i class="fa fa-trash"></i> delete</button></td>
+                        <td class="text-center"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{ d.pk }}">{% trans "view metadata" %}</button></td>
+                        <td class="text-center"><button type="button" class="btn btn-danger" onclick="delete_annotation({{ d.pk }})" ><i class="fa fa-trash"></i>{% trans "delete" %} </button></td>
                     </tr>
                     {% endif %}
                 {% endfor %}
@@ -95,19 +96,19 @@
             </div>
         </div>
         <div class="box box-primary">
-            <div class="box-header"><h4>Annotations for bounding boxes</h4></div>
+            <div class="box-header"><h4>{% trans "Annotations for bounding boxes" %}</h4></div>
             <div class="box-body">
                 {% if annotation_list %}
                 <table class="table">
                 <thead>
                 <tr>
-                        <th>Annotation</th>
-                        <th>User</th>
-                        <th>x</th>
-                        <th>y</th>
-                        <th>w</th>
-                        <th>h</th>
-                        <th>metadata</th>
+                        <th>{% trans "Annotation" %}</th>
+                        <th>{% trans "User" %}</th>
+                        <th>{% trans "x" %}</th>
+                        <th>{% trans "y" %}</th>
+                        <th>{% trans "w" %}</th>
+                        <th>{% trans "h" %}</th>
+                        <th>{% trans "metadata" %}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -120,7 +121,7 @@
                         <td>{{ d.y }} </td>
                         <td>{{ d.w }} </td>
                         <td>{{ d.h }} </td>
-                        <td class="text-center"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{ d.pk }}">view metadata</button></td>
+                        <td class="text-center"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{ d.pk }}">{% trans "view metadata" %}</button></td>
                     </tr>
                     {% endif %}
                 {% endfor %}
@@ -130,17 +131,17 @@
                 </div>
             </div>
             <div class="box box-primary">
-            <div class="box-header"><h4>Detections</h4></div>
+            <div class="box-header"><h4>{% trans "Detections" %}</h4></div>
             <div class="box-body">
                 <table class="table">
                 <thead>
                 <tr>
-                        <th>object</th>
-                        <th>confidence</th>
-                        <th>x</th>
-                        <th>y</th>
-                        <th>w</th>
-                        <th>h</th>
+                        <th>{% trans "object" %}</th>
+                        <th>{% trans "confidence" %}</th>
+                        <th>{% trans "x" %}</th>
+                        <th>{% trans "y" %}</th>
+                        <th>{% trans "w" %}</th>
+                        <th>{% trans "h" %}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -163,7 +164,7 @@
 <div class="row">
     <div class="box box-primary">
         <div class="box-header">
-            <h3>Detected objects:</h3>
+            <h3>{% trans "Detected objects:" %}</h3>
         </div>
     </div>
     <div class="row">
@@ -178,7 +179,7 @@
         </div>
         <div class="box-footer text-center">
             <h5>Confidence: {{ d.confidence|floatformat }}</h5>
-            <a href="/query_detection/{{ d.pk }}/" class="btn btn-info"><i class="fa fa-search"></i> Query using this detection</a>
+            <a href="/query_detection/{{ d.pk }}/" class="btn btn-info"><i class="fa fa-search"></i> {% trans "Query using this detection" %}</a>
         </div>
     </div>
     </div>
@@ -200,20 +201,20 @@
         <h4 class="modal-title" id="myModalLabel">Annotation : {{ k.object_name }}</h4>
       </div>
       <div class="modal-body">
-        <h4 class="text-center">Text metadata</h4>
+        <h4 class="text-center">{% trans "Text metadata" %}</h4>
         <textarea rows="10" style="width:100%;">{{ k.metadata_text }}</textarea>
-        <h4 class="text-center">JSON metadata</h4>
+        <h4 class="text-center">{% trans "JSON metadata" %}</h4>
         <textarea rows="10" style="width:100%;">{{ k.metadata_json }}</textarea>
         {% if not k.full_frame %}
-        <h4 class="text-center" style="margin-bottom:15px;margin-top:20px">Bounding box</h4>
+        <h4 class="text-center" style="margin-bottom:15px;margin-top:20px">{% trans "Bounding box" %}</h4>
         <div style="width: {{ k.w }}px; height: {{ k.h }}px; position: relative;overflow:hidden;margin: auto;">
           <img src="{{ url }}" id="image" style="position: absolute; top: -{{ k.y }}px; left: -{{ k.x }}px" />
         </div>
         {% endif %}
       </div>
       <div class="modal-footer">
-       <button type="button" class="btn btn-danger pull-left" onclick="delete_annotation({{ k.pk }})" ><i class="fa fa-trash"></i> delete</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+       <button type="button" class="btn btn-danger pull-left" onclick="delete_annotation({{ k.pk }})" ><i class="fa fa-trash"></i> {% trans "delete" %}</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "Close" %}</button>
       </div>
     </div>
   </div>

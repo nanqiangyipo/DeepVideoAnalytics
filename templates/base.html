@@ -1,10 +1,11 @@
+{% load i18n %}
 <!DOCTYPE html>
 {% load static from staticfiles %}
 <html {% block ngblock %}{% endblock %}>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Deep Video Analytics</title>
+    <title>{% trans "Deep Video Analytics" as dva_title %}{{ dva_title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href={% static '/bootstrap/css/bootstrap.min.css' %}>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -33,7 +34,7 @@
       </a>
       <!-- Navbar Right Menu -->
         <a href="/" class="logo">
-          <span class="logo-lg">Deep Video Analytics</span>
+          <span class="logo-lg">{{ dva_title }}</span>
         </a>
      <div class="status-bar">
       {% block status_bar %}
@@ -47,7 +48,7 @@
      </div>
       <div class="navbar-custom-menu" style="display: inline-block !important;">
         <ul class="nav navbar-nav">
-          <li><a href="https://www.deepvideoanalytics.com/" target="_blank">Deep Video Analytics</a></li>
+          <li><a href="https://www.deepvideoanalytics.com/" target="_blank">{{ dva_title }}</a></li>
         </ul>
       </div>
     </nav>
@@ -62,20 +63,20 @@
       <!-- /.search form -->
       <!-- Sidebar Menu -->
       <ul class="nav sidebar-menu">
-        <li><a href="/"><i class="fa fa-search"></i><span class="nav-label">Dashboard</span></a></li>
-        <li><a href="/videos/"><i class="fa fa fa-desktop"></i><span class="nav-label">Videos / Datasets</span></a></li>
-        <li><a href="/queries/"><i class="fa fa fa-backward"></i><span class="nav-label">Past queries</span></a></li>
-        <li><a href="/textsearch/"><i class="fa fa-font"></i><span class="nav-label">Full-text Search</span></a></li>
-        <li><a href="/indexes/"><i class="fa fa fa-database"></i><span class="nav-label">Indexing</span></a></li>
-        <li><a href="/clustering/"><i class="fa fa-group"></i><span class="nav-label">Clustering</span></a></li>
-        <li><a href="/detectors/"><i class="fa fa-square"></i><span class="nav-label">Detectors</span></a></li>
-        <li><a href="/ocr/"><i class="fa fa-font"></i><span class="nav-label">Annotators & OCR</span></a></li>
-        <li><a href="/training/"><i class="fa fa-gears"></i><span class="nav-label">Training</span></a></li>
-        <li><a href="/external/"><i class="fa fa-globe"></i><span class="nav-label">Visual Data Network</span></a></li>
-        <li><a href="/tasks/"><i class="fa fa-tasks"></i><span class="nav-label">Tasks</span></a></li>
-        <li><a href="/status"><i class="fa fa-question-circle"></i><span class="nav-label">Logs</span></a></li>
-        <li><a href="/api"><i class="fa fa-keyboard-o"></i><span class="nav-label">REST API</span></a></li>
-        <li><a href="/admin"><i class="fa fa-lock"></i><span class="nav-label">Admin</span></a></li>
+        <li><a href="/"><i class="fa fa-search"></i><span class="nav-label">{% trans "Dashboard" %}</span></a></li>
+        <li><a href="/videos/"><i class="fa fa fa-desktop"></i><span class="nav-label">{% trans "Videos / Datasets" %}</span></a></li>
+        <li><a href="/queries/"><i class="fa fa fa-backward"></i><span class="nav-label">{% trans "Past queries" %}</span></a></li>
+        <li><a href="/textsearch/"><i class="fa fa-font"></i><span class="nav-label">{% trans "Full-text Search" %}</span></a></li>
+        <li><a href="/indexes/"><i class="fa fa fa-database"></i><span class="nav-label">{% trans "Indexing" %}</span></a></li>
+        <li><a href="/clustering/"><i class="fa fa-group"></i><span class="nav-label">{% trans "Clustering" %}</span></a></li>
+        <li><a href="/detectors/"><i class="fa fa-square"></i><span class="nav-label">{% trans "Detectors" %}</span></a></li>
+        <li><a href="/ocr/"><i class="fa fa-font"></i><span class="nav-label">{% trans "Annotators & OCR" %}</span></a></li>
+        <li><a href="/training/"><i class="fa fa-gears"></i><span class="nav-label">{% trans "Training" %}</span></a></li>
+        <li><a href="/external/"><i class="fa fa-globe"></i><span class="nav-label">{% trans "Visual Data Network" %}</span></a></li>
+        <li><a href="/tasks/"><i class="fa fa-tasks"></i><span class="nav-label">{% trans "Tasks" %}</span></a></li>
+        <li><a href="/status"><i class="fa fa-question-circle"></i><span class="nav-label">{% trans "Logs" %}</span></a></li>
+        <li><a href="/api"><i class="fa fa-keyboard-o"></i><span class="nav-label">{% trans "REST API" %}</span></a></li>
+        <li><a href="/admin"><i class="fa fa-lock"></i><span class="nav-label">{% trans "Admin" %}</span></a></li>
       </ul>
     </section>
   </aside>

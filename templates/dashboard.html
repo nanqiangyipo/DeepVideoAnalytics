@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static from staticfiles %}
 {% block ng_control %}ng-controller="CanvasControls"{% endblock %}
 {% block status_bar %}
@@ -69,7 +70,7 @@
         </div>
         <div class="m-t row">
             <div class="col-xs-4 text-right">
-                <h5 style="font-weight:bold">Selected indexers: </h5>
+                <h5 style="font-weight:bold">{% trans "Selected indexers" %}: </h5>
             </div>
             <div class="col-xs-8">
             <select class="js-example-basic-multiple" multiple="multiple" id="indexer_list" style="width:100%">
@@ -81,7 +82,7 @@
         </div>
         <div class="m-t row">
             <div class="col-xs-4 text-right">
-                <h5 style="font-weight:bold">Exclude index entries: </h5>
+                <h5 style="font-weight:bold">{% trans "Exclude index entries" %}: </h5>
             </div>
             <div class="col-xs-8">
             <select class="js-example-basic-multiple" multiple="multiple" id="excluded_index_entries" style="width:100%">
@@ -92,14 +93,14 @@
             </div>
         </div>
         <div>
-            <label for="result_count">Result count</label>
+            <label for="result_count">{% trans "Result count" %}</label>
             <input style="display:inline-block; margin-right:10px;width:50px;" type="number" name="result_count"  id="result_count" value="20" class="checkbox text-right index_name">
-            <label for="entire_image">Send entire image (ignore zoom/pan)</label>
+            <label for="entire_image">{% trans "Send entire image (ignore zoom/pan)" %}</label>
             <input style="display:inline-block; margin-right:5px" type="checkbox" ng-model="send_entire_image" class="checkbox">
         </div>
         <div>
-            <button href="" class="btn btn-info" id="segment" ng-click="search(true)"><i class="fa fa-search-plus"></i>&nbsp;&nbsp;Approximate Search</button>
-            <button href="" class="btn btn-primary" id="search_quick" ng-click="search(false)"><i class="fa fa-search"></i>&nbsp;&nbsp;Exact Search</button>
+            <button href="" class="btn btn-info" id="segment" ng-click="search(true)"><i class="fa fa-search-plus"></i>&nbsp;&nbsp;{% trans "Approximate Search" %}</button>
+            <button href="" class="btn btn-primary" id="search_quick" ng-click="search(false)"><i class="fa fa-search"></i>&nbsp;&nbsp;{% trans "Exact Search" %}</button>
         </div>
     </div>
     <div class=" col-xs-12 col-sm-12 col-md-6 col-lg-4 m-t uploadmenu">
@@ -108,12 +109,12 @@
                 <div class="box box-primary">
                     <div class="box-body with_border">
                         <div class="row">
-                            <div class="col-xs-7 text-center"><a class="btn btn-primary" data-toggle="modal" data-target="#allowed" href="#" ><i class="fa fa-upload"></i> Upload video, dataset or an export</a></div>
-                            <div class="col-xs-5 text-center"><a class="btn btn-primary" data-toggle="modal" data-target="#ytdisclaimer" href="#" ><i class="fa fa-youtube"></i> Submit youtube url</a></div>
+                            <div class="col-xs-7 text-center"><a class="btn btn-primary" data-toggle="modal" data-target="#allowed" href="#" ><i class="fa fa-upload"></i> {% trans "Upload video, dataset or an export" %}</a></div>
+                            <div class="col-xs-5 text-center"><a class="btn btn-primary" data-toggle="modal" data-target="#ytdisclaimer" href="#" ><i class="fa fa-youtube"></i> {% trans "Submit youtube url" %}</a></div>
                         </div>
                         <div class="row m-t">
-                            <p div class="col-xs-7 text-center"><a class="btn btn-primary" data-toggle="modal" data-target="#awscreds" href="#" ><i class="fa fa-cloud-download"></i> Bulk import from AWS S3 bucket</a></p>
-                            <p div class="col-xs-5 text-center"><a class="btn btn-primary" href="/external" ><i class="fa fa-globe"></i> Import from VDN</a></p>
+                            <p div class="col-xs-7 text-center"><a class="btn btn-primary" data-toggle="modal" data-target="#awscreds" href="#" ><i class="fa fa-cloud-download"></i> {% trans "Bulk import from AWS S3 bucket" %}</a></p>
+                            <p div class="col-xs-5 text-center"><a class="btn btn-primary" href="/external" ><i class="fa fa-globe"></i> {% trans "Import from VDN" %}</a></p>
                         </div>
 
                         <div class="modal fade" tabindex="-1" role="dialog" id="allowed">
@@ -121,9 +122,9 @@
                             <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span></button><h4 class="modal-title">Upload video / dataset or exported zip file.</h4></div>
+                                    <span aria-hidden="true">&times;</span></button><h4 class="modal-title">{% trans "Upload video / dataset or exported zip file." %}</h4></div>
                                 <div class="modal-body">
-                                <p>An .mp4 video file or multiple images in a single zip file <a href="https://github.com/AKSHAYUBHAT/DeepVideoAnalytics/blob/master/tests/exampledataset.zip" target="_blank">(example of a zip file)</a> or an exported ".dva_export.zip".</p>
+                                <p>{% trans "An .mp4 video file or multiple images in a single zip file" %} <a href="https://github.com/AKSHAYUBHAT/DeepVideoAnalytics/blob/master/tests/exampledataset.zip" target="_blank">{% trans "(example of a zip file)" %}</a> {% trans 'or an exported ".dva_export.zip".' %}</p>
                                 <form role="form"  method="post" enctype="multipart/form-data" action="#" >
                                     <div class="form-group">
                                     <input id="id_name" name="name" class="form-control" type="text" required="" placeholder="provide a name">
@@ -131,7 +132,7 @@
                                     <div class="row">
                                     <div class="col-xs-10 col-xs-offset-1">
                                         <div class="form-group text-center">
-                                        <label for="id_file" >Video (.mp4) or zip file:</label>
+                                        <label for="id_file" >{% trans "Video (.mp4) or zip file" %}:</label>
                                         <input style="margin: 10px auto 10px" id="id_file" name="file" class="btn bg-blue btn-file form-control" type="file" required="">
                                         </div>
                                     </div>
@@ -139,17 +140,17 @@
                                     <div class="row">
                                     <div class="col-xs-6">
                                         <div class="form-group">
-                                        <label for="nth">Extract every n<sup>th</sup> frame from video<input id="nth" class="form-control" name="nth" type="number" value="30"></label>
+                                        <label for="nth">{% trans 'Extract every n<sup>th</sup> frame from video' %}<input id="nth" class="form-control" name="nth" type="number" value="30"></label>
                                         </div>
                                     </div>
                                     <div class="col-xs-6">
                                         <div class="form-group">
-                                        <label for="rescale">Rescale frames to width <input id="rescale" class="form-control" name="rescale" type="number" placeholder="Default original width"></label>
+                                        <label for="rescale">{% trans "Rescale frames to width" %} <input id="rescale" class="form-control" name="rescale" type="number" placeholder="Default original width"></label>
                                         </div>
                                     </div>
                                     </div>
                                     {% csrf_token %}
-                                    <button type="submit" class="btn btn-primary btn-block">Upload</button>
+                                    <button type="submit" class="btn btn-primary btn-block">{% trans "Upload" %}</button>
                                 </form>
                             </div>
                             </div>
@@ -157,8 +158,8 @@
                         </div>
                         <div class="modal fade" tabindex="-1" role="dialog" id="ytdisclaimer">
                         <div class="modal-dialog" role="document"><div class="modal-content">
-                            <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title">Submit Youtube url</h4></div>
-                            <div class="modal-body"><p> <span style="font-weight:bold">Legal disclaimer:</span>Its your responsibility to abide by laws governing <a target="_blank" href="https://www.youtube.com/static?template=terms">Youtube TOS</a> in your jurisdiction. We use <a target="_blank" href="https://rg3.github.io/youtube-dl/">youtube-dl</a> to process urls.</p>
+                            <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title">{% trans "Submit Youtube url" %}</h4></div>
+                            <div class="modal-body"><p> <span style="font-weight:bold">{#  there is something I can't solve yet #}{% trans "Legal disclaimer:" %}</span>Its your responsibility to abide by laws governing <a target="_blank" href="https://www.youtube.com/static?template=terms">Youtube TOS</a> in your jurisdiction. We use <a target="_blank" href="https://rg3.github.io/youtube-dl/">youtube-dl</a> to process urls.</p>
                                 <form role="form"  method="post" action="/youtube" >
                                 <div class="form-group">
                                     <input id="id_ytname" name="name" class="form-control" type="text" required="" placeholder="provide a name">
@@ -169,18 +170,18 @@
                                 <div class="row">
                                 <div class="col-xs-6">
                                     <div class="form-group">
-                                    <label for="nth">Extract every n<sup>th</sup> frame from video<input id="nth" class="form-control" name="nth" type="number" value="30"></label>
+                                    <label for="nth">{% trans 'Extract every n<sup>th</sup> frame from video' %}<input id="nth" class="form-control" name="nth" type="number" value="30"></label>
                                     </div>
                                 </div>
                                 <div class="col-xs-6">
                                     <div class="form-group">
-                                    <label for="rescale">Rescale frames to width <input id="rescale" class="form-control" name="rescale" type="number" placeholder="Default original width"></label>
+                                    <label for="rescale">{% trans "Rescale frames to width" %} <input id="rescale" class="form-control" name="rescale" type="number" placeholder="Default original width"></label>
                                     </div>
                                 </div>
                                 </div>
                                 <div class="form-group">
                                 {% csrf_token %}
-                                <button type="submit" class="btn btn-primary btn-block">submit</button>
+                                <button type="submit" class="btn btn-primary btn-block">{% trans "submit" %}</button>
                                 </div>
                         </form>
 
@@ -194,26 +195,26 @@
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span></button><h4 class="modal-title">Import bulk files from AWS S3</h4></div>
                             <div class="modal-body" style="text-align:left">
-                                <p>We suggest setting AWS authentication credentials using one of following methods.</p>
+                                <p>{% trans "We suggest setting AWS authentication credentials using one of following methods." %}</p>
                                     <ul>
-                                        <li>In an aws config file.</li>
-                                        <li>Via Environment variables inside your docker-compose .yml</li>
-                                        <li>Using IAM Roles (instance metadata discovery service) when running DVA on AWS.</li>
+                                        <li>{% trans "In an aws config file." %}</li>
+                                        <li>{% trans "Via Environment variables inside your docker-compose .yml" %}</li>
+                                        <li>{% trans "Using IAM Roles (instance metadata discovery service) when running DVA on AWS." %}</li>
                                     </ul>
-                                <p>We do not provide a method to enter AWS credentials via web interface.</p>
+                                <p>{% trans "We do not provide a method to enter AWS credentials via web interface." %}</p>
                                 <form role="form"  method="post" action="/import_s3" >
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class="col-sm-6"><input id="id_s3_region" name="region" class="form-control" type="text" required="" placeholder="S3 region" value="us-east-1"></div>
-                                        <div class="col-sm-6"><input id="id_s3_bucket" name="bucket" class="form-control" type="text" required="" placeholder="S3 bucket"></div>
+                                        <div class="col-sm-6"><input id="id_s3_region" name="region" class="form-control" type="text" required="" placeholder="{% trans 'S3 region' %}" value="us-east-1"></div>
+                                        <div class="col-sm-6"><input id="id_s3_bucket" name="bucket" class="form-control" type="text" required="" placeholder="{% trans 'S3 bucket' %}"></div>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <textarea id="id_s3_key" rows="2" name="key" class="form-control" type="text" required="" placeholder="S3 key or list of keys (.mp4, .zip or .dva_export.zip) with one per line"></textarea>
+                                    <textarea id="id_s3_key" rows="2" name="key" class="form-control" type="text" required="" placeholder="{% trans 'S3 key or list of keys (.mp4, .zip or .dva_export.zip) with one per line' %}"></textarea>
                                 </div>
                                 <div class="form-group">
                                     {% csrf_token %}
-                                <button type="submit" class="btn btn-primary btn-block">Import</button>
+                                <button type="submit" class="btn btn-primary btn-block">{% trans "Import" %}</button>
                                 </div>
                                 </form>
                             </div></div>
@@ -223,8 +224,8 @@
                 </div>
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h4 style="margin-top:10px;display:inline-block">Tasks status</h4>
-                        <a class="btn btn-primary" style="float:right" data-toggle="modal" data-target="#tasksubmit" href="#" ><i class="fa fa-play"></i> Manually run task</a>
+                        <h4 style="margin-top:10px;display:inline-block">{% trans "Tasks status" %}</h4>
+                        <a class="btn btn-primary" style="float:right" data-toggle="modal" data-target="#tasksubmit" href="#" ><i class="fa fa-play"></i> {% trans "Manually run task" %}</a>
 
                     </div>
                     <div class="box-body">
@@ -233,7 +234,7 @@
                             <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">Submit task manually</h4></div>
+                                <h4 class="modal-title">{% trans "Submit task manually" %}</h4></div>
                             <div class="modal-body" style="text-align:left">
                             <form action="/video_send_task" method="POST" >
                             <div class="row">
@@ -272,16 +273,16 @@
 
                         <div class="row text-center">
                             <div class="col-xs-3">
-                                <a class="btn btn-warning" href="/tasks/pending/" style="margin: 10px auto" > <i class="fa fa-clock-o"></i> {{ pending_tasks }} pending</a>
+                                <a class="btn btn-warning" href="/tasks/pending/" style="margin: 10px auto" > <i class="fa fa-clock-o"></i> {{ pending_tasks }} {% trans "pending" %}</a>
                             </div>
                             <div class="col-xs-3">
-                                <a class="btn btn-primary" href="/tasks/running/" style="margin: 10px auto" > <i class="fa fa-gears"></i> {{ running_tasks }} running</a>
+                                <a class="btn btn-primary" href="/tasks/running/" style="margin: 10px auto" > <i class="fa fa-gears"></i> {{ running_tasks }} {% trans "running" %}</a>
                             </div>
                             <div class="col-xs-3">
-                                <a class="btn btn-success" href="/tasks/successful/" style="margin: 10px auto" > <i class="fa fa-check"></i> {{ successful_tasks }} done</a>
+                                <a class="btn btn-success" href="/tasks/successful/" style="margin: 10px auto" > <i class="fa fa-check"></i> {{ successful_tasks }} {% trans "done" %}</a>
                             </div>
                             <div class="col-xs-3">
-                                <a class="btn btn-danger" href="/tasks/failed/" style="margin: 10px auto" > <i class="fa fa-close"></i> {{ errored_tasks }} failed</a>
+                                <a class="btn btn-danger" href="/tasks/failed/" style="margin: 10px auto" > <i class="fa fa-close"></i> {{ errored_tasks }} {% trans "failed" %}</a>
                             </div>
                         </div>
                     </div>
@@ -293,30 +294,30 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="col-xs-3">
-                                <a class="btn" href="/videos/" style="margin: 10px auto" > <i class="fa fa-video-camera"></i> {{ video_count }} video / datasets</a>
+                                <a class="btn" href="/videos/" style="margin: 10px auto" > <i class="fa fa-video-camera"></i> {{ video_count }} {% trans "video / datasets" %}</a>
                             </div>
                             <div class="col-xs-3">
-                                <a class="btn" href="/videos/" style="margin: 10px auto" > <i class="fa fa-picture-o"></i> {{ frame_count }} frames</a>
+                                <a class="btn" href="/videos/" style="margin: 10px auto" > <i class="fa fa-picture-o"></i> {{ frame_count }} {% trans "frames" %}</a>
                             </div>
                             <div class="col-xs-3">
-                                <a class="btn" href="/queries/" style="margin: 10px auto" > <i class="fa fa-search"></i> {{ query_count }} queries</a>
+                                <a class="btn" href="/queries/" style="margin: 10px auto" > <i class="fa fa-search"></i> {{ query_count }} {% trans "queries" %}</a>
                             </div>
                             <div class="col-xs-3">
-                                <a class="btn" href="/indexes/" style="margin: 10px auto" > <i class="fa fa-list"></i> {{ index_entries_count }} indexes</a>
+                                <a class="btn" href="/indexes/" style="margin: 10px auto" > <i class="fa fa-list"></i> {{ index_entries_count }} i{% trans "ndexes" %}</a>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-xs-3">
-                                <a class="btn" href="/detectors/" style="margin: 10px auto" > <i class="fa fa-square"></i> {{ custom_detector_count }} Trained detectors</a>
+                                <a class="btn" href="/detectors/" style="margin: 10px auto" > <i class="fa fa-square"></i> {{ custom_detector_count }} {% trans "Trained detectors" %}</a>
                             </div>
                             <div class="col-xs-3">
-                                <a class="btn" href="/tasks/" style="margin: 10px auto" > <i class="fa fa-clock-o"></i> {{ task_events_count }}  tasks </a>
+                                <a class="btn" href="/tasks/" style="margin: 10px auto" > <i class="fa fa-clock-o"></i> {{ task_events_count }}  {% trans "tasks" %} </a>
                             </div>
                             <div class="col-xs-3">
-                                <a class="btn" href="/external/" style="margin: 10px auto" > <i class="fa fa-globe"></i> {{ external_datasets_count }} VDN datasets</a>
+                                <a class="btn" href="/external/" style="margin: 10px auto" > <i class="fa fa-globe"></i> {{ external_datasets_count }} {% trans "VDN datasets" %}</a>
                             </div>
                             <div class="col-xs-3">
-                                <a class="btn" href="/external/" style="margin: 10px auto" > <i class="fa fa-globe"></i> {{ external_servers_count }} VDN servers</a>
+                                <a class="btn" href="/external/" style="margin: 10px auto" > <i class="fa fa-globe"></i> {{ external_servers_count }} {% trans "VDN servers" %}</a>
                             </div>
                         </div>
                     </div>
@@ -329,7 +330,7 @@
     <div class="col-lg-6" ng-repeat="(name, entries) in results">
     <div class="box">
     <div class="box-header">
-        <h3>{[ name ]} results:</h3>
+        <h3>{[ name ]} {% trans "results:" %}</h3>
     </div>
     </div>
         <div class="row">
@@ -355,7 +356,7 @@
 {% block page_js %}
     <script>
         var annotation_mode = false;
-        var status = "Please add image to search or upload.";
+        var status = "{% trans 'Please add image to search or upload.' %}";
         var payload = "{{ payload }}";
 
         var csrf_token = "{% csrf_token %}";
