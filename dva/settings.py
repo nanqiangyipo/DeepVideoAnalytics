@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os, dj_database_url, sys
 from .worker_config import *
+from django.utils.translation import ugettext_lazy as _
 
 VDN_ENABLE = 'VDN_ENABLE' in os.environ
 DVA_PRIVATE_ENABLE = 'DVA_PRIVATE_ENABLE' in os.environ
@@ -115,6 +116,7 @@ else:
     MIDDLEWARE = [
         'django.middleware.security.SecurityMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.locale.LocaleMiddleware',
         'django.middleware.common.CommonMiddleware',
         'django.middleware.csrf.CsrfViewMiddleware',
         'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -224,6 +226,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'zh-hans'
 
 # TIME_ZONE = 'UTC'
 TIME_ZONE = 'Asia/Shanghai'
@@ -265,3 +268,15 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
+
+# languages
+# https://docs.djangoproject.com/en/1.11/topics/i18n/translation/#how-django-discovers-language-preference
+# http://www.i18nguy.com/unicode/language-identifiers.html
+LANGUAGES=[
+    ('en-us',_('English')),
+    ('zh-CN',_('Chinese')),
+]
+LOCALE_PATHS = [
+    # os.path.join(PROJECT_ROOT, '/locale'),
+    os.path.join(BASE_DIR, 'dvaapp/locale'),
+]
