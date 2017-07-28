@@ -6,7 +6,7 @@
 <div class="row">
     <div class="box box-info">
         <div class="box-header">
-            <h2>Train and apply custom detectors using region annotations</h2>
+            <h2>{% trans "Train and apply custom detectors using region annotations" %}</h2>
         </div>
     </div>
 </div>
@@ -16,18 +16,18 @@
         <div class="col-lg-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h4>Train custom YOLO detector</h4>
+                    <h4>{% trans "Train custom YOLO detector" %}</h4>
                 </div>
                 <div class="box-body">
                     <form role="form" action="/detectors/"  method="post" >
                             <div class="row">
                             <div class="col-lg-6"><div class="form-group">
-                                <label for="name">Detector name</label>
+                                <label for="name">{% trans "Detector name" %}</label>
                                 <input id="id_name" name="name" class="form-control" type="text" required="" placeholder="provide a name">
                             </div></div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label for="excluded_videos">Exclude video/dataset</label>
+                                    <label for="excluded_videos">{% trans "Exclude video/dataset" %}</label>
                                     <select class="js-example-basic-multiple" multiple="multiple" id="excluded_videos" name="excluded_videos" style="width:100%">
                                     {% for v in videos %}
                                         <option value="{{ v.pk }}">{{ v.name }}</option>
@@ -38,22 +38,22 @@
                             </div>
                             <div class="row">
                             <div class="col-lg-6"><div class="form-group">
-                                <label for="object_names">Object names</label>
+                                <label for="object_names">{% trans "Object names" %}</label>
                                 <input id="object_names" name="object_names" class="form-control" type="text" placeholder="comma separated list of regions to by object_names">
                             </div></div>
                             <div class="col-lg-6"><div class="form-group">
-                                <label for="labels">Labels</label>
+                                <label for="labels">{% trans "Labels" %}</label>
                                 <input id="labels" name="labels" class="form-control" type="text" placeholder="comma separated list of regions to by applied labels">
                             </div></div>
                             </div>
                             <div class="form-group">
-                                <label for="args">Additional JSON arguments for customizing options such as number of phase 1/2 epochs, etc.</label>
+                                <label for="args">{% trans "Additional JSON arguments for customizing options such as number of phase 1/2 epochs, etc." %}</label>
                                 <textarea class="form-control" name="args" rows="2" placeholder="Additional arguments as JSON { phase_2_epochs:50 } etc."></textarea>
                             </div>
                             {% csrf_token %}
                             <div style="text-align: center">
-                                <button type="submit" name="action" value="estimate" class="pull-left btn btn-info"><i class="fa fa-list"></i> Estimate training set</button>
-                                <button type="submit" name="action" value="train" class="pull-right btn btn-primary"><i class="fa fa-gears"></i> Train detector</button>
+                                <button type="submit" name="action" value="estimate" class="pull-left btn btn-info"><i class="fa fa-list"></i> {% trans "Estimate training set" %}</button>
+                                <button type="submit" name="action" value="train" class="pull-right btn btn-primary"><i class="fa fa-gears"></i> {% trans "Train detector" %}</button>
                             </div>
                     </form>
                 </div>
@@ -62,10 +62,10 @@
         <div class="col-lg-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h4>Train custom indexer</h4>
+                    <h4>{% trans "Train custom indexer" %}</h4>
                 </div>
                 <div class="box-body">
-                    <h4>Coming soon</h4>
+                    <h4>{% trnas "Coming soon" %}</h4>
                 </div>
             </div>
         </div>

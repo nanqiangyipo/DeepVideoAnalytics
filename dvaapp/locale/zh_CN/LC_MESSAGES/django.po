@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-27 18:16+0800\n"
+"POT-Creation-Date: 2017-07-28 18:27+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -69,7 +69,7 @@ msgstr "个性化"
 msgid "Visual Data Network"
 msgstr "视频云存储"
 
-#: templates/base.html:76
+#: templates/base.html:76 templates/dvaapp/tevent_list.html:38
 msgid "Tasks"
 msgstr "服务器任务"
 
@@ -84,6 +84,79 @@ msgstr "REST接口"
 #: templates/base.html:79
 msgid "Admin"
 msgstr "管理员"
+
+#: templates/clustering.html:9
+msgid "Visualize & perform clustering for approximate search"
+msgstr ""
+
+#: templates/clustering.html:19
+msgid "Create new clustering using LOPQ"
+msgstr ""
+
+#: templates/clustering.html:25 templates/clustering.html:73
+msgid "Algorithm"
+msgstr ""
+
+#: templates/clustering.html:33
+msgid "Exclude (Algorithms other than the selected are automatically excluded)"
+msgstr ""
+
+#: templates/clustering.html:41
+msgid "PCA components"
+msgstr ""
+
+#: templates/clustering.html:45 templates/clustering.html:76
+msgid "M"
+msgstr ""
+
+#: templates/clustering.html:49 templates/clustering.html:77
+msgid "V"
+msgstr ""
+
+#: templates/clustering.html:53
+msgid "Subq"
+msgstr ""
+
+#: templates/clustering.html:57
+#, fuzzy
+#| msgid "at %(frame_index)s"
+msgid "Create new clustering"
+msgstr "的第%(frame_index)s帧"
+
+#: templates/clustering.html:67
+msgid "Clustering results & associated "
+msgstr ""
+
+#: templates/clustering.html:74
+#, fuzzy
+#| msgid "Selected indexers"
+msgid "Source indexer"
+msgstr "选择索引"
+
+#: templates/clustering.html:75
+msgid "Components"
+msgstr ""
+
+#: templates/clustering.html:78
+msgid "Subquantizers"
+msgstr ""
+
+#: templates/clustering.html:79 templates/dvaapp/video_list.html:83
+msgid "Completed"
+msgstr ""
+
+#: templates/clustering.html:80 templates/dvaapp/video_detail.html:163
+#, fuzzy
+#| msgid "created"
+msgid "Created"
+msgstr "创建时间"
+
+#: templates/clustering.html:81 templates/textsearch.html:82
+#: templates/textsearch.html:109 templates/textsearch.html:148
+#: templates/textsearch.html:165 templates/textsearch.html:173
+#: templates/textsearch.html:188 templates/textsearch.html:196
+msgid "details"
+msgstr "详情"
 
 #: templates/dashboard.html:73
 msgid "Selected indexers"
@@ -206,7 +279,8 @@ msgid ""
 "S3 key or list of keys (.mp4, .zip or .dva_export.zip) with one per line"
 msgstr "一个提供一个s3密钥或视频、压缩文件、导出文件的名称"
 
-#: templates/dashboard.html:217
+#: templates/dashboard.html:217 templates/external_data.html:57
+#: templates/external_data.html:100
 msgid "Import"
 msgstr "导入"
 
@@ -279,6 +353,106 @@ msgstr "查询结果:"
 msgid "Please add image to search or upload."
 msgstr "请上传图片检索或上传数据"
 
+#: templates/detectors.html:9 templates/training.html:9
+msgid "Train and apply custom detectors using region annotations"
+msgstr ""
+
+#: templates/detectors.html:19 templates/training.html:19
+msgid "Train custom YOLO detector"
+msgstr ""
+
+#: templates/detectors.html:25 templates/training.html:25
+#, fuzzy
+#| msgid "Detectors"
+msgid "Detector name"
+msgstr "深度挖掘"
+
+#: templates/detectors.html:30 templates/training.html:30
+#, fuzzy
+#| msgid "video / datasets"
+msgid "Exclude video/dataset"
+msgstr "视频/数据集"
+
+#: templates/detectors.html:41 templates/training.html:41
+#, fuzzy
+#| msgid "Object name"
+msgid "Object names"
+msgstr "对象名称"
+
+#: templates/detectors.html:45 templates/textsearch.html:30
+#: templates/textsearch.html:57 templates/training.html:45
+msgid "Labels"
+msgstr "标签"
+
+#: templates/detectors.html:50 templates/training.html:50
+msgid ""
+"Additional JSON arguments for customizing options such as number of phase "
+"1/2 epochs, etc."
+msgstr ""
+
+#: templates/detectors.html:55 templates/training.html:55
+msgid "Estimate training set"
+msgstr ""
+
+#: templates/detectors.html:56 templates/training.html:56
+#, fuzzy
+#| msgid "Detectors"
+msgid "Train detector"
+msgstr "深度挖掘"
+
+#: templates/detectors.html:65
+msgid "Detect objects using custom detector"
+msgstr ""
+
+#: templates/detectors.html:71
+#, fuzzy
+#| msgid "Selected indexers"
+msgid "Select detector"
+msgstr "选择索引"
+
+#: templates/detectors.html:91
+#, fuzzy
+#| msgid "Detectors"
+msgid "Apply detector"
+msgstr "深度挖掘"
+
+#: templates/detectors.html:114
+#, fuzzy
+#| msgid "at %(frame_index)s"
+msgid "Trained custom detectors"
+msgstr "的第%(frame_index)s帧"
+
+#: templates/detectors.html:120 templates/dvaapp/frame_detail.html:45
+#: templates/dvaapp/tevent_list.html:155 templates/external_data.html:53
+#: templates/external_data.html:96 templates/external_data.html:138
+#: templates/textsearch.html:163 templates/textsearch.html:186
+msgid "Name"
+msgstr "名字"
+
+#: templates/detectors.html:121
+#, fuzzy
+#| msgid "Training"
+msgid "Training frames"
+msgstr "个性化"
+
+#: templates/detectors.html:122
+#, fuzzy
+#| msgid "Training"
+msgid "Training boxes"
+msgstr "个性化"
+
+#: templates/detectors.html:123
+#, fuzzy
+#| msgid "object"
+msgid "Objects"
+msgstr "名称"
+
+#: templates/detectors.html:124
+#, fuzzy
+#| msgid "details"
+msgid "Details"
+msgstr "详情"
+
 #: templates/dvaapp/frame_detail.html:9
 msgid "Details for"
 msgstr "在原数据"
@@ -325,16 +499,11 @@ msgstr "元数据文本"
 msgid "Metadata JSON"
 msgstr "元数据JSON"
 
-#: templates/dvaapp/frame_detail.html:45 templates/textsearch.html:163
-#: templates/textsearch.html:186
-msgid "Name"
-msgstr "名字"
-
 #: templates/dvaapp/frame_detail.html:47
 msgid "Assign tags/labels"
 msgstr "分配标签/标签"
 
-#: templates/dvaapp/frame_detail.html:58
+#: templates/dvaapp/frame_detail.html:58 templates/ocr.html:45
 msgid "Submit"
 msgstr "提交"
 
@@ -509,13 +678,80 @@ msgstr "请稍等"
 msgid "Query again using image"
 msgstr "重新执行此查询"
 
+#: templates/dvaapp/tevent_list.html:12
+msgid "List of Tasks, Operations & Queues"
+msgstr ""
+
+#: templates/dvaapp/tevent_list.html:46 templates/dvaapp/video_detail.html:32
+#: templates/dvaapp/video_detail.html:58 templates/dvaapp/video_list.html:81
+#: templates/indexes.html:66 templates/ocr.html:32
+#: templates/textsearch.html:78 templates/textsearch.html:105
+#: templates/textsearch.html:135
+msgid "Video"
+msgstr "视频"
+
+#: templates/dvaapp/tevent_list.html:47
+#, fuzzy
+#| msgid "duration"
+msgid "Operation"
+msgstr "长度"
+
+#: templates/dvaapp/tevent_list.html:48
+msgid "ts"
+msgstr ""
+
+#: templates/dvaapp/tevent_list.html:49
+msgid "unix ts"
+msgstr ""
+
+#: templates/dvaapp/tevent_list.html:50 templates/dvaapp/video_detail.html:17
+#: templates/dvaapp/video_list.html:40
+msgid "duration"
+msgstr "长度"
+
+#: templates/dvaapp/tevent_list.html:51
+msgid "error"
+msgstr ""
+
+#: templates/dvaapp/tevent_list.html:52
+msgid "status and details"
+msgstr ""
+
+#: templates/dvaapp/tevent_list.html:53
+#, fuzzy
+#| msgid "indexes"
+msgid "retry task"
+msgstr "索引"
+
+#: templates/dvaapp/tevent_list.html:54
+msgid "mark as failed<"
+msgstr ""
+
+#: templates/dvaapp/tevent_list.html:138
+msgid "Task & Queue configuration"
+msgstr ""
+
+#: templates/dvaapp/tevent_list.html:144 templates/dvaapp/tevent_list.html:157
+msgid "Queue"
+msgstr ""
+
+#: templates/dvaapp/tevent_list.html:156
+msgid "Type"
+msgstr ""
+
+#: templates/dvaapp/tevent_list.html:158
+msgid "Post success tasks"
+msgstr ""
+
 #: templates/dvaapp/video_detail.html:10
 #, python-format
 msgid ""
 "Currently showing frames and associated annotations & detections for frame "
 "index  <span style=\"font-weight:bold\">%(begin)s</span> to\"  <span style="
 "\"font-weight:bold\">%(end)s"
-msgstr "展示从<span style=\"font-weight:bold\">%(begin)s</span>到<span style=\"font-weight:bold\">%(end)s</span>图片信息"
+msgstr ""
+"展示从<span style=\"font-weight:bold\">%(begin)s</span>到<span style=\"font-"
+"weight:bold\">%(end)s</span>图片信息"
 
 #: templates/dvaapp/video_detail.html:15
 #: templates/dvaapp/video_detail.html:228 templates/dvaapp/video_list.html:38
@@ -525,10 +761,6 @@ msgstr "数据类型"
 #: templates/dvaapp/video_detail.html:16 templates/dvaapp/video_list.html:39
 msgid "name"
 msgstr "名称"
-
-#: templates/dvaapp/video_detail.html:17 templates/dvaapp/video_list.html:40
-msgid "duration"
-msgstr "长度"
 
 #: templates/dvaapp/video_detail.html:19 templates/dvaapp/video_list.html:42
 msgid "segments"
@@ -551,6 +783,7 @@ msgid "width"
 msgstr "宽度"
 
 #: templates/dvaapp/video_detail.html:24 templates/dvaapp/video_list.html:45
+#: templates/indexes.html:123
 msgid "created"
 msgstr "创建时间"
 
@@ -569,12 +802,6 @@ msgstr "查询"
 #: templates/dvaapp/video_detail.html:32
 msgid "Dataset"
 msgstr "数据集"
-
-#: templates/dvaapp/video_detail.html:32 templates/dvaapp/video_detail.html:58
-#: templates/dvaapp/video_list.html:81 templates/textsearch.html:78
-#: templates/textsearch.html:105 templates/textsearch.html:135
-msgid "Video"
-msgstr "视频"
 
 #: templates/dvaapp/video_detail.html:42
 msgid "youtube link"
@@ -658,12 +885,6 @@ msgstr ""
 msgid "Available backups"
 msgstr ""
 
-#: templates/dvaapp/video_detail.html:163
-#, fuzzy
-#| msgid "created"
-msgid "Created"
-msgstr "创建时间"
-
 #: templates/dvaapp/video_detail.html:165 templates/dvaapp/video_list.html:84
 msgid "Download URL or S3 region/bucket/key"
 msgstr ""
@@ -744,8 +965,238 @@ msgstr "导入"
 msgid "Started"
 msgstr ""
 
-#: templates/dvaapp/video_list.html:83
-msgid "Completed"
+#: templates/external_data.html:11
+msgid "List of configured visual data network servers, datasets & detectors"
+msgstr ""
+
+#: templates/external_data.html:24
+msgid "Server Name"
+msgstr ""
+
+#: templates/external_data.html:25
+msgid "Server URL"
+msgstr ""
+
+#: templates/external_data.html:26
+#, fuzzy
+#| msgid "VDN datasets"
+msgid "Pull datasets list"
+msgstr "视频云存储数据集"
+
+#: templates/external_data.html:34
+msgid "Load / Refresh"
+msgstr ""
+
+#: templates/external_data.html:47
+#, fuzzy
+#| msgid "video / datasets"
+msgid "Available datasets"
+msgstr "视频/数据集"
+
+#: templates/external_data.html:54 templates/external_data.html:97
+msgid "Server"
+msgstr ""
+
+#: templates/external_data.html:55 templates/external_data.html:98
+#: templates/external_data.html:141
+msgid "AWS Region/Bucket/ Key"
+msgstr ""
+
+#: templates/external_data.html:56 templates/external_data.html:99
+#: templates/external_data.html:142
+msgid "Direct download"
+msgstr ""
+
+#: templates/external_data.html:90
+#, fuzzy
+#| msgid "Detectors"
+msgid "Available Detectors"
+msgstr "深度挖掘"
+
+#: templates/external_data.html:132
+#, fuzzy
+#| msgid "at %(frame_index)s"
+msgid "Configured datasets"
+msgstr "的第%(frame_index)s帧"
+
+#: templates/external_data.html:139
+#, fuzzy
+#| msgid "source"
+msgid "Source"
+msgstr "源"
+
+#: templates/external_data.html:140
+msgid "Root"
+msgstr ""
+
+#: templates/external_data.html:143
+#, fuzzy
+#| msgid "details"
+msgid "View details"
+msgstr "详情"
+
+#: templates/external_data.html:144
+#, fuzzy
+#| msgid "Object name"
+msgid "Parent name"
+msgstr "对象名称"
+
+#: templates/external_data.html:145
+#, fuzzy
+#| msgid "details"
+msgid "Parent details"
+msgstr "详情"
+
+#: templates/indexes.html:9
+msgid "List of indexes"
+msgstr "索引列表"
+
+#: templates/indexes.html:19
+#, fuzzy
+#| msgid "at %(frame_index)s"
+msgid "Configured indexes"
+msgstr "的第%(frame_index)s帧"
+
+#: templates/indexes.html:25 templates/indexes.html:116
+#, fuzzy
+#| msgid "Indexing"
+msgid "Index name"
+msgstr "索引"
+
+#: templates/indexes.html:26
+#, fuzzy
+#| msgid "indexes"
+msgid "Indexer task"
+msgstr "索引"
+
+#: templates/indexes.html:27
+msgid "Indexer queue"
+msgstr ""
+
+#: templates/indexes.html:28
+msgid "Retriever queue"
+msgstr ""
+
+#: templates/indexes.html:29
+#, fuzzy
+#| msgid "Detections"
+msgid "Detection specific"
+msgstr "深度挖掘列表"
+
+#: templates/indexes.html:52
+msgid "Index custom set of regions"
+msgstr ""
+
+#: templates/indexes.html:57
+#, fuzzy
+#| msgid "Indexing"
+msgid "Indexing algorithm"
+msgstr "索引"
+
+#: templates/indexes.html:75
+#, fuzzy
+#| msgid "Regions"
+msgid "Region types"
+msgstr "提取结果集"
+
+#: templates/indexes.html:85
+#, fuzzy
+#| msgid "Object name"
+msgid "object name"
+msgstr "对象名称"
+
+#: templates/indexes.html:86
+msgid "object_name_contains"
+msgstr ""
+
+#: templates/indexes.html:87
+msgid "text_contains"
+msgstr ""
+
+#: templates/indexes.html:90
+#, fuzzy
+#| msgid "height"
+msgid "Min height"
+msgstr "高度"
+
+#: templates/indexes.html:91
+#, fuzzy
+#| msgid "height"
+msgid "Max height"
+msgstr "高度"
+
+#: templates/indexes.html:92
+#, fuzzy
+#| msgid "width"
+msgid "Min width"
+msgstr "宽度"
+
+#: templates/indexes.html:93
+#, fuzzy
+#| msgid "width"
+msgid "Max width"
+msgstr "宽度"
+
+#: templates/indexes.html:99
+#, fuzzy
+#| msgid "at %(frame_index)s"
+msgid "Create custom index"
+msgstr "的第%(frame_index)s帧"
+
+#: templates/indexes.html:110
+#, fuzzy
+#| msgid "Exclude index entries"
+msgid "Index entries"
+msgstr "减少索引项"
+
+#: templates/indexes.html:117
+#, fuzzy
+#| msgid "Video"
+msgid "Video name"
+msgstr "视频"
+
+#: templates/indexes.html:118
+#, fuzzy
+#| msgid "Detected objects:"
+msgid "Indexed object"
+msgstr "智能分析结果:"
+
+#: templates/indexes.html:119
+#, fuzzy
+#| msgid "Approximate Search"
+msgid "Approximate"
+msgstr "模糊搜索"
+
+#: templates/indexes.html:120
+msgid "Features filename"
+msgstr ""
+
+#: templates/indexes.html:121
+msgid "Entries filename"
+msgstr ""
+
+#: templates/indexes.html:122
+msgid "count"
+msgstr ""
+
+#: templates/ocr.html:9
+msgid "Perform OCR"
+msgstr ""
+
+#: templates/ocr.html:18
+msgid ""
+"Submit video/dataset for Connectionist Text Proposal Network (detection) and "
+"Convolutional Recurrent Neural Network (recognition)"
+msgstr ""
+
+#: templates/ocr.html:23
+#, fuzzy
+#| msgid "Tasks"
+msgid "Task"
+msgstr "服务器任务"
+
+#: templates/ocr.html:42
+msgid "Arguments as JSON"
 msgstr ""
 
 #: templates/rest_framework/admin.html:118
@@ -764,10 +1215,6 @@ msgstr "输入要搜索的文本"
 #: templates/textsearch.html:29 templates/textsearch.html:56
 msgid "Regions"
 msgstr "提取结果集"
-
-#: templates/textsearch.html:30 templates/textsearch.html:57
-msgid "Labels"
-msgstr "标签"
 
 #: templates/textsearch.html:31 templates/textsearch.html:58
 msgid "Frames"
@@ -797,13 +1244,6 @@ msgstr "对象名称"
 msgid "Text"
 msgstr "文本"
 
-#: templates/textsearch.html:82 templates/textsearch.html:109
-#: templates/textsearch.html:148 templates/textsearch.html:165
-#: templates/textsearch.html:173 templates/textsearch.html:188
-#: templates/textsearch.html:196
-msgid "details"
-msgstr "详情"
-
 #: templates/textsearch.html:100
 msgid "Results: regions object name"
 msgstr "结果：区域对象名称"
@@ -831,6 +1271,12 @@ msgstr "目录"
 #: templates/textsearch.html:181
 msgid "Results: frame subdirs"
 msgstr "结果：帧子目录"
+
+#: templates/training.html:65
+#, fuzzy
+#| msgid "at %(frame_index)s"
+msgid "Train custom indexer"
+msgstr "的第%(frame_index)s帧"
 
 #~ msgid ""
 #~ "\n"
