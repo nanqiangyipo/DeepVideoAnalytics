@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-26 18:38+0800\n"
+"POT-Creation-Date: 2017-07-27 18:16+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,836 +17,818 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: DVA/dva/settings.py:276
+#: dva/settings.py:276
 msgid "English"
 msgstr "英文"
 
-#: DVA/dva/settings.py:277
+#: dva/settings.py:277
 msgid "Chinese"
 msgstr "中文"
 
-#: DVA/templates/base.html:8
+#: templates/base.html:8
 msgid "Deep Video Analytics"
 msgstr "深度视频分析"
 
-#: DVA/templates/base.html:66
+#: templates/base.html:66
 msgid "Dashboard"
 msgstr "仪表盘"
 
-#: DVA/templates/base.html:67
+#: templates/base.html:67
 msgid "Videos / Datasets"
 msgstr "视频/数据集"
 
-#: DVA/templates/base.html:68
+#: templates/base.html:68
 msgid "Past queries"
-msgstr ""
+msgstr "搜索记录"
 
-#: DVA/templates/base.html:69
+#: templates/base.html:69
 msgid "Full-text Search"
-msgstr ""
+msgstr "全文检索"
 
-#: DVA/templates/base.html:70
+#: templates/base.html:70
 msgid "Indexing"
-msgstr ""
+msgstr "索引"
 
-#: DVA/templates/base.html:71
+#: templates/base.html:71
 msgid "Clustering"
-msgstr ""
+msgstr "聚集"
 
-#: DVA/templates/base.html:72
+#: templates/base.html:72
 msgid "Detectors"
-msgstr ""
+msgstr "深度挖掘"
 
-#: DVA/templates/base.html:73
+#: templates/base.html:73
 msgid "Annotators & OCR"
-msgstr ""
+msgstr "标注和OCR"
 
-#: DVA/templates/base.html:74
+#: templates/base.html:74
 msgid "Training"
-msgstr ""
+msgstr "个性化"
 
-#: DVA/templates/base.html:75
+#: templates/base.html:75
 msgid "Visual Data Network"
-msgstr ""
+msgstr "视频云存储"
 
-#: DVA/templates/base.html:76
+#: templates/base.html:76
 msgid "Tasks"
-msgstr ""
+msgstr "服务器任务"
 
-#: DVA/templates/base.html:77
+#: templates/base.html:77
 msgid "Logs"
-msgstr ""
+msgstr "服务器日志"
 
-#: DVA/templates/base.html:78
+#: templates/base.html:78
 msgid "REST API"
-msgstr ""
+msgstr "REST接口"
 
-#: DVA/templates/base.html:79
+#: templates/base.html:79
 msgid "Admin"
-msgstr ""
+msgstr "管理员"
 
-#: DVA/templates/dashboard.html:73
+#: templates/dashboard.html:73
 msgid "Selected indexers"
 msgstr "选择索引"
 
-#: DVA/templates/dashboard.html:85
+#: templates/dashboard.html:85
 msgid "Exclude index entries"
 msgstr "减少索引项"
 
-#: DVA/templates/dashboard.html:96
+#: templates/dashboard.html:96
 msgid "Result count"
-msgstr ""
+msgstr "检索结果数量："
 
-#: DVA/templates/dashboard.html:98
+#: templates/dashboard.html:98
 msgid "Send entire image (ignore zoom/pan)"
-msgstr ""
+msgstr "使用原始图片查询（忽略缩放）"
 
-#: DVA/templates/dashboard.html:102
+#: templates/dashboard.html:102
 msgid "Approximate Search"
-msgstr ""
+msgstr "模糊搜索"
 
-#: DVA/templates/dashboard.html:103
+#: templates/dashboard.html:103
 msgid "Exact Search"
-msgstr ""
+msgstr "精确查询"
 
-#: DVA/templates/dashboard.html:112
+#: templates/dashboard.html:112
 msgid "Upload video, dataset or an export"
-msgstr ""
+msgstr "上传或导出数据"
 
-#: DVA/templates/dashboard.html:113
+#: templates/dashboard.html:113
 msgid "Submit youtube url"
-msgstr ""
+msgstr "提交油管连接"
 
-#: DVA/templates/dashboard.html:116
+#: templates/dashboard.html:116
 msgid "Bulk import from AWS S3 bucket"
-msgstr ""
+msgstr "亚马逊云批量导入"
 
-#: DVA/templates/dashboard.html:117
+#: templates/dashboard.html:117
 msgid "Import from VDN"
-msgstr ""
+msgstr "其它云存储批量导入"
 
-#: DVA/templates/dashboard.html:125
+#: templates/dashboard.html:125
 msgid "Upload video / dataset or exported zip file."
-msgstr ""
+msgstr "上次或下载数据"
 
-#: DVA/templates/dashboard.html:127
+#: templates/dashboard.html:127
 msgid "An .mp4 video file or multiple images in a single zip file"
-msgstr ""
+msgstr "一个MP4视频文件或一个包含多张图片的zip文件"
 
-#: DVA/templates/dashboard.html:127
+#: templates/dashboard.html:127
 msgid "(example of a zip file)"
-msgstr ""
+msgstr "(zip文件样例)"
 
-#: DVA/templates/dashboard.html:127
+#: templates/dashboard.html:127
 msgid "or an exported \".dva_export.zip\"."
-msgstr ""
+msgstr "或类似\".dva_export.zip\"的文件。"
 
-#: DVA/templates/dashboard.html:135
+#: templates/dashboard.html:135
 msgid "Video (.mp4) or zip file"
-msgstr ""
+msgstr "视频文件(.mp4)或者zip文件"
 
-#: DVA/templates/dashboard.html:143 DVA/templates/dashboard.html:173
+#: templates/dashboard.html:143 templates/dashboard.html:173
 msgid "Extract every n<sup>th</sup> frame from video"
 msgstr "每隔几帧抽取一张图片"
 
-#: DVA/templates/dashboard.html:148 DVA/templates/dashboard.html:178
+#: templates/dashboard.html:148 templates/dashboard.html:178
 msgid "Rescale frames to width"
-msgstr ""
+msgstr "缩放图片后的宽度"
 
-#: DVA/templates/dashboard.html:153
+#: templates/dashboard.html:153
 msgid "Upload"
-msgstr ""
+msgstr "上传"
 
-#: DVA/templates/dashboard.html:161
+#: templates/dashboard.html:161
 msgid "Submit Youtube url"
-msgstr ""
+msgstr "输入一个油管视频连接"
 
-#: DVA/templates/dashboard.html:162
+#: templates/dashboard.html:162
 msgid "Legal disclaimer:"
-msgstr ""
+msgstr "免责声明"
 
-#: DVA/templates/dashboard.html:184 DVA/templates/dvaapp/video_detail.html:306
+#: templates/dashboard.html:184 templates/dvaapp/video_detail.html:306
 msgid "submit"
-msgstr ""
+msgstr "提交"
 
-#: DVA/templates/dashboard.html:198
+#: templates/dashboard.html:198
 msgid ""
 "We suggest setting AWS authentication credentials using one of following "
 "methods."
-msgstr ""
+msgstr "AWS验证采用如下方方式之一："
 
-#: DVA/templates/dashboard.html:200
+#: templates/dashboard.html:200
 msgid "In an aws config file."
-msgstr ""
+msgstr "AWS的配置文件(config file)"
 
-#: DVA/templates/dashboard.html:201
+#: templates/dashboard.html:201
 msgid "Via Environment variables inside your docker-compose .yml"
-msgstr ""
+msgstr "配置在docker-compose.yml中配置相应环境变量"
 
-#: DVA/templates/dashboard.html:202
+#: templates/dashboard.html:202
 msgid ""
 "Using IAM Roles (instance metadata discovery service) when running DVA on "
 "AWS."
-msgstr ""
+msgstr "在AWS上运行深度视频分析平台时使用IAM角色"
 
-#: DVA/templates/dashboard.html:204
+#: templates/dashboard.html:204
 msgid "We do not provide a method to enter AWS credentials via web interface."
-msgstr ""
+msgstr "本平台不提供亚马逊云登录认证接口"
 
-#: DVA/templates/dashboard.html:208
+#: templates/dashboard.html:208
 msgid "S3 region"
 msgstr "S3 区"
 
-#: DVA/templates/dashboard.html:209
+#: templates/dashboard.html:209
 msgid "S3 bucket"
-msgstr ""
+msgstr "S3 存储区"
 
-#: DVA/templates/dashboard.html:213
+#: templates/dashboard.html:213
 msgid ""
 "S3 key or list of keys (.mp4, .zip or .dva_export.zip) with one per line"
-msgstr ""
+msgstr "一个提供一个s3密钥或视频、压缩文件、导出文件的名称"
 
-#: DVA/templates/dashboard.html:217
+#: templates/dashboard.html:217
 msgid "Import"
 msgstr "导入"
 
-#: DVA/templates/dashboard.html:227
+#: templates/dashboard.html:227
 msgid "Tasks status"
-msgstr ""
+msgstr "任务执行状态"
 
-#: DVA/templates/dashboard.html:228
+#: templates/dashboard.html:228
 msgid "Manually run task"
-msgstr ""
+msgstr "执行任务"
 
-#: DVA/templates/dashboard.html:237
+#: templates/dashboard.html:237
 msgid "Submit task manually"
-msgstr ""
+msgstr "手工提交任务"
 
-#: DVA/templates/dashboard.html:276 DVA/templates/dvaapp/video_detail.html:101
+#: templates/dashboard.html:276 templates/dvaapp/video_detail.html:101
 msgid "pending"
-msgstr ""
+msgstr "待执行"
 
-#: DVA/templates/dashboard.html:279 DVA/templates/dvaapp/video_detail.html:104
+#: templates/dashboard.html:279 templates/dvaapp/video_detail.html:104
 msgid "running"
-msgstr ""
+msgstr "正在执行"
 
-#: DVA/templates/dashboard.html:282 DVA/templates/dvaapp/video_detail.html:107
+#: templates/dashboard.html:282 templates/dvaapp/video_detail.html:107
 msgid "done"
-msgstr ""
+msgstr "已完成"
 
-#: DVA/templates/dashboard.html:285 DVA/templates/dvaapp/video_detail.html:110
+#: templates/dashboard.html:285 templates/dvaapp/video_detail.html:110
 msgid "failed"
-msgstr ""
+msgstr "失败"
 
-#: DVA/templates/dashboard.html:297
+#: templates/dashboard.html:297
 msgid "video / datasets"
-msgstr ""
+msgstr "视频/数据集"
 
-#: DVA/templates/dashboard.html:300 DVA/templates/dvaapp/video_detail.html:18
-#: DVA/templates/dvaapp/video_list.html:41
+#: templates/dashboard.html:300 templates/dvaapp/video_detail.html:18
+#: templates/dvaapp/video_list.html:41
 msgid "frames"
-msgstr ""
+msgstr "帧"
 
-#: DVA/templates/dashboard.html:303
+#: templates/dashboard.html:303
 msgid "queries"
-msgstr ""
+msgstr "查询"
 
-#: DVA/templates/dashboard.html:306
-msgid "ndexes"
-msgstr ""
+#: templates/dashboard.html:306
+msgid "indexes"
+msgstr "索引"
 
-#: DVA/templates/dashboard.html:311
+#: templates/dashboard.html:311
 msgid "Trained detectors"
 msgstr ""
 
-#: DVA/templates/dashboard.html:314
+#: templates/dashboard.html:314
 msgid "tasks"
-msgstr ""
+msgstr "任务"
 
-#: DVA/templates/dashboard.html:317
+#: templates/dashboard.html:317
 msgid "VDN datasets"
-msgstr ""
+msgstr "视频云存储数据集"
 
-#: DVA/templates/dashboard.html:320
+#: templates/dashboard.html:320
 msgid "VDN servers"
-msgstr ""
+msgstr "视频云存储服务器"
 
-#: DVA/templates/dashboard.html:333
+#: templates/dashboard.html:333
 msgid "results:"
-msgstr ""
+msgstr "查询结果:"
 
-#: DVA/templates/dashboard.html:359
+#: templates/dashboard.html:359
 msgid "Please add image to search or upload."
 msgstr "请上传图片检索或上传数据"
 
-#: DVA/templates/dvaapp/frame_detail.html:9
+#: templates/dvaapp/frame_detail.html:9
 msgid "Details for"
 msgstr "在原数据"
 
-#: DVA/templates/dvaapp/frame_detail.html:10
+#: templates/dvaapp/frame_detail.html:10
 msgid "file named: "
 msgstr "在原数据"
 
-#: DVA/templates/dvaapp/frame_detail.html:10
+#: templates/dvaapp/frame_detail.html:10
 #, python-format
 msgid "at %(frame_index)s"
 msgstr "的第%(frame_index)s帧"
 
-#: DVA/templates/dvaapp/frame_detail.html:11
+#: templates/dvaapp/frame_detail.html:11
 #, python-format
 msgid " in Segment%(tran_si)s"
 msgstr ",第%(tran_si)s个片段"
 
-#: DVA/templates/dvaapp/frame_detail.html:23
+#: templates/dvaapp/frame_detail.html:23
 msgid "Previous"
 msgstr "上一个"
 
-#: DVA/templates/dvaapp/frame_detail.html:25
+#: templates/dvaapp/frame_detail.html:25
 msgid "Query using this frame"
-msgstr ""
+msgstr "以此为检索图片"
 
-#: DVA/templates/dvaapp/frame_detail.html:26
+#: templates/dvaapp/frame_detail.html:26
 msgid "Next"
 msgstr "下一个"
 
-#: DVA/templates/dvaapp/frame_detail.html:32
+#: templates/dvaapp/frame_detail.html:32
 msgid "Add & edit annotations for bouding box"
-msgstr ""
+msgstr "添加或编辑目标框的标注"
 
-#: DVA/templates/dvaapp/frame_detail.html:33
+#: templates/dvaapp/frame_detail.html:33
 msgid "Or assign metadata & labels to entire frame/image below"
-msgstr ""
+msgstr "为这张图片添加源数据或标签"
 
-#: DVA/templates/dvaapp/frame_detail.html:37
-#: DVA/templates/dvaapp/frame_detail.html:38
+#: templates/dvaapp/frame_detail.html:37 templates/dvaapp/frame_detail.html:38
 msgid "Metadata Text"
 msgstr "元数据文本"
 
-#: DVA/templates/dvaapp/frame_detail.html:41
-#: DVA/templates/dvaapp/frame_detail.html:42
+#: templates/dvaapp/frame_detail.html:41 templates/dvaapp/frame_detail.html:42
 msgid "Metadata JSON"
 msgstr "元数据JSON"
 
-#: DVA/templates/dvaapp/frame_detail.html:45 DVA/templates/textsearch.html:163
-#: DVA/templates/textsearch.html:186
+#: templates/dvaapp/frame_detail.html:45 templates/textsearch.html:163
+#: templates/textsearch.html:186
 msgid "Name"
 msgstr "名字"
 
-#: DVA/templates/dvaapp/frame_detail.html:47
+#: templates/dvaapp/frame_detail.html:47
 msgid "Assign tags/labels"
 msgstr "分配标签/标签"
 
-#: DVA/templates/dvaapp/frame_detail.html:58
+#: templates/dvaapp/frame_detail.html:58
 msgid "Submit"
 msgstr "提交"
 
-#: DVA/templates/dvaapp/frame_detail.html:68
+#: templates/dvaapp/frame_detail.html:68
 msgid "Annotations for entire frame / image"
-msgstr ""
+msgstr "图片标注信息"
 
-#: DVA/templates/dvaapp/frame_detail.html:74
-#: DVA/templates/dvaapp/frame_detail.html:105
+#: templates/dvaapp/frame_detail.html:74
+#: templates/dvaapp/frame_detail.html:105
 msgid "Annotation"
-msgstr ""
+msgstr "标注"
 
-#: DVA/templates/dvaapp/frame_detail.html:75
-#: DVA/templates/dvaapp/frame_detail.html:106
+#: templates/dvaapp/frame_detail.html:75
+#: templates/dvaapp/frame_detail.html:106
 msgid "User"
-msgstr ""
+msgstr "用户"
 
-#: DVA/templates/dvaapp/frame_detail.html:76
-#: DVA/templates/dvaapp/video_detail.html:315
+#: templates/dvaapp/frame_detail.html:76
+#: templates/dvaapp/video_detail.html:315
 msgid "Metadata"
-msgstr ""
+msgstr "元数据"
 
-#: DVA/templates/dvaapp/frame_detail.html:77
+#: templates/dvaapp/frame_detail.html:77
 msgid "Delete"
-msgstr ""
+msgstr "删除"
 
-#: DVA/templates/dvaapp/frame_detail.html:86
-#: DVA/templates/dvaapp/frame_detail.html:124
+#: templates/dvaapp/frame_detail.html:86
+#: templates/dvaapp/frame_detail.html:124
 msgid "view metadata"
-msgstr ""
+msgstr "查看元数据"
 
-#: DVA/templates/dvaapp/frame_detail.html:87
-#: DVA/templates/dvaapp/frame_detail.html:216
+#: templates/dvaapp/frame_detail.html:87
+#: templates/dvaapp/frame_detail.html:216
 msgid "delete"
-msgstr ""
+msgstr "删除"
 
-#: DVA/templates/dvaapp/frame_detail.html:99
+#: templates/dvaapp/frame_detail.html:99
 msgid "Annotations for bounding boxes"
-msgstr ""
+msgstr "目标框标注信息"
 
-#: DVA/templates/dvaapp/frame_detail.html:107
-#: DVA/templates/dvaapp/frame_detail.html:141
-#: DVA/templates/dvaapp/video_detail.html:232
+#: templates/dvaapp/frame_detail.html:107
+#: templates/dvaapp/frame_detail.html:141
+#: templates/dvaapp/video_detail.html:232
 msgid "x"
-msgstr ""
+msgstr "横坐标"
 
-#: DVA/templates/dvaapp/frame_detail.html:108
-#: DVA/templates/dvaapp/frame_detail.html:142
-#: DVA/templates/dvaapp/video_detail.html:233
+#: templates/dvaapp/frame_detail.html:108
+#: templates/dvaapp/frame_detail.html:142
+#: templates/dvaapp/video_detail.html:233
 msgid "y"
-msgstr ""
+msgstr "纵坐标"
 
-#: DVA/templates/dvaapp/frame_detail.html:109
-#: DVA/templates/dvaapp/frame_detail.html:143
-#: DVA/templates/dvaapp/video_detail.html:234
+#: templates/dvaapp/frame_detail.html:109
+#: templates/dvaapp/frame_detail.html:143
+#: templates/dvaapp/video_detail.html:234
 msgid "w"
-msgstr ""
+msgstr "宽度"
 
-#: DVA/templates/dvaapp/frame_detail.html:110
-#: DVA/templates/dvaapp/frame_detail.html:144
-#: DVA/templates/dvaapp/video_detail.html:235
+#: templates/dvaapp/frame_detail.html:110
+#: templates/dvaapp/frame_detail.html:144
+#: templates/dvaapp/video_detail.html:235
 msgid "h"
-msgstr ""
+msgstr "高度"
 
-#: DVA/templates/dvaapp/frame_detail.html:111
+#: templates/dvaapp/frame_detail.html:111
 msgid "metadata"
-msgstr ""
+msgstr "元数据"
 
-#: DVA/templates/dvaapp/frame_detail.html:134
+#: templates/dvaapp/frame_detail.html:134
 msgid "Detections"
-msgstr ""
+msgstr "深度挖掘列表"
 
-#: DVA/templates/dvaapp/frame_detail.html:139
+#: templates/dvaapp/frame_detail.html:139
 msgid "object"
-msgstr ""
+msgstr "名称"
 
-#: DVA/templates/dvaapp/frame_detail.html:140
-#: DVA/templates/dvaapp/video_detail.html:230
+#: templates/dvaapp/frame_detail.html:140
+#: templates/dvaapp/video_detail.html:230
 msgid "confidence"
-msgstr ""
+msgstr "置信度"
 
-#: DVA/templates/dvaapp/frame_detail.html:167
+#: templates/dvaapp/frame_detail.html:167
 msgid "Detected objects:"
-msgstr ""
+msgstr "智能分析结果:"
 
-#: DVA/templates/dvaapp/frame_detail.html:182
+#: templates/dvaapp/frame_detail.html:182
 msgid "Query using this detection"
-msgstr ""
+msgstr "使用这张图片进行搜索"
 
-#: DVA/templates/dvaapp/frame_detail.html:204
+#: templates/dvaapp/frame_detail.html:204
 msgid "Text metadata"
-msgstr ""
+msgstr "文本元数据"
 
-#: DVA/templates/dvaapp/frame_detail.html:206
+#: templates/dvaapp/frame_detail.html:206
 msgid "JSON metadata"
-msgstr ""
+msgstr "JSON 元数据"
 
-#: DVA/templates/dvaapp/frame_detail.html:209
+#: templates/dvaapp/frame_detail.html:209
 msgid "Bounding box"
-msgstr ""
+msgstr "目标框"
 
-#: DVA/templates/dvaapp/frame_detail.html:217
+#: templates/dvaapp/frame_detail.html:217
 msgid "Close"
-msgstr ""
+msgstr "关闭"
 
-#: DVA/templates/dvaapp/query_detail.html:9
+#: templates/dvaapp/query_detail.html:9
 msgid "Query results"
 msgstr "查询结果查看"
 
-#: DVA/templates/dvaapp/query_detail.html:22
+#: templates/dvaapp/query_detail.html:22
 msgid "Query again"
 msgstr "重新查询"
 
-#: DVA/templates/dvaapp/query_detail.html:28
+#: templates/dvaapp/query_detail.html:28
 msgid "Query plan"
 msgstr "查询计划"
 
-#: DVA/templates/dvaapp/query_detail.html:42
+#: templates/dvaapp/query_detail.html:42
 msgid "results"
 msgstr "索引模型的结果"
 
-#: DVA/templates/dvaapp/query_detail.html:50
-#: DVA/templates/dvaapp/video_detail.html:149
-#: DVA/templates/textsearch.html:137
+#: templates/dvaapp/query_detail.html:50
+#: templates/dvaapp/video_detail.html:149 templates/textsearch.html:137
 msgid "Region"
 msgstr "提取结果"
 
-#: DVA/templates/dvaapp/query_detail.html:50
-#: DVA/templates/dvaapp/video_detail.html:221
-#: DVA/templates/dvaapp/video_detail.html:222
-#: DVA/templates/textsearch.html:138
+#: templates/dvaapp/query_detail.html:50
+#: templates/dvaapp/video_detail.html:221
+#: templates/dvaapp/video_detail.html:222 templates/textsearch.html:138
 msgid "Frame"
-msgstr ""
+msgstr "帧"
 
-#: DVA/templates/dvaapp/query_detail.html:53
+#: templates/dvaapp/query_detail.html:53
 #, python-format
 msgid "In %(video_name)s at %(frame_index)s"
 msgstr "在 %(video_name)s 第%(frame_index)s帧"
 
-#: DVA/templates/dvaapp/query_detail.html:55
+#: templates/dvaapp/query_detail.html:55
 #, python-format
 msgid "at %(distance)s"
 msgstr "差异度:%(distance)s"
 
-#: DVA/templates/dvaapp/query_list.html:10
+#: templates/dvaapp/query_list.html:10
 msgid "List of past queries"
-msgstr ""
+msgstr "历史查询列表"
 
-#: DVA/templates/dvaapp/query_list.html:10
+#: templates/dvaapp/query_list.html:10
 msgid "click on query image to view results"
-msgstr ""
+msgstr "点击图片查看详情"
 
-#: DVA/templates/dvaapp/query_list.html:23
+#: templates/dvaapp/query_list.html:23
 msgid "Created at"
 msgstr "创建于"
 
-#: DVA/templates/dvaapp/query_list.html:24
+#: templates/dvaapp/query_list.html:24
 msgid "results available"
-msgstr ""
+msgstr "查询已完成"
 
-#: DVA/templates/dvaapp/query_list.html:24
+#: templates/dvaapp/query_list.html:24
 msgid "waiting for results"
-msgstr ""
+msgstr "查询未完成"
 
-#: DVA/templates/dvaapp/query_list.html:29
+#: templates/dvaapp/query_list.html:29
 msgid "View results"
-msgstr ""
+msgstr "查看结果"
 
-#: DVA/templates/dvaapp/query_list.html:29
+#: templates/dvaapp/query_list.html:29
 msgid "waiting"
-msgstr ""
+msgstr "请稍等"
 
-#: DVA/templates/dvaapp/query_list.html:33
+#: templates/dvaapp/query_list.html:33
 msgid "Query again using image"
-msgstr ""
+msgstr "重新执行此查询"
 
-#: DVA/templates/dvaapp/video_detail.html:10
+#: templates/dvaapp/video_detail.html:10
+#, python-format
 msgid ""
 "Currently showing frames and associated annotations & detections for frame "
-"index"
-msgstr ""
+"index  <span style=\"font-weight:bold\">%(begin)s</span> to\"  <span style="
+"\"font-weight:bold\">%(end)s"
+msgstr "展示从<span style=\"font-weight:bold\">%(begin)s</span>到<span style=\"font-weight:bold\">%(end)s</span>图片信息"
 
-#: DVA/templates/dvaapp/video_detail.html:15
-#: DVA/templates/dvaapp/video_detail.html:228
-#: DVA/templates/dvaapp/video_list.html:38
+#: templates/dvaapp/video_detail.html:15
+#: templates/dvaapp/video_detail.html:228 templates/dvaapp/video_list.html:38
 msgid "type"
-msgstr ""
+msgstr "数据类型"
 
-#: DVA/templates/dvaapp/video_detail.html:16
-#: DVA/templates/dvaapp/video_list.html:39
+#: templates/dvaapp/video_detail.html:16 templates/dvaapp/video_list.html:39
 msgid "name"
-msgstr ""
+msgstr "名称"
 
-#: DVA/templates/dvaapp/video_detail.html:17
-#: DVA/templates/dvaapp/video_list.html:40
+#: templates/dvaapp/video_detail.html:17 templates/dvaapp/video_list.html:40
 msgid "duration"
-msgstr ""
+msgstr "长度"
 
-#: DVA/templates/dvaapp/video_detail.html:19
-#: DVA/templates/dvaapp/video_list.html:42
+#: templates/dvaapp/video_detail.html:19 templates/dvaapp/video_list.html:42
 msgid "segments"
-msgstr ""
+msgstr "分段数量"
 
-#: DVA/templates/dvaapp/video_detail.html:20
-#, fuzzy
-#| msgid "Region"
+#: templates/dvaapp/video_detail.html:20
 msgid "regions"
 msgstr "提取结果"
 
-#: DVA/templates/dvaapp/video_detail.html:21
+#: templates/dvaapp/video_detail.html:21
 msgid "labels"
-msgstr ""
+msgstr "标签"
 
-#: DVA/templates/dvaapp/video_detail.html:22
-#: DVA/templates/dvaapp/video_list.html:43
+#: templates/dvaapp/video_detail.html:22 templates/dvaapp/video_list.html:43
 msgid "height"
-msgstr ""
+msgstr "高度"
 
-#: DVA/templates/dvaapp/video_detail.html:23
-#: DVA/templates/dvaapp/video_list.html:44
+#: templates/dvaapp/video_detail.html:23 templates/dvaapp/video_list.html:44
 msgid "width"
-msgstr ""
+msgstr "宽度"
 
-#: DVA/templates/dvaapp/video_detail.html:24
-#: DVA/templates/dvaapp/video_list.html:45
+#: templates/dvaapp/video_detail.html:24 templates/dvaapp/video_list.html:45
 msgid "created"
 msgstr "创建时间"
 
-#: DVA/templates/dvaapp/video_detail.html:25
-#: DVA/templates/dvaapp/video_list.html:46
+#: templates/dvaapp/video_detail.html:25 templates/dvaapp/video_list.html:46
 msgid "youtube"
-msgstr ""
+msgstr "油管"
 
-#: DVA/templates/dvaapp/video_detail.html:26
+#: templates/dvaapp/video_detail.html:26
 msgid "VDN source"
-msgstr ""
+msgstr "视频云存储"
 
-#: DVA/templates/dvaapp/video_detail.html:32
-#, fuzzy
-#| msgid "Query plan"
+#: templates/dvaapp/video_detail.html:32
 msgid "Query"
-msgstr "查询计划"
+msgstr "查询"
 
-#: DVA/templates/dvaapp/video_detail.html:32
+#: templates/dvaapp/video_detail.html:32
 msgid "Dataset"
-msgstr ""
+msgstr "数据集"
 
-#: DVA/templates/dvaapp/video_detail.html:32
-#: DVA/templates/dvaapp/video_detail.html:58
-#: DVA/templates/dvaapp/video_list.html:81 DVA/templates/textsearch.html:78
-#: DVA/templates/textsearch.html:105 DVA/templates/textsearch.html:135
+#: templates/dvaapp/video_detail.html:32 templates/dvaapp/video_detail.html:58
+#: templates/dvaapp/video_list.html:81 templates/textsearch.html:78
+#: templates/textsearch.html:105 templates/textsearch.html:135
 msgid "Video"
-msgstr ""
+msgstr "视频"
 
-#: DVA/templates/dvaapp/video_detail.html:42
+#: templates/dvaapp/video_detail.html:42
 msgid "youtube link"
-msgstr ""
+msgstr "油管链接"
 
-#: DVA/templates/dvaapp/video_detail.html:43
+#: templates/dvaapp/video_detail.html:43
 msgid "source"
-msgstr ""
+msgstr "源"
 
-#: DVA/templates/dvaapp/video_detail.html:71
+#: templates/dvaapp/video_detail.html:71
 #, python-format
 msgid ""
 "The video / dataset has max frame_index %(mfi)s > 1000 please select range"
-msgstr ""
+msgstr "该数据有%(mfi)s张图片（>1000）请选择一个范围"
 
-#: DVA/templates/dvaapp/video_detail.html:77
+#: templates/dvaapp/video_detail.html:77
 msgid "frame index range"
-msgstr ""
+msgstr "图片数量范围"
 
-#: DVA/templates/dvaapp/video_detail.html:78
-#: DVA/templates/dvaapp/video_detail.html:238
-#: DVA/templates/dvaapp/video_detail.html:254
-#: DVA/templates/dvaapp/video_detail.html:269
-#: DVA/templates/dvaapp/video_detail.html:284
-#: DVA/templates/dvaapp/video_list.html:48
-#: DVA/templates/dvaapp/video_list.html:65
+#: templates/dvaapp/video_detail.html:78
+#: templates/dvaapp/video_detail.html:238
+#: templates/dvaapp/video_detail.html:254
+#: templates/dvaapp/video_detail.html:269
+#: templates/dvaapp/video_detail.html:284 templates/dvaapp/video_list.html:48
+#: templates/dvaapp/video_list.html:65
 msgid "view"
-msgstr ""
+msgstr "查看"
 
-#: DVA/templates/dvaapp/video_detail.html:84
+#: templates/dvaapp/video_detail.html:84
 #, python-format
 msgid "%(frame_index_offset_begin)s to %(frame_index_offset_end)s"
-msgstr ""
+msgstr "从%(frame_index_offset_begin)s 到 %(frame_index_offset_end)s"
 
-#: DVA/templates/dvaapp/video_detail.html:85
+#: templates/dvaapp/video_detail.html:85
 msgid "view range"
-msgstr ""
+msgstr "查看范围"
 
-#: DVA/templates/dvaapp/video_detail.html:97
+#: templates/dvaapp/video_detail.html:97
 msgid "Task status"
 msgstr ""
 
-#: DVA/templates/dvaapp/video_detail.html:116
+#: templates/dvaapp/video_detail.html:116
 msgid "Admin actions"
 msgstr ""
 
-#: DVA/templates/dvaapp/video_detail.html:121
+#: templates/dvaapp/video_detail.html:121
 #, fuzzy
 #| msgid "Import"
 msgid "Export as a file"
 msgstr "导入"
 
-#: DVA/templates/dvaapp/video_detail.html:126
+#: templates/dvaapp/video_detail.html:126
 msgid "Delete (only staff)"
 msgstr ""
 
-#: DVA/templates/dvaapp/video_detail.html:139
+#: templates/dvaapp/video_detail.html:139
 msgid "Rename"
 msgstr ""
 
-#: DVA/templates/dvaapp/video_detail.html:147
+#: templates/dvaapp/video_detail.html:147
 msgid "S3 Bucket"
 msgstr ""
 
-#: DVA/templates/dvaapp/video_detail.html:148
+#: templates/dvaapp/video_detail.html:148
 msgid "S3 Key"
 msgstr ""
 
-#: DVA/templates/dvaapp/video_detail.html:156
+#: templates/dvaapp/video_detail.html:156
 msgid ""
 "Delete currently requires retrieval workers to be restarted to purge index "
 "loaded in memory (a fix is pending)"
 msgstr ""
 
-#: DVA/templates/dvaapp/video_detail.html:157
+#: templates/dvaapp/video_detail.html:157
 msgid ""
 "Provide AWS credential via environment variables or by running aws configure "
 "inside container or via IAM roles on EC2"
 msgstr ""
 
-#: DVA/templates/dvaapp/video_detail.html:159
+#: templates/dvaapp/video_detail.html:159
 msgid "Available backups"
 msgstr ""
 
-#: DVA/templates/dvaapp/video_detail.html:163
+#: templates/dvaapp/video_detail.html:163
 #, fuzzy
 #| msgid "created"
 msgid "Created"
 msgstr "创建时间"
 
-#: DVA/templates/dvaapp/video_detail.html:165
-#: DVA/templates/dvaapp/video_list.html:84
+#: templates/dvaapp/video_detail.html:165 templates/dvaapp/video_list.html:84
 msgid "Download URL or S3 region/bucket/key"
 msgstr ""
 
-#: DVA/templates/dvaapp/video_detail.html:173
-#: DVA/templates/dvaapp/video_list.html:93
+#: templates/dvaapp/video_detail.html:173 templates/dvaapp/video_list.html:93
 msgid "click to download"
 msgstr ""
 
-#: DVA/templates/dvaapp/video_detail.html:194
+#: templates/dvaapp/video_detail.html:194
 msgid "Push video/dataset to remote VDN server"
 msgstr ""
 
-#: DVA/templates/dvaapp/video_detail.html:199
+#: templates/dvaapp/video_detail.html:199
 msgid "local annotations to push to a remote VDN server."
 msgstr ""
 
-#: DVA/templates/dvaapp/video_detail.html:201
+#: templates/dvaapp/video_detail.html:201
 msgid "Push annotations"
 msgstr ""
 
-#: DVA/templates/dvaapp/video_detail.html:204
+#: templates/dvaapp/video_detail.html:204
 msgid "No pending changes"
 msgstr ""
 
-#: DVA/templates/dvaapp/video_detail.html:216
+#: templates/dvaapp/video_detail.html:216
 msgid "List of frames/images & detection"
 msgstr ""
 
-#: DVA/templates/dvaapp/video_detail.html:229
+#: templates/dvaapp/video_detail.html:229
 msgid "file / annotation / object name"
 msgstr ""
 
-#: DVA/templates/dvaapp/video_detail.html:231
+#: templates/dvaapp/video_detail.html:231
 msgid "size in pixels"
 msgstr ""
 
-#: DVA/templates/dvaapp/video_detail.html:236
+#: templates/dvaapp/video_detail.html:236
 msgid "segment"
 msgstr ""
 
-#: DVA/templates/dvaapp/video_detail.html:237
+#: templates/dvaapp/video_detail.html:237
 #, fuzzy
 #| msgid "at %(frame_index)s"
 msgid "frame index"
 msgstr "的第%(frame_index)s帧"
 
-#: DVA/templates/dvaapp/video_detail.html:259
+#: templates/dvaapp/video_detail.html:259
 msgid "detection"
 msgstr ""
 
-#: DVA/templates/dvaapp/video_detail.html:274
+#: templates/dvaapp/video_detail.html:274
 msgid "annotation"
 msgstr ""
 
-#: DVA/templates/dvaapp/video_list.html:10
+#: templates/dvaapp/video_list.html:10
 msgid "List of videos & datasets"
 msgstr ""
 
-#: DVA/templates/dvaapp/video_list.html:15
+#: templates/dvaapp/video_list.html:15
 msgid "Go back"
 msgstr ""
 
-#: DVA/templates/dvaapp/video_list.html:21
+#: templates/dvaapp/video_list.html:21
 msgid "Load more"
 msgstr ""
 
-#: DVA/templates/dvaapp/video_list.html:47
+#: templates/dvaapp/video_list.html:47
 msgid "VDN Source"
 msgstr ""
 
-#: DVA/templates/dvaapp/video_list.html:75
+#: templates/dvaapp/video_list.html:75
 #, fuzzy
 #| msgid "Import"
 msgid "Exports"
 msgstr "导入"
 
-#: DVA/templates/dvaapp/video_list.html:82
+#: templates/dvaapp/video_list.html:82
 msgid "Started"
 msgstr ""
 
-#: DVA/templates/dvaapp/video_list.html:83
+#: templates/dvaapp/video_list.html:83
 msgid "Completed"
 msgstr ""
 
-#: DVA/templates/rest_framework/admin.html:118
-#: DVA/templates/rest_framework/base.html:128
+#: templates/rest_framework/admin.html:118
+#: templates/rest_framework/base.html:128
 msgid "Filters"
 msgstr "筛选"
 
-#: DVA/templates/textsearch.html:10
+#: templates/textsearch.html:10
 msgid "Full text search & OCR annotations"
 msgstr "全文检索和OCR"
 
-#: DVA/templates/textsearch.html:23 DVA/templates/textsearch.html:25
+#: templates/textsearch.html:23 templates/textsearch.html:25
 msgid "enter text to search"
 msgstr "输入要搜索的文本"
 
-#: DVA/templates/textsearch.html:29 DVA/templates/textsearch.html:56
+#: templates/textsearch.html:29 templates/textsearch.html:56
 msgid "Regions"
 msgstr "提取结果集"
 
-#: DVA/templates/textsearch.html:30 DVA/templates/textsearch.html:57
+#: templates/textsearch.html:30 templates/textsearch.html:57
 msgid "Labels"
 msgstr "标签"
 
-#: DVA/templates/textsearch.html:31 DVA/templates/textsearch.html:58
+#: templates/textsearch.html:31 templates/textsearch.html:58
 msgid "Frames"
 msgstr "帧"
 
-#: DVA/templates/textsearch.html:34
+#: templates/textsearch.html:34
 msgid "Search all videos/datasets"
 msgstr "搜索视频/数据集"
 
-#: DVA/templates/textsearch.html:40
+#: templates/textsearch.html:40
 msgid "Search"
 msgstr "搜索"
 
-#: DVA/templates/textsearch.html:73
+#: templates/textsearch.html:73
 msgid "Results: regions metadata text"
 msgstr "结果：区域元数据文本"
 
-#: DVA/templates/textsearch.html:79 DVA/templates/textsearch.html:106
+#: templates/textsearch.html:79 templates/textsearch.html:106
 msgid "Frame index"
 msgstr "帧位置"
 
-#: DVA/templates/textsearch.html:80 DVA/templates/textsearch.html:107
+#: templates/textsearch.html:80 templates/textsearch.html:107
 msgid "Object name"
 msgstr "对象名称"
 
-#: DVA/templates/textsearch.html:81 DVA/templates/textsearch.html:108
+#: templates/textsearch.html:81 templates/textsearch.html:108
 msgid "Text"
 msgstr "文本"
 
-#: DVA/templates/textsearch.html:82 DVA/templates/textsearch.html:109
-#: DVA/templates/textsearch.html:148 DVA/templates/textsearch.html:165
-#: DVA/templates/textsearch.html:173 DVA/templates/textsearch.html:188
-#: DVA/templates/textsearch.html:196
+#: templates/textsearch.html:82 templates/textsearch.html:109
+#: templates/textsearch.html:148 templates/textsearch.html:165
+#: templates/textsearch.html:173 templates/textsearch.html:188
+#: templates/textsearch.html:196
 msgid "details"
 msgstr "详情"
 
-#: DVA/templates/textsearch.html:100
+#: templates/textsearch.html:100
 msgid "Results: regions object name"
 msgstr "结果：区域对象名称"
 
-#: DVA/templates/textsearch.html:129
+#: templates/textsearch.html:129
 msgid "Results: labels"
 msgstr "结果：标签"
 
-#: DVA/templates/textsearch.html:134
+#: templates/textsearch.html:134
 msgid "Label"
 msgstr "标签"
 
-#: DVA/templates/textsearch.html:136
+#: templates/textsearch.html:136
 msgid "Clip"
 msgstr "夹"
 
-#: DVA/templates/textsearch.html:158
+#: templates/textsearch.html:158
 msgid "Results: frame names"
 msgstr "结果：帧名称"
 
-#: DVA/templates/textsearch.html:164 DVA/templates/textsearch.html:187
+#: templates/textsearch.html:164 templates/textsearch.html:187
 msgid "Directory"
 msgstr "目录"
 
-#: DVA/templates/textsearch.html:181
+#: templates/textsearch.html:181
 msgid "Results: frame subdirs"
 msgstr "结果：帧子目录"
 
