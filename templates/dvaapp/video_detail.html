@@ -7,7 +7,7 @@
 <div class="row">
     <div class="box box-info">
         <div class="box-header">
-            <h4> <span style="font-weight:bold">{{ object.name }}</span>: {% trans "Currently showing frames and associated annotations & detections for frame index" %} <span style="font-weight:bold">{{ offset }}</span> to <span style="font-weight:bold">{{ limit }}</span>.</h4>
+            <h4> <span style="font-weight:bold">{{ object.name }}</span>: {% blocktrans trimmed with begin=offset end=limit %}Currently showing frames and associated annotations & detections for frame index  <span style="font-weight:bold">{{ begin }}</span> to"  <span style="font-weight:bold">{{ end }} {% endblocktrans %}</span>.</h4>
             <div class="col-lg-12 m-t">
                 <table class="table table-bordered">
                 <thead>

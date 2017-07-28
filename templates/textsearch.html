@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load staticfiles %}
 
 {% block page_content %}
@@ -6,7 +7,7 @@
 <div class="row">
     <div class="box box-info">
         <div class="box-header">
-            <h2>Full text search & OCR annotations</h2>
+            <h2>{% trans "Full text search & OCR annotations" %}</h2>
         </div>
     </div>
 </div>
@@ -19,24 +20,24 @@
                 <form action="." method="get">
                     <div class="row">
                         {% if q %}
-                            <div class="col-lg-12"><input class="form-control" id="q" name="q" required="required" value="{{ q }}" placeholder="enter text to search" /></div>
+                            <div class="col-lg-12"><input class="form-control" id="q" name="q" required="required" value="{{ q }}" placeholder="{% trans 'enter text to search' %}" /></div>
                         {% else %}
-                            <div class="col-lg-12"><input class="form-control" id="q" name="q" required="required" placeholder="enter text to search" /></div>
+                            <div class="col-lg-12"><input class="form-control" id="q" name="q" required="required" placeholder="{% trans 'enter text to search' %}" /></div>
                         {% endif %}
                     </div>
                     <div class="row" style="margin-top:10px">
-                        <div class="col-md-1 form-group"><label for="regions" class="form-group text-center">Regions<input type="checkbox" checked="checked"  class=""  id="regions" name="regions"/></label></div>
-                        <div class="col-md-1 form-group"><label for="labels" class="form-group text-center">Labels<input type="checkbox" checked="checked"  class=""  id="labels" name="labels"/></label></div>
-                        <div class="col-md-1 form-group"><label for="frames" class="form-group text-center">Frames<input type="checkbox" checked="checked"  class="" id="frames" name="frames"/></label></div>
+                        <div class="col-md-1 form-group"><label for="regions" class="form-group text-center">{% trans "Regions" %}<input type="checkbox" checked="checked"  class=""  id="regions" name="regions"/></label></div>
+                        <div class="col-md-1 form-group"><label for="labels" class="form-group text-center">{% trans "Labels" %}<input type="checkbox" checked="checked"  class=""  id="labels" name="labels"/></label></div>
+                        <div class="col-md-1 form-group"><label for="frames" class="form-group text-center">{% trans "Frames" %}<input type="checkbox" checked="checked"  class="" id="frames" name="frames"/></label></div>
                         <div class="col-md-6 form-group">
                             <select class="js-example-basic-single" id="video_pk" name="video_pk" style="width:100%">
-                                <option value="" selected="selected">Search all videos/datasets</option>
+                                <option value="" selected="selected">{% trans "Search all videos/datasets" %}</option>
                             {% for v in videos %}
                                 <option value="{{ v.pk }}">{{ v.name }}</option>
                             {% endfor %}
                             </select>
                         </div>
-                        <div class="text-center col-md-3 form-group"><button type="submit" class="btn btn-primary btn-block"><i class="fa fa-search"></i> Search</button></div>
+                        <div class="text-center col-md-3 form-group"><button type="submit" class="btn btn-primary btn-block"><i class="fa fa-search"></i> {% trans "Search" %}</button></div>
 
                     </div>
                     {% csrf_token %}
@@ -52,9 +53,9 @@
                             <h4>Query: {{ q }} </h4>
                         </div>
                         <div class="col-md-2"><h4>{{ offset }} to {{ limit }}</h4></div>
-                        <div class="col-md-1 form-group"><label for="regions" class="form-group text-center">Regions<input type="checkbox" checked="checked"  class=""  id="regions" name="regions"/></label></div>
-                        <div class="col-md-1 form-group"><label for="labels" class="form-group text-center">Labels<input type="checkbox" checked="checked"  class=""  id="labels" name="labels"/></label></div>
-                        <div class="col-md-1 form-group"><label for="frames" class="form-group text-center">Frames<input type="checkbox" checked="checked"  class="" id="frames" name="frames"/></label></div>
+                        <div class="col-md-1 form-group"><label for="regions" class="form-group text-center">{% trans "Regions" %}<input type="checkbox" checked="checked"  class=""  id="regions" name="regions"/></label></div>
+                        <div class="col-md-1 form-group"><label for="labels" class="form-group text-center">{% trans "Labels" %}<input type="checkbox" checked="checked"  class=""  id="labels" name="labels"/></label></div>
+                        <div class="col-md-1 form-group"><label for="frames" class="form-group text-center">{% trans "Frames" %}<input type="checkbox" checked="checked"  class="" id="frames" name="frames"/></label></div>
                         <div class="col-md-3 text-center form-group"><button style="margin-top:10px" type="submit" class="btn btn-primary"><i class="fa fa-forward"></i> Next {{ delta }}</button></div>
                     </div>
                     {% csrf_token %}
@@ -69,16 +70,16 @@
             {% if results %}
                 {% if results.regions_meta or results.regions_name %}
                 <div class="box box-primary">
-                    <div class="box-header"><h4>Results: regions metadata text</h4></div>
+                    <div class="box-header"><h4>{% trans "Results: regions metadata text" %}</h4></div>
                     <div class="box-body">
                     <table class="table dataTables">
                     <thead>
                     <tr>
-                        <th class="text-center">Video</th>
-                        <th class="text-center">Frame index</th>
-                        <th class="text-center">Object name</th>
-                        <th class="text-center">Text</th>
-                        <th class="text-center">details</th>
+                        <th class="text-center">{% trans "Video" %}</th>
+                        <th class="text-center">{% trans "Frame index" %}</th>
+                        <th class="text-center">{% trans "Object name" %}</th>
+                        <th class="text-center">{% trans "Text" %}</th>
+                        <th class="text-center">{% trans "details" %}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -96,16 +97,16 @@
                     </div>
                 </div>
                 <div class="box box-primary">
-                    <div class="box-header"><h4>Results: regions object name</h4></div>
+                    <div class="box-header"><h4>{% trans "Results: regions object name" %}</h4></div>
                     <div class="box-body">
                     <table class="table dataTables">
                     <thead>
                     <tr>
-                        <th class="text-center">Video</th>
-                        <th class="text-center">Frame index</th>
-                        <th class="text-center">Object name</th>
-                        <th class="text-center">Text</th>
-                        <th class="text-center">details</th>
+                        <th class="text-center">{% trans "Video" %}</th>
+                        <th class="text-center">{% trans "Frame index" %}</th>
+                        <th class="text-center">{% trans "Object name" %}</th>
+                        <th class="text-center">{% trans "Text" %}</th>
+                        <th class="text-center">{% trans "details" %}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -125,16 +126,16 @@
                 {% endif %}
                 {% if results.labels %}
                 <div class="box box-primary">
-                    <div class="box-header"><h4>Results: labels</h4></div>
+                    <div class="box-header"><h4>{% trans "Results: labels" %}</h4></div>
                     <div class="box-body">
                     <table class="table dataTables">
                     <thead>
                     <tr>
-                        <th class="text-center">Label</th>
-                        <th class="text-center">Video</th>
-                        <th class="text-center">Clip</th>
-                        <th class="text-center">Region</th>
-                        <th class="text-center">Frame</th>
+                        <th class="text-center">{% trans "Label" %}</th>
+                        <th class="text-center">{% trans "Video" %}</th>
+                        <th class="text-center">{% trans "Clip" %}</th>
+                        <th class="text-center">{% trans "Region" %}</th>
+                        <th class="text-center">{% trans "Frame" %}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -144,7 +145,7 @@
                             <td>{{ l.video.name }}</td>
                             <td> TODO </td>
                             <td>{% if l.region %}{{ l.region.object_name }}{% endif %}</td>
-                            <td class="text-center"><a href="/frames/{{ l.frame.pk }}">details</a></td>
+                            <td class="text-center"><a href="/frames/{{ l.frame.pk }}">{% trans "details" %}</a></td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -154,14 +155,14 @@
                 {% endif %}
                 {% if results.frames_name or results.frames_subdir %}
                 <div class="box box-primary">
-                    <div class="box-header"><h4>Results: frame names</h4></div>
+                    <div class="box-header"><h4>{% trans "Results: frame names" %}</h4></div>
                     <div class="box-body">
                     <table class="table dataTables">
                     <thead>
                     <tr>
-                        <th class="text-center">Name</th>
-                        <th class="text-center">Directory</th>
-                        <th class="text-center">details</th>
+                        <th class="text-center">{% trans "Name" %}</th>
+                        <th class="text-center">{% trans "Directory" %}</th>
+                        <th class="text-center">{% trans "details" %}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -169,7 +170,7 @@
                         <tr>
                             <td>{{ f.name }}</td>
                             <td>{{ f.subdir }}</td>
-                            <td class="text-center"><a href="/frames/{{ f.pk }}">details</a></td>
+                            <td class="text-center"><a href="/frames/{{ f.pk }}">{% trans "details" %}</a></td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -177,14 +178,14 @@
                     </div>
                 </div>
                 <div class="box box-primary">
-                    <div class="box-header"><h4>Results: frame subdirs</h4></div>
+                    <div class="box-header"><h4>{% trans "Results: frame subdirs" %}</h4></div>
                     <div class="box-body">
                     <table class="table dataTables">
                     <thead>
                     <tr>
-                        <th class="text-center">Name</th>
-                        <th class="text-center">Directory</th>
-                        <th class="text-center">details</th>
+                        <th class="text-center">{% trans "Name" %}</th>
+                        <th class="text-center">{% trans "Directory" %}</th>
+                        <th class="text-center">{% trans "details" %}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -192,7 +193,7 @@
                         <tr>
                             <td>{{ f.name }}</td>
                             <td>{{ f.subdir }}</td>
-                            <td class="text-center"><a href="/frames/{{ f.pk }}">details</a></td>
+                            <td class="text-center"><a href="/frames/{{ f.pk }}">{% trans "details" %}</a></td>
                         </tr>
                     {% endfor %}
                     </tbody>
