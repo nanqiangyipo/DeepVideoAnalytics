@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load staticfiles %}
-
+{% load i18n %}
 {% block page_content %}
 <section class="content-header" style="padding-top:0px" xmlns="http://www.w3.org/1999/html">
 <div class="row">
@@ -23,7 +23,7 @@
                             <div class="row">
                             <div class="col-lg-6"><div class="form-group">
                                 <label for="name">{% trans "Detector name" %}</label>
-                                <input id="id_name" name="name" class="form-control" type="text" required="" placeholder="provide a name">
+                                <input id="id_name" name="name" class="form-control" type="text" required="" placeholder={% trans "provide a name" %}>
                             </div></div>
                             <div class="col-lg-6">
                                 <div class="form-group">
@@ -39,11 +39,11 @@
                             <div class="row">
                             <div class="col-lg-6"><div class="form-group">
                                 <label for="object_names">{% trans "Object names" %}</label>
-                                <input id="object_names" name="object_names" class="form-control" type="text" placeholder="comma separated list of regions to by object_names">
+                                <input id="object_names" name="object_names" class="form-control" type="text" placeholder={% trans "comma separated list of regions to by object_names" %}>
                             </div></div>
                             <div class="col-lg-6"><div class="form-group">
                                 <label for="labels">{% trans "Labels" %}</label>
-                                <input id="labels" name="labels" class="form-control" type="text" placeholder="comma separated list of regions to by applied labels">
+                                <input id="labels" name="labels" class="form-control" type="text" placeholder={% trans "comma separated list of regions to by applied labels"%}>
                             </div></div>
                             </div>
                             <div class="form-group">
@@ -65,7 +65,7 @@
                     <h4>{% trans "Train custom indexer" %}</h4>
                 </div>
                 <div class="box-body">
-                    <h4>{% trnas "Coming soon" %}</h4>
+                    <h4>{% trans "Coming soon" %}</h4>
                 </div>
             </div>
         </div>

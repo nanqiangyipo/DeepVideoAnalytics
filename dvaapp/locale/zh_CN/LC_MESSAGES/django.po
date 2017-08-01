@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-28 18:27+0800\n"
+"POT-Creation-Date: 2017-07-31 16:44+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,6 +23,190 @@ msgstr "英文"
 #: dva/settings.py:277
 msgid "Chinese"
 msgstr "中文"
+
+#: templates/annotate.html:13
+msgid "{[ status ]}"
+msgstr ""
+
+#: templates/annotate.html:23
+msgid "Annotate frame "
+msgstr "注释框"
+
+# ：templates/dvaapp/frame_detail.html:23
+#: templates/annotate.html:24 templates/dvaapp/frame_detail.html:23
+msgid "Previous"
+msgstr "上一个"
+
+# ：templates/dvaapp/frame_detail.html:25
+#: templates/annotate.html:25 templates/dvaapp/frame_detail.html:25
+msgid "Query using this frame"
+msgstr "以此为检索图片"
+
+#: templates/annotate.html:26
+msgid "Add bounding box annotation"
+msgstr "增加区域属性注释"
+
+# ：templates/dvaapp/frame_detail.html:26
+#: templates/annotate.html:27 templates/dvaapp/frame_detail.html:26
+msgid "Next"
+msgstr "下一个"
+
+#: templates/annotate.html:44 templates/annotate.html:134
+msgid "left"
+msgstr "左边界"
+
+#: templates/annotate.html:50 templates/annotate.html:135
+#: templates/dvaapp/video_detail.html:22 templates/dvaapp/video_list.html:43
+msgid "height"
+msgstr "高度"
+
+#: templates/annotate.html:54 templates/annotate.html:136
+#: templates/dvaapp/video_detail.html:23 templates/dvaapp/video_list.html:44
+msgid "width"
+msgstr "宽度"
+
+#: templates/annotate.html:60
+msgid "Text metadata (indexed for full text search)"
+msgstr "文本转换数据（全文本查找）"
+
+#: templates/annotate.html:61
+msgid "metadata_text"
+msgstr "元数据文本"
+
+#: templates/annotate.html:64 templates/dvaapp/frame_detail.html:206
+msgid "JSON metadata"
+msgstr "JSON 元数据"
+
+#: templates/annotate.html:65
+msgid "metadata_json"
+msgstr "元数据"
+
+#: templates/annotate.html:70 templates/detectors.html:120
+#: templates/dvaapp/frame_detail.html:45 templates/dvaapp/tevent_list.html:155
+#: templates/external_data.html:53 templates/external_data.html:96
+#: templates/external_data.html:138 templates/push.html:32
+#: templates/textsearch.html:163 templates/textsearch.html:186
+msgid "Name"
+msgstr "名字"
+
+#: templates/annotate.html:74
+msgid "Assign labels :"
+msgstr "分配标签/标签"
+
+#: templates/annotate.html:75
+msgid "specify multiple by seperating with a comma"
+msgstr "用逗号分隔以多项分类"
+
+#: templates/annotate.html:78 templates/dashboard.html:184
+#: templates/dvaapp/video_detail.html:306
+msgid "submit"
+msgstr "提交"
+
+#: templates/annotate.html:87
+msgid "Use mousewheel or touchpad to zoom-in/out/pan"
+msgstr "用滚轮或触控板放大/缩小"
+
+#: templates/annotate.html:89 templates/dashboard.html:51
+msgid "Move back"
+msgstr "下移"
+
+#: templates/annotate.html:90 templates/dashboard.html:52
+msgid "Move forward"
+msgstr "上移"
+
+#: templates/annotate.html:91 templates/dashboard.html:53
+msgid "Send to back"
+msgstr "置顶"
+
+#: templates/annotate.html:92 templates/dashboard.html:54
+msgid "Bring to front"
+msgstr "置底"
+
+#: templates/annotate.html:94 templates/dashboard.html:58
+msgid "Opacity"
+msgstr "透明度"
+
+#: templates/annotate.html:97 templates/annotate.html:101
+#: templates/dashboard.html:46 templates/dashboard.html:61
+msgid "Deselect"
+msgstr "不选择"
+
+# ：templates/annotate.html:151
+#: templates/annotate.html:100 templates/annotate.html:151
+#: templates/dashboard.html:45 templates/dashboard.html:49
+#: templates/dvaapp/frame_detail.html:77
+msgid "Delete"
+msgstr "删除该图"
+
+#: templates/annotate.html:103 templates/dashboard.html:25
+msgid "Reset Zoom"
+msgstr "取消缩放"
+
+#: templates/annotate.html:125
+msgid ""
+"Existing annotations and detections (refresh the page to reload new "
+"annotations)"
+msgstr "已有注释（刷新以加入新的注释）"
+
+#: templates/annotate.html:126
+msgid "Show /Hide all"
+msgstr "显示/隐藏"
+
+#: templates/annotate.html:131 templates/dvaapp/video_detail.html:15
+#: templates/dvaapp/video_detail.html:228 templates/dvaapp/video_list.html:38
+#: templates/push.html:80
+msgid "type"
+msgstr "数据类型"
+
+#: templates/annotate.html:132
+msgid "label / name"
+msgstr "对象名称"
+
+#: templates/annotate.html:133
+msgid "top"
+msgstr "顶"
+
+#: templates/annotate.html:137
+msgid "full frame"
+msgstr "所有帧"
+
+#: templates/annotate.html:138
+msgid "visible"
+msgstr "可视"
+
+# ：templates/dvaapp/frame_detail.html:87
+#: templates/annotate.html:139 templates/dvaapp/frame_detail.html:87
+#: templates/dvaapp/frame_detail.html:216
+msgid "delete"
+msgstr "删除"
+
+#: templates/annotate.html:143
+msgid "{[ box.box_type]}"
+msgstr "类型"
+
+#: templates/annotate.html:144
+msgid "{[ box.label]}"
+msgstr "标签"
+
+#: templates/annotate.html:145
+msgid "{[ box.top]}"
+msgstr "顶"
+
+#: templates/annotate.html:146
+msgid "{[ box.left]}"
+msgstr "左"
+
+#: templates/annotate.html:147
+msgid "{[ box.height*box.scaleY ]}"
+msgstr "高度"
+
+#: templates/annotate.html:148
+msgid "{[ box.width*box.scaleX ]}"
+msgstr "宽度"
+
+#: templates/annotate.html:149
+msgid "{[ box.full_frame ]}"
+msgstr "所有帧"
 
 #: templates/base.html:8
 msgid "Deep Video Analytics"
@@ -87,67 +270,62 @@ msgstr "管理员"
 
 #: templates/clustering.html:9
 msgid "Visualize & perform clustering for approximate search"
-msgstr ""
+msgstr "可视化和执行聚类以进行近似搜索"
 
 #: templates/clustering.html:19
 msgid "Create new clustering using LOPQ"
-msgstr ""
+msgstr "使用LOPQ创建新的群集"
 
 #: templates/clustering.html:25 templates/clustering.html:73
 msgid "Algorithm"
-msgstr ""
+msgstr "算法"
 
 #: templates/clustering.html:33
 msgid "Exclude (Algorithms other than the selected are automatically excluded)"
-msgstr ""
+msgstr "排除（除了所选择的算法被自动排除）"
 
 #: templates/clustering.html:41
 msgid "PCA components"
-msgstr ""
+msgstr "PCA组件"
 
 #: templates/clustering.html:45 templates/clustering.html:76
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #: templates/clustering.html:49 templates/clustering.html:77
 msgid "V"
-msgstr ""
+msgstr "V"
 
 #: templates/clustering.html:53
 msgid "Subq"
-msgstr ""
+msgstr "Subq"
 
 #: templates/clustering.html:57
-#, fuzzy
-#| msgid "at %(frame_index)s"
 msgid "Create new clustering"
-msgstr "的第%(frame_index)s帧"
+msgstr "创建新的簇"
 
 #: templates/clustering.html:67
 msgid "Clustering results & associated "
-msgstr ""
+msgstr "聚类结果与关联"
 
 #: templates/clustering.html:74
-#, fuzzy
-#| msgid "Selected indexers"
 msgid "Source indexer"
-msgstr "选择索引"
+msgstr "索引源"
 
 #: templates/clustering.html:75
 msgid "Components"
-msgstr ""
+msgstr "组件"
 
 #: templates/clustering.html:78
 msgid "Subquantizers"
-msgstr ""
+msgstr "子量化器"
 
-#: templates/clustering.html:79 templates/dvaapp/video_list.html:83
+#: templates/clustering.html:79 templates/dvaapp/tevent_list.html:74
+#: templates/dvaapp/tevent_list.html:113 templates/dvaapp/video_list.html:83
 msgid "Completed"
-msgstr ""
+msgstr "已完成"
 
 #: templates/clustering.html:80 templates/dvaapp/video_detail.html:163
-#, fuzzy
-#| msgid "created"
 msgid "Created"
 msgstr "创建时间"
 
@@ -157,6 +335,38 @@ msgstr "创建时间"
 #: templates/textsearch.html:188 templates/textsearch.html:196
 msgid "details"
 msgstr "详情"
+
+#: templates/dashboard.html:23
+msgid "Add image"
+msgstr "添加图片"
+
+#: templates/dashboard.html:26
+msgid "Clean editor"
+msgstr "重置查询"
+
+#: templates/dashboard.html:27
+msgid "Clear masks"
+msgstr "清除画笔"
+
+#: templates/dashboard.html:31
+msgid "Exclude"
+msgstr "画笔涂抹"
+
+#: templates/dashboard.html:33 templates/dashboard.html:36
+msgid "Stop Drawing!"
+msgstr "结束涂抹"
+
+#: templates/dashboard.html:40
+msgid "Brush width"
+msgstr "画笔粗细"
+
+#: templates/dashboard.html:50
+msgid "Duplicate"
+msgstr "克隆"
+
+#: templates/dashboard.html:55
+msgid "Scale"
+msgstr "大小"
 
 #: templates/dashboard.html:73
 msgid "Selected indexers"
@@ -238,10 +448,6 @@ msgstr "输入一个油管视频连接"
 msgid "Legal disclaimer:"
 msgstr "免责声明"
 
-#: templates/dashboard.html:184 templates/dvaapp/video_detail.html:306
-msgid "submit"
-msgstr "提交"
-
 #: templates/dashboard.html:198
 msgid ""
 "We suggest setting AWS authentication credentials using one of following "
@@ -266,13 +472,13 @@ msgstr "在AWS上运行深度视频分析平台时使用IAM角色"
 msgid "We do not provide a method to enter AWS credentials via web interface."
 msgstr "本平台不提供亚马逊云登录认证接口"
 
-#: templates/dashboard.html:208
+#: templates/dashboard.html:208 templates/push.html:36
 msgid "S3 region"
-msgstr "S3 区"
+msgstr "S3 域"
 
 #: templates/dashboard.html:209
 msgid "S3 bucket"
-msgstr "S3 存储区"
+msgstr "S3 存储"
 
 #: templates/dashboard.html:213
 msgid ""
@@ -312,6 +518,10 @@ msgstr "已完成"
 msgid "failed"
 msgstr "失败"
 
+#: templates/dashboard.html:292 templates/detectors.html:123
+msgid "Objects"
+msgstr "项目"
+
 #: templates/dashboard.html:297
 msgid "video / datasets"
 msgstr "视频/数据集"
@@ -331,7 +541,7 @@ msgstr "索引"
 
 #: templates/dashboard.html:311
 msgid "Trained detectors"
-msgstr ""
+msgstr "专业探测器"
 
 #: templates/dashboard.html:314
 msgid "tasks"
@@ -339,11 +549,11 @@ msgstr "任务"
 
 #: templates/dashboard.html:317
 msgid "VDN datasets"
-msgstr "视频云存储数据集"
+msgstr "中央数据集"
 
 #: templates/dashboard.html:320
 msgid "VDN servers"
-msgstr "视频云存储服务器"
+msgstr "中央存储服务器"
 
 #: templates/dashboard.html:333
 msgid "results:"
@@ -355,101 +565,89 @@ msgstr "请上传图片检索或上传数据"
 
 #: templates/detectors.html:9 templates/training.html:9
 msgid "Train and apply custom detectors using region annotations"
-msgstr ""
+msgstr "使用区域注释训练和应用定制检测器"
 
 #: templates/detectors.html:19 templates/training.html:19
 msgid "Train custom YOLO detector"
-msgstr ""
+msgstr "定制YOLO训练探测器"
 
 #: templates/detectors.html:25 templates/training.html:25
-#, fuzzy
-#| msgid "Detectors"
 msgid "Detector name"
-msgstr "深度挖掘"
+msgstr "探测器名称"
+
+#: templates/detectors.html:26 templates/training.html:26
+msgid "provide a name"
+msgstr "输入一个名称"
 
 #: templates/detectors.html:30 templates/training.html:30
-#, fuzzy
-#| msgid "video / datasets"
 msgid "Exclude video/dataset"
-msgstr "视频/数据集"
+msgstr "排除视频/数据集"
 
 #: templates/detectors.html:41 templates/training.html:41
-#, fuzzy
-#| msgid "Object name"
 msgid "Object names"
 msgstr "对象名称"
+
+#: templates/detectors.html:42 templates/training.html:42
+msgid "comma separated list of regions to by object_names"
+msgstr "以项目名称分隔域列表"
 
 #: templates/detectors.html:45 templates/textsearch.html:30
 #: templates/textsearch.html:57 templates/training.html:45
 msgid "Labels"
 msgstr "标签"
 
+#: templates/detectors.html:46 templates/training.html:46
+msgid "comma separated list of regions to by applied labels"
+msgstr "以应用标签分隔域列表"
+
+# ： templates/training.html:50
 #: templates/detectors.html:50 templates/training.html:50
 msgid ""
 "Additional JSON arguments for customizing options such as number of phase "
 "1/2 epochs, etc."
-msgstr ""
+msgstr "自定义json参数"
+
+#: templates/detectors.html:51
+msgid "Additional arguments as JSON { phase_2_epochs:50 } etc."
+msgstr "自定义json参数"
 
 #: templates/detectors.html:55 templates/training.html:55
 msgid "Estimate training set"
-msgstr ""
+msgstr "预测训练集"
 
 #: templates/detectors.html:56 templates/training.html:56
-#, fuzzy
-#| msgid "Detectors"
 msgid "Train detector"
 msgstr "深度挖掘"
 
 #: templates/detectors.html:65
 msgid "Detect objects using custom detector"
-msgstr ""
+msgstr "使用自定义检测器检测对象"
 
 #: templates/detectors.html:71
-#, fuzzy
-#| msgid "Selected indexers"
 msgid "Select detector"
-msgstr "选择索引"
+msgstr "选择检测器"
+
+#: templates/detectors.html:80
+msgid "Select video/dataset"
+msgstr "选择视频/数据集"
 
 #: templates/detectors.html:91
-#, fuzzy
-#| msgid "Detectors"
 msgid "Apply detector"
-msgstr "深度挖掘"
+msgstr "应用检测器"
 
 #: templates/detectors.html:114
-#, fuzzy
-#| msgid "at %(frame_index)s"
 msgid "Trained custom detectors"
-msgstr "的第%(frame_index)s帧"
-
-#: templates/detectors.html:120 templates/dvaapp/frame_detail.html:45
-#: templates/dvaapp/tevent_list.html:155 templates/external_data.html:53
-#: templates/external_data.html:96 templates/external_data.html:138
-#: templates/textsearch.html:163 templates/textsearch.html:186
-msgid "Name"
-msgstr "名字"
+msgstr "已训练的自定义检测器"
 
 #: templates/detectors.html:121
-#, fuzzy
-#| msgid "Training"
 msgid "Training frames"
-msgstr "个性化"
+msgstr "训练帧"
 
 #: templates/detectors.html:122
-#, fuzzy
-#| msgid "Training"
 msgid "Training boxes"
-msgstr "个性化"
-
-#: templates/detectors.html:123
-#, fuzzy
-#| msgid "object"
-msgid "Objects"
-msgstr "名称"
+msgstr "训练集"
 
 #: templates/detectors.html:124
-#, fuzzy
-#| msgid "details"
 msgid "Details"
 msgstr "详情"
 
@@ -470,18 +668,6 @@ msgstr "的第%(frame_index)s帧"
 #, python-format
 msgid " in Segment%(tran_si)s"
 msgstr ",第%(tran_si)s个片段"
-
-#: templates/dvaapp/frame_detail.html:23
-msgid "Previous"
-msgstr "上一个"
-
-#: templates/dvaapp/frame_detail.html:25
-msgid "Query using this frame"
-msgstr "以此为检索图片"
-
-#: templates/dvaapp/frame_detail.html:26
-msgid "Next"
-msgstr "下一个"
 
 #: templates/dvaapp/frame_detail.html:32
 msgid "Add & edit annotations for bouding box"
@@ -504,6 +690,7 @@ msgid "Assign tags/labels"
 msgstr "分配标签/标签"
 
 #: templates/dvaapp/frame_detail.html:58 templates/ocr.html:45
+#: templates/push.html:56 templates/push.html:129
 msgid "Submit"
 msgstr "提交"
 
@@ -526,19 +713,10 @@ msgstr "用户"
 msgid "Metadata"
 msgstr "元数据"
 
-#: templates/dvaapp/frame_detail.html:77
-msgid "Delete"
-msgstr "删除"
-
 #: templates/dvaapp/frame_detail.html:86
 #: templates/dvaapp/frame_detail.html:124
 msgid "view metadata"
 msgstr "查看元数据"
-
-#: templates/dvaapp/frame_detail.html:87
-#: templates/dvaapp/frame_detail.html:216
-msgid "delete"
-msgstr "删除"
 
 #: templates/dvaapp/frame_detail.html:99
 msgid "Annotations for bounding boxes"
@@ -546,29 +724,29 @@ msgstr "目标框标注信息"
 
 #: templates/dvaapp/frame_detail.html:107
 #: templates/dvaapp/frame_detail.html:141
-#: templates/dvaapp/video_detail.html:232
+#: templates/dvaapp/video_detail.html:232 templates/push.html:83
 msgid "x"
 msgstr "横坐标"
 
 #: templates/dvaapp/frame_detail.html:108
 #: templates/dvaapp/frame_detail.html:142
-#: templates/dvaapp/video_detail.html:233
+#: templates/dvaapp/video_detail.html:233 templates/push.html:84
 msgid "y"
 msgstr "纵坐标"
 
 #: templates/dvaapp/frame_detail.html:109
 #: templates/dvaapp/frame_detail.html:143
-#: templates/dvaapp/video_detail.html:234
+#: templates/dvaapp/video_detail.html:234 templates/push.html:85
 msgid "w"
 msgstr "宽度"
 
 #: templates/dvaapp/frame_detail.html:110
 #: templates/dvaapp/frame_detail.html:144
-#: templates/dvaapp/video_detail.html:235
+#: templates/dvaapp/video_detail.html:235 templates/push.html:86
 msgid "h"
 msgstr "高度"
 
-#: templates/dvaapp/frame_detail.html:111
+#: templates/dvaapp/frame_detail.html:111 templates/push.html:88
 msgid "metadata"
 msgstr "元数据"
 
@@ -596,10 +774,6 @@ msgstr "使用这张图片进行搜索"
 #: templates/dvaapp/frame_detail.html:204
 msgid "Text metadata"
 msgstr "文本元数据"
-
-#: templates/dvaapp/frame_detail.html:206
-msgid "JSON metadata"
-msgstr "JSON 元数据"
 
 #: templates/dvaapp/frame_detail.html:209
 msgid "Bounding box"
@@ -680,7 +854,7 @@ msgstr "重新执行此查询"
 
 #: templates/dvaapp/tevent_list.html:12
 msgid "List of Tasks, Operations & Queues"
-msgstr ""
+msgstr "任务表单"
 
 #: templates/dvaapp/tevent_list.html:46 templates/dvaapp/video_detail.html:32
 #: templates/dvaapp/video_detail.html:58 templates/dvaapp/video_list.html:81
@@ -691,18 +865,16 @@ msgid "Video"
 msgstr "视频"
 
 #: templates/dvaapp/tevent_list.html:47
-#, fuzzy
-#| msgid "duration"
 msgid "Operation"
-msgstr "长度"
+msgstr "操作"
 
 #: templates/dvaapp/tevent_list.html:48
 msgid "ts"
-msgstr ""
+msgstr "时长"
 
 #: templates/dvaapp/tevent_list.html:49
 msgid "unix ts"
-msgstr ""
+msgstr "单元时长"
 
 #: templates/dvaapp/tevent_list.html:50 templates/dvaapp/video_detail.html:17
 #: templates/dvaapp/video_list.html:40
@@ -711,37 +883,59 @@ msgstr "长度"
 
 #: templates/dvaapp/tevent_list.html:51
 msgid "error"
-msgstr ""
+msgstr "报错\t"
 
 #: templates/dvaapp/tevent_list.html:52
 msgid "status and details"
-msgstr ""
+msgstr "状态"
 
 #: templates/dvaapp/tevent_list.html:53
-#, fuzzy
-#| msgid "indexes"
 msgid "retry task"
-msgstr "索引"
+msgstr "重试任务"
 
 #: templates/dvaapp/tevent_list.html:54
 msgid "mark as failed<"
-msgstr ""
+msgstr "标记失败"
+
+#: templates/dvaapp/tevent_list.html:68 templates/dvaapp/tevent_list.html:107
+msgid "Failed"
+msgstr "失败"
+
+#: templates/dvaapp/tevent_list.html:70 templates/dvaapp/tevent_list.html:109
+msgid "Pending"
+msgstr "待执行"
+
+#: templates/dvaapp/tevent_list.html:72 templates/dvaapp/tevent_list.html:111
+msgid "Running"
+msgstr "正在执行"
+
+#: templates/dvaapp/tevent_list.html:76 templates/dvaapp/tevent_list.html:115
+msgid "Unknown"
+msgstr "未知"
+
+#: templates/dvaapp/tevent_list.html:79
+msgid "Retry"
+msgstr "重试"
+
+#: templates/dvaapp/tevent_list.html:80
+msgid "Mark as failed"
+msgstr "标记失败"
 
 #: templates/dvaapp/tevent_list.html:138
 msgid "Task & Queue configuration"
-msgstr ""
+msgstr "任务及队列配置"
 
 #: templates/dvaapp/tevent_list.html:144 templates/dvaapp/tevent_list.html:157
 msgid "Queue"
-msgstr ""
+msgstr "队列"
 
 #: templates/dvaapp/tevent_list.html:156
 msgid "Type"
-msgstr ""
+msgstr "类型"
 
 #: templates/dvaapp/tevent_list.html:158
 msgid "Post success tasks"
-msgstr ""
+msgstr "发布成功"
 
 #: templates/dvaapp/video_detail.html:10
 #, python-format
@@ -752,11 +946,6 @@ msgid ""
 msgstr ""
 "展示从<span style=\"font-weight:bold\">%(begin)s</span>到<span style=\"font-"
 "weight:bold\">%(end)s</span>图片信息"
-
-#: templates/dvaapp/video_detail.html:15
-#: templates/dvaapp/video_detail.html:228 templates/dvaapp/video_list.html:38
-msgid "type"
-msgstr "数据类型"
 
 #: templates/dvaapp/video_detail.html:16 templates/dvaapp/video_list.html:39
 msgid "name"
@@ -773,14 +962,6 @@ msgstr "提取结果"
 #: templates/dvaapp/video_detail.html:21
 msgid "labels"
 msgstr "标签"
-
-#: templates/dvaapp/video_detail.html:22 templates/dvaapp/video_list.html:43
-msgid "height"
-msgstr "高度"
-
-#: templates/dvaapp/video_detail.html:23 templates/dvaapp/video_list.html:44
-msgid "width"
-msgstr "宽度"
 
 #: templates/dvaapp/video_detail.html:24 templates/dvaapp/video_list.html:45
 #: templates/indexes.html:123
@@ -826,7 +1007,7 @@ msgstr "图片数量范围"
 #: templates/dvaapp/video_detail.html:254
 #: templates/dvaapp/video_detail.html:269
 #: templates/dvaapp/video_detail.html:284 templates/dvaapp/video_list.html:48
-#: templates/dvaapp/video_list.html:65
+#: templates/dvaapp/video_list.html:65 templates/push.html:89
 msgid "view"
 msgstr "查看"
 
@@ -841,125 +1022,119 @@ msgstr "查看范围"
 
 #: templates/dvaapp/video_detail.html:97
 msgid "Task status"
-msgstr ""
+msgstr "任务状态"
 
 #: templates/dvaapp/video_detail.html:116
 msgid "Admin actions"
-msgstr ""
+msgstr "管理操作"
 
 #: templates/dvaapp/video_detail.html:121
-#, fuzzy
-#| msgid "Import"
 msgid "Export as a file"
-msgstr "导入"
+msgstr "导出文件"
 
 #: templates/dvaapp/video_detail.html:126
 msgid "Delete (only staff)"
-msgstr ""
+msgstr "删除（只有工作人员）"
 
 #: templates/dvaapp/video_detail.html:139
 msgid "Rename"
-msgstr ""
+msgstr "重命名"
 
 #: templates/dvaapp/video_detail.html:147
 msgid "S3 Bucket"
-msgstr ""
+msgstr "S3存储"
 
 #: templates/dvaapp/video_detail.html:148
 msgid "S3 Key"
-msgstr ""
+msgstr "S3密钥"
 
 #: templates/dvaapp/video_detail.html:156
 msgid ""
 "Delete currently requires retrieval workers to be restarted to purge index "
 "loaded in memory (a fix is pending)"
-msgstr ""
+msgstr "删除需要检索人员重新启动以清除索引，加载在内存中（修复程序正在等待）"
 
 #: templates/dvaapp/video_detail.html:157
 msgid ""
 "Provide AWS credential via environment variables or by running aws configure "
 "inside container or via IAM roles on EC2"
-msgstr ""
+msgstr "通过环境变量或运行aws配置提供AWS凭据,内部容器或EC2上的IAM角色"
 
 #: templates/dvaapp/video_detail.html:159
 msgid "Available backups"
-msgstr ""
+msgstr "可用备份"
 
 #: templates/dvaapp/video_detail.html:165 templates/dvaapp/video_list.html:84
 msgid "Download URL or S3 region/bucket/key"
-msgstr ""
+msgstr "下载URL或S3域/存储/键"
 
 #: templates/dvaapp/video_detail.html:173 templates/dvaapp/video_list.html:93
 msgid "click to download"
-msgstr ""
+msgstr "下载"
 
 #: templates/dvaapp/video_detail.html:194
 msgid "Push video/dataset to remote VDN server"
-msgstr ""
+msgstr "推送数据集到远程VDN服务器"
 
 #: templates/dvaapp/video_detail.html:199
 msgid "local annotations to push to a remote VDN server."
-msgstr ""
+msgstr "推送本地注释到远程VDN服务器"
 
 #: templates/dvaapp/video_detail.html:201
 msgid "Push annotations"
-msgstr ""
+msgstr "推送注释"
 
 #: templates/dvaapp/video_detail.html:204
 msgid "No pending changes"
-msgstr ""
+msgstr "暂无更改"
 
 #: templates/dvaapp/video_detail.html:216
 msgid "List of frames/images & detection"
-msgstr ""
+msgstr "图像检测表"
 
 #: templates/dvaapp/video_detail.html:229
 msgid "file / annotation / object name"
-msgstr ""
+msgstr "对象名称"
 
-#: templates/dvaapp/video_detail.html:231
+#: templates/dvaapp/video_detail.html:231 templates/push.html:82
 msgid "size in pixels"
-msgstr ""
+msgstr "尺寸（像素）"
 
 #: templates/dvaapp/video_detail.html:236
 msgid "segment"
-msgstr ""
+msgstr "分割"
 
-#: templates/dvaapp/video_detail.html:237
-#, fuzzy
-#| msgid "at %(frame_index)s"
+#: templates/dvaapp/video_detail.html:237 templates/push.html:87
 msgid "frame index"
-msgstr "的第%(frame_index)s帧"
+msgstr "窗口索引"
 
 #: templates/dvaapp/video_detail.html:259
 msgid "detection"
-msgstr ""
+msgstr "检测"
 
 #: templates/dvaapp/video_detail.html:274
 msgid "annotation"
-msgstr ""
+msgstr "注释"
 
 #: templates/dvaapp/video_list.html:10
 msgid "List of videos & datasets"
-msgstr ""
+msgstr "数据集列表"
 
 #: templates/dvaapp/video_list.html:15
 msgid "Go back"
-msgstr ""
+msgstr "返回"
 
 #: templates/dvaapp/video_list.html:21
 msgid "Load more"
-msgstr ""
+msgstr "加载更多"
 
 #: templates/dvaapp/video_list.html:47
 msgid "VDN Source"
-msgstr ""
+msgstr "VDN源"
 
 #: templates/dvaapp/video_list.html:75
-#, fuzzy
-#| msgid "Import"
 msgid "Exports"
-msgstr "导入"
+msgstr "导出"
 
 #: templates/dvaapp/video_list.html:82
 msgid "Started"
@@ -971,238 +1146,264 @@ msgstr ""
 
 #: templates/external_data.html:24
 msgid "Server Name"
-msgstr ""
+msgstr "服务器名称"
 
 #: templates/external_data.html:25
 msgid "Server URL"
-msgstr ""
+msgstr "存储路径"
 
 #: templates/external_data.html:26
-#, fuzzy
-#| msgid "VDN datasets"
 msgid "Pull datasets list"
-msgstr "视频云存储数据集"
+msgstr "取出数据列表"
 
 #: templates/external_data.html:34
 msgid "Load / Refresh"
-msgstr ""
+msgstr "加载"
 
 #: templates/external_data.html:47
-#, fuzzy
-#| msgid "video / datasets"
 msgid "Available datasets"
-msgstr "视频/数据集"
+msgstr "可用视频/数据集"
 
 #: templates/external_data.html:54 templates/external_data.html:97
 msgid "Server"
-msgstr ""
+msgstr "服务器"
 
 #: templates/external_data.html:55 templates/external_data.html:98
 #: templates/external_data.html:141
 msgid "AWS Region/Bucket/ Key"
-msgstr ""
+msgstr "AWS区域/存储/键"
 
 #: templates/external_data.html:56 templates/external_data.html:99
 #: templates/external_data.html:142
 msgid "Direct download"
-msgstr ""
+msgstr "直接下载"
 
 #: templates/external_data.html:90
-#, fuzzy
-#| msgid "Detectors"
 msgid "Available Detectors"
-msgstr "深度挖掘"
+msgstr "可用检测器"
 
 #: templates/external_data.html:132
-#, fuzzy
-#| msgid "at %(frame_index)s"
 msgid "Configured datasets"
-msgstr "的第%(frame_index)s帧"
+msgstr "已设置数据集"
 
 #: templates/external_data.html:139
-#, fuzzy
-#| msgid "source"
 msgid "Source"
 msgstr "源"
 
 #: templates/external_data.html:140
 msgid "Root"
-msgstr ""
+msgstr "根"
 
 #: templates/external_data.html:143
-#, fuzzy
-#| msgid "details"
 msgid "View details"
-msgstr "详情"
+msgstr "查看详情"
 
 #: templates/external_data.html:144
-#, fuzzy
-#| msgid "Object name"
 msgid "Parent name"
-msgstr "对象名称"
+msgstr "父类名称"
 
 #: templates/external_data.html:145
-#, fuzzy
-#| msgid "details"
 msgid "Parent details"
-msgstr "详情"
+msgstr "父类详情"
 
 #: templates/indexes.html:9
 msgid "List of indexes"
 msgstr "索引列表"
 
 #: templates/indexes.html:19
-#, fuzzy
-#| msgid "at %(frame_index)s"
 msgid "Configured indexes"
-msgstr "的第%(frame_index)s帧"
+msgstr "已设置索引"
 
 #: templates/indexes.html:25 templates/indexes.html:116
-#, fuzzy
-#| msgid "Indexing"
 msgid "Index name"
-msgstr "索引"
+msgstr "索引名称"
 
 #: templates/indexes.html:26
-#, fuzzy
-#| msgid "indexes"
 msgid "Indexer task"
-msgstr "索引"
+msgstr "索引任务"
 
 #: templates/indexes.html:27
 msgid "Indexer queue"
-msgstr ""
+msgstr "索引队列"
 
 #: templates/indexes.html:28
 msgid "Retriever queue"
-msgstr ""
+msgstr "检索队列"
 
 #: templates/indexes.html:29
-#, fuzzy
-#| msgid "Detections"
 msgid "Detection specific"
-msgstr "深度挖掘列表"
+msgstr "检测分类"
 
 #: templates/indexes.html:52
 msgid "Index custom set of regions"
-msgstr ""
+msgstr "区的索引设定"
 
 #: templates/indexes.html:57
-#, fuzzy
-#| msgid "Indexing"
 msgid "Indexing algorithm"
-msgstr "索引"
+msgstr "索引算法"
 
 #: templates/indexes.html:75
-#, fuzzy
-#| msgid "Regions"
 msgid "Region types"
-msgstr "提取结果集"
+msgstr "区域类别"
 
 #: templates/indexes.html:85
-#, fuzzy
-#| msgid "Object name"
 msgid "object name"
 msgstr "对象名称"
 
 #: templates/indexes.html:86
 msgid "object_name_contains"
-msgstr ""
+msgstr "对象内容"
 
 #: templates/indexes.html:87
 msgid "text_contains"
-msgstr ""
+msgstr "文本内容"
 
 #: templates/indexes.html:90
-#, fuzzy
-#| msgid "height"
 msgid "Min height"
-msgstr "高度"
+msgstr "最小高度"
 
 #: templates/indexes.html:91
-#, fuzzy
-#| msgid "height"
 msgid "Max height"
-msgstr "高度"
+msgstr "最大高度"
 
 #: templates/indexes.html:92
-#, fuzzy
-#| msgid "width"
 msgid "Min width"
 msgstr "宽度"
 
 #: templates/indexes.html:93
-#, fuzzy
-#| msgid "width"
 msgid "Max width"
-msgstr "宽度"
+msgstr "最小宽度"
 
 #: templates/indexes.html:99
-#, fuzzy
-#| msgid "at %(frame_index)s"
 msgid "Create custom index"
-msgstr "的第%(frame_index)s帧"
+msgstr "创建索引"
 
 #: templates/indexes.html:110
-#, fuzzy
-#| msgid "Exclude index entries"
 msgid "Index entries"
-msgstr "减少索引项"
+msgstr "索引项"
 
 #: templates/indexes.html:117
-#, fuzzy
-#| msgid "Video"
 msgid "Video name"
 msgstr "视频"
 
 #: templates/indexes.html:118
-#, fuzzy
-#| msgid "Detected objects:"
 msgid "Indexed object"
-msgstr "智能分析结果:"
+msgstr "检测项"
 
 #: templates/indexes.html:119
-#, fuzzy
-#| msgid "Approximate Search"
 msgid "Approximate"
 msgstr "模糊搜索"
 
 #: templates/indexes.html:120
 msgid "Features filename"
-msgstr ""
+msgstr "特征文件"
 
 #: templates/indexes.html:121
 msgid "Entries filename"
-msgstr ""
+msgstr "文件条目"
 
 #: templates/indexes.html:122
 msgid "count"
-msgstr ""
+msgstr "数目"
 
 #: templates/ocr.html:9
 msgid "Perform OCR"
-msgstr ""
+msgstr "执行光学字符识别"
 
 #: templates/ocr.html:18
 msgid ""
 "Submit video/dataset for Connectionist Text Proposal Network (detection) and "
 "Convolutional Recurrent Neural Network (recognition)"
-msgstr ""
+msgstr "提交检测视频"
 
 #: templates/ocr.html:23
-#, fuzzy
-#| msgid "Tasks"
 msgid "Task"
 msgstr "服务器任务"
 
 #: templates/ocr.html:42
 msgid "Arguments as JSON"
-msgstr ""
+msgstr "JSON参数"
+
+#: templates/push.html:11
+msgid "Push new annotations in "
+msgstr "加入新的注释"
+
+#: templates/push.html:11
+msgid "to remote VDN server"
+msgstr "视频云存储服务器"
+
+#: templates/push.html:13
+msgid "Export & Push "
+msgstr "导出"
+
+#: templates/push.html:13
+msgid "with frames, annotations, and other information to remote VDN server"
+msgstr "帧，注释，及其他信息到远程服务器"
+
+#: templates/push.html:26
+msgid "Push dataset to VDN using an AWS S3 key / bucket"
+msgstr "用AWS S3传输数据到远程服务器"
+
+#: templates/push.html:27
+msgid ""
+"If you intened to make it public, make sure that requester pay is enabled "
+"AND access policies are set correctly for the entire bucket. Provide AWS "
+"credential via environment variables or by running aws configure inside "
+"container or via IAM roles on EC2."
+msgstr "如果你想要使它发布，请确保请求已被授权，并且接口设置正确。"
+
+#: templates/push.html:33
+msgid "Description"
+msgstr "描述"
+
+#: templates/push.html:34
+msgid "S3 bucket "
+msgstr "S3 存储"
+
+#: templates/push.html:35
+msgid "S3 key"
+msgstr "S3 密钥"
+
+#: templates/push.html:42
+msgid "VDN Server"
+msgstr "视频云存储服务器"
+
+#: templates/push.html:48 templates/push.html:121
+msgid "Token"
+msgstr "令牌"
+
+#: templates/push.html:48 templates/push.html:121
+msgid "(generate token here)"
+msgstr "（在此生成令牌）"
+
+#: templates/push.html:57 templates/push.html:130
+msgid "Push to"
+msgstr "发送到"
+
+#: templates/push.html:70
+msgid "Pending Annotations"
+msgstr "待标注"
+
+#: templates/push.html:75
+msgid "Select / Deselect all annotations "
+msgstr "选择/不选择所有注释"
+
+#: templates/push.html:81
+msgid "label"
+msgstr "标签"
+
+#: templates/push.html:90
+msgid "select"
+msgstr "选择"
 
 #: templates/rest_framework/admin.html:118
 #: templates/rest_framework/base.html:128
 msgid "Filters"
 msgstr "筛选"
+
+#: templates/status.html:9
+msgid "Logs (only on the current machine / container)"
+msgstr "登录（只在当前机器）"
 
 #: templates/textsearch.html:10
 msgid "Full text search & OCR annotations"
@@ -1273,10 +1474,12 @@ msgid "Results: frame subdirs"
 msgstr "结果：帧子目录"
 
 #: templates/training.html:65
-#, fuzzy
-#| msgid "at %(frame_index)s"
 msgid "Train custom indexer"
-msgstr "的第%(frame_index)s帧"
+msgstr "训练设置索引"
+
+#: templates/training.html:68
+msgid "Coming soon"
+msgstr "即将更新"
 
 #~ msgid ""
 #~ "\n"

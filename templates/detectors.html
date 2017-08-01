@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load staticfiles %}
-
+{% load i18n %}
 {% block page_content %}
 <section class="content-header" style="padding-top:0px" xmlns="http://www.w3.org/1999/html">
 <div class="row">
@@ -23,7 +23,7 @@
                             <div class="row">
                             <div class="col-lg-6"><div class="form-group">
                                 <label for="name">{% trans "Detector name" %}</label>
-                                <input id="id_name" name="name" class="form-control" type="text" required="" placeholder="provide a name">
+                                <input id="id_name" name="name" class="form-control" type="text" required="" placeholder={% trans  "provide a name"%}>
                             </div></div>
                             <div class="col-lg-6">
                                 <div class="form-group">
@@ -39,16 +39,16 @@
                             <div class="row">
                             <div class="col-lg-6"><div class="form-group">
                                 <label for="object_names">{% trans "Object names" %}</label>
-                                <input id="object_names" name="object_names" class="form-control" type="text" placeholder="comma separated list of regions to by object_names">
+                                <input id="object_names" name="object_names" class="form-control" type="text" placeholder={% trans "comma separated list of regions to by object_names" %}>
                             </div></div>
                             <div class="col-lg-6"><div class="form-group">
                                 <label for="labels">{% trans "Labels" %}</label>
-                                <input id="labels" name="labels" class="form-control" type="text" placeholder="comma separated list of regions to by applied labels">
+                                <input id="labels" name="labels" class="form-control" type="text" placeholder={% trans  "comma separated list of regions to by applied labels"%}>
                             </div></div>
                             </div>
                             <div class="form-group">
                                 <label for="args">{% trans "Additional JSON arguments for customizing options such as number of phase 1/2 epochs, etc." %}</label>
-                                <textarea class="form-control" name="args" rows="2" placeholder="Additional arguments as JSON { phase_2_epochs:50 } etc."></textarea>
+                                <textarea class="form-control" name="args" rows="2" placeholder={% trans "Additional arguments as JSON { phase_2_epochs:50 } etc." %}></textarea>
                             </div>
                             {% csrf_token %}
                             <div style="text-align: center">
@@ -77,7 +77,7 @@
                             </div></div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label for="excluded_videos">{% tran "Select video/dataset" %}</label>
+                                    <label for="excluded_videos">{% trans "Select video/dataset" %}</label>
                                     <select class="js-example-basic-single" id="video_pk" name="video_pk" style="width:100%">
                                     {% for v in videos %}
                                         <option value="{{ v.pk }}">{{ v.name }}</option>

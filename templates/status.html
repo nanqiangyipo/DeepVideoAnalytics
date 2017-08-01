@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% load staticfiles %}
-
+{% load i18n %}
 {% block page_content %}
 <section class="content-header" style="padding-top:0px" xmlns="http://www.w3.org/1999/html">
 <div class="row">
     <div class="box box-info">
         <div class="box-header">
-            <h2>Logs (only on the current machine / container)</h2>
+            <h2>{% trans "Logs (only on the current machine / container)" %}</h2>
         </div>
     </div>
 </div>

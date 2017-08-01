@@ -65,19 +65,19 @@
                             <td class="text-right">{{ e.error_message }}</td>
                             <td>
                                 {% if e.errored %}
-                                    <a href="#" data-toggle="modal" data-target="#modal_{{ e.pk }}" class="btn btn-danger btn-block">Failed</a>
+                                    <a href="#" data-toggle="modal" data-target="#modal_{{ e.pk }}" class="btn btn-danger btn-block">{% trans "Failed" %}</a>
                                 {% elif e.seconds < 0 and not e.started %}
-                                    <a href="#" data-toggle="modal" data-target="#modal_{{ e.pk }}" class="btn btn-warning btn-block">Pending</a>
+                                    <a href="#" data-toggle="modal" data-target="#modal_{{ e.pk }}" class="btn btn-warning btn-block">{% trans "Pending" %}</a>
                                 {% elif e.seconds < 0 and e.started and not e.completed%}
-                                    <a href="#" data-toggle="modal" data-target="#modal_{{ e.pk }}" class="btn btn-primary btn-block">Running</a>
+                                    <a href="#" data-toggle="modal" data-target="#modal_{{ e.pk }}" class="btn btn-primary btn-block">{% trans "Running" %}</a>
                                 {% elif e.completed%}
-                                    <a href="#" data-toggle="modal" data-target="#modal_{{ e.pk }}" class="btn btn-success btn-block">Completed</a>
+                                    <a href="#" data-toggle="modal" data-target="#modal_{{ e.pk }}" class="btn btn-success btn-block">{% trans "Completed" %}</a>
                                 {% else %}
-                                    <a href="#" data-toggle="modal" data-target="#modal_{{ e.pk }}" class="btn btn-info btn-block">Unknown</a>
+                                    <a href="#" data-toggle="modal" data-target="#modal_{{ e.pk }}" class="btn btn-info btn-block">{% trans "Unknown" %}</a>
                                 {% endif %}
                             </td>
-                            <td class="text-center"><button class="btn btn-warning" name="pk" formaction="/retry/" type="submit" value="{{ e.pk }}">Retry</button></td>
-                            <td class="text-center"><button class="btn btn-warning" name="pk" formaction="/failed/"  type="submit" value="{{ e.pk }}" >Mark as failed</button></td>
+                            <td class="text-center"><button class="btn btn-warning" name="pk" formaction="/retry/" type="submit" value="{{ e.pk }}">{% trans "Retry" %}</button></td>
+                            <td class="text-center"><button class="btn btn-warning" name="pk" formaction="/failed/"  type="submit" value="{{ e.pk }}" >{% trans "Mark as failed" %}</button></td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -104,15 +104,15 @@
                 </div>
                 <div class="col-lg-4">
                 {% if e.errored %}
-                    <a href="#" class="btn btn-danger btn-block">Failed</a>
+                    <a href="#" class="btn btn-danger btn-block">{% trans "Failed" %}</a>
                 {% elif e.seconds < 0 and not e.started %}
-                    <a href="#" class="btn btn-warning btn-block">Pending</a>
+                    <a href="#" class="btn btn-warning btn-block">{% trans "Pending" %}</a>
                 {% elif e.seconds < 0 and e.started and not e.completed%}
-                    <a href="#" class="btn btn-primary btn-block">Running</a>
+                    <a href="#" class="btn btn-primary btn-block">{% trans "Running" %}</a>
                 {% elif e.completed%}
-                    <a href="#" class="btn btn-success btn-block">Completed</a>
+                    <a href="#" class="btn btn-success btn-block">{% trans "Completed" %}</a>
                 {% else %}
-                    <a href="#" class="btn btn-disabled btn-block">Unknown</a>
+                    <a href="#" class="btn btn-disabled btn-block">{% trans "Unknown" %}</a>
                 {% endif %}
                 </div>
             </div>

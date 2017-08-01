@@ -20,45 +20,45 @@
         <div class="inner">
         <form id="image-form" style="width:100%;"  onsubmit="return false;">
             <input type='file'  id='imgfile' style="display:none"/>
-            <a type='button' class="btn btn-primary btn-move" id='btnLoad' ng-click='load_image();'><i class="fa fa-image"></i>&nbsp;&nbsp;Add image</a>
+            <a type='button' class="btn btn-primary btn-move" id='btnLoad' ng-click='load_image();'><i class="fa fa-image"></i>&nbsp;&nbsp;{% trans "Add image" %}</a>
         </form>
-        <button type="button" class="btn btn-info  btn-move"  id="reset_zoom" ng-click="resetZoom()"><i class="fa fa-refresh"></i>&nbsp;Reset Zoom</button>
-        <button type="button" class="btn btn-danger  btn-move"  id="clear" ng-click="confirmClear()"><i class="fa fa-trash"></i>&nbsp;&nbsp;Clean editor</button>
-        <button type="button" class="btn btn-warning  btn-move"  id="clear_mask" ng-click="confirmClearMasks()"><i class="fa fa-trash"></i>&nbsp;Clear masks</button>
+        <button type="button" class="btn btn-info  btn-move"  id="reset_zoom" ng-click="resetZoom()"><i class="fa fa-refresh"></i>&nbsp;{% trans "Reset Zoom" %}</button>
+        <button type="button" class="btn btn-danger  btn-move"  id="clear" ng-click="confirmClear()"><i class="fa fa-trash"></i>&nbsp;&nbsp;{% trans "Clean editor" %}</button>
+        <button type="button" class="btn btn-warning  btn-move"  id="clear_mask" ng-click="confirmClearMasks()"><i class="fa fa-trash"></i>&nbsp;{% trans "Clear masks" %}</button>
         <button id="drawing-mode_b"
           ng-click="setFreeDrawingMode(!getFreeDrawingMode(2),2)"
           ng-class="{'btn-inverse': getFreeDrawingMode(2)}" class="btn btn-move btn-warning ">
-          <i class="fa fa-pencil"></i>&nbsp;&nbsp;Exclude </button>
+          <i class="fa fa-pencil"></i>&nbsp;&nbsp;{% trans "Exclude" %} </button>
         <div ng-show="getFreeDrawingMode(1)" class="drawing-mode">
-            <button id="drawing-mode_x" ng-click="setFreeDrawingMode(!getFreeDrawingMode(1),1)" class="btn bg-red btn-move stop_btn"> <i class="fa fa-close"></i>&nbsp;&nbsp;Stop Drawing!</button>
+            <button id="drawing-mode_x" ng-click="setFreeDrawingMode(!getFreeDrawingMode(1),1)" class="btn bg-red btn-move stop_btn"> <i class="fa fa-close"></i>&nbsp;&nbsp;{% trans "Stop Drawing!" %}</button>
         </div>
         <div ng-show="getFreeDrawingMode(2)" class="drawing-mode">
-            <button id="drawing-mode_x_2" ng-click="setFreeDrawingMode(!getFreeDrawingMode(2),2)" class="btn btn-warning btn-move stop_btn"> <i class="fa fa-close"></i>&nbsp;&nbsp;Stop Drawing!</button>
+            <button id="drawing-mode_x_2" ng-click="setFreeDrawingMode(!getFreeDrawingMode(2),2)" class="btn btn-warning btn-move stop_btn"> <i class="fa fa-close"></i>&nbsp;{% trans "Stop Drawing!" %}&nbsp;</button>
         </div>
         <div id="drawing-mode-wrapper"  class="drawing-mode">
         <div id="drawing-mode-options"  ng-show="getFreeDrawingMode()">
-          <h5 style="text-align: center">Brush width</h5>
+          <h5 style="text-align: center">{% trans "Brush width" %}</h5>
           <input type="range" value="30" min="0" max="150" bind-value-to="drawingLineWidth">
         </div>
         </div>
         <div ng-show="canvas.getActiveGroup()">
-            <button type="button" class="btn  btn-danger btn-object-action bg-maroon btn-move" id="remove-selected-group" ng-click="removeSelected()"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete</button>
-            <button type="button" class="btn  btn-object-action btn-move" id="deselect_group" ng-click="deselect()"><i class="fa fa-minus"></i>&nbsp;&nbsp;Deselect</button>
+            <button type="button" class="btn  btn-danger btn-object-action bg-maroon btn-move" id="remove-selected-group" ng-click="removeSelected()"><i class="fa fa-trash"></i>&nbsp;&nbsp;{% trans "Delete" %}</button>
+            <button type="button" class="btn  btn-object-action btn-move" id="deselect_group" ng-click="deselect()"><i class="fa fa-minus"></i>&nbsp;&nbsp;{% trans "Deselect" %}</button>
         </div>
         <div ng-show="canvas.getActiveObject()">
-            <button type="button" class="btn  btn-danger btn-object-action bg-maroon btn-move" id="remove-selected" ng-click="removeSelected()"><i class="fa fa-minus"></i>&nbsp;&nbsp;Delete</button>
-            <button type="button" class="btn  btn-info btn-object-action btn-move" id="duplicate" ng-click="duplicate()"><i class="fa fa-copy"></i>&nbsp;&nbsp;Duplicate</button>
-            <button id="send-backwards" class="btn btn-info  btn-object-action btn-move" ng-click="sendBackwards()"><i class="fa fa-step-backward"></i>&nbsp;&nbsp;Move back</button>
-            <button id="bring-forward" class="btn btn-info  btn-object-action btn-move"  ng-click="bringForward()"><i class="fa fa-step-forward"></i>&nbsp;&nbsp;Move forward</button>
-            <button id="send-to-back" class="btn btn-info  btn-object-action btn-move"  ng-click="sendToBack()"><i class="fa fa-backward"></i>&nbsp;&nbsp;Send to back</button>
-            <button id="bring-to-front" class="btn btn-info  btn-object-action btn-move"  ng-click="bringToFront()"><i class="fa fa-forward"></i>&nbsp;&nbsp;Bring to front</button>
-            <h5 style="text-align: center">Scale</h5>
+            <button type="button" class="btn  btn-danger btn-object-action bg-maroon btn-move" id="remove-selected" ng-click="removeSelected()"><i class="fa fa-minus"></i>&nbsp;&nbsp;{% trans "Delete" %}</button>
+            <button type="button" class="btn  btn-info btn-object-action btn-move" id="duplicate" ng-click="duplicate()"><i class="fa fa-copy"></i>&nbsp;&nbsp;{% trans "Duplicate" %}</button>
+            <button id="send-backwards" class="btn btn-info  btn-object-action btn-move" ng-click="sendBackwards()"><i class="fa fa-step-backward"></i>&nbsp;&nbsp;{% trans "Move back" %}</button>
+            <button id="bring-forward" class="btn btn-info  btn-object-action btn-move"  ng-click="bringForward()"><i class="fa fa-step-forward"></i>&nbsp;&nbsp;{% trans "Move forward" %}</button>
+            <button id="send-to-back" class="btn btn-info  btn-object-action btn-move"  ng-click="sendToBack()"><i class="fa fa-backward"></i>&nbsp;&nbsp;{% trans "Send to back" %}</button>
+            <button id="bring-to-front" class="btn btn-info  btn-object-action btn-move"  ng-click="bringToFront()"><i class="fa fa-forward"></i>&nbsp;&nbsp;{% trans "Bring to front" %}</button>
+            <h5 style="text-align: center">{% trans "Scale" %}</h5>
             <input value="100" max="200" type="range" bind-value-to="scale">
             <div id="color-opacity-controls" ng-show="canvas.getActiveObject()">
-                <h5 style="text-align: center">Opacity</h5>
+                <h5 style="text-align: center">{% trans "Opacity" %}</h5>
                 <input value="100" type="range" bind-value-to="opacity">
             </div>
-            <button type="button" class="btn  btn-object-action bg-yellow btn-move" id="deselect" ng-click="deselect()"><i class="fa fa-minus"></i>&nbsp;&nbsp;Deselect</button>
+            <button type="button" class="btn  btn-object-action bg-yellow btn-move" id="deselect" ng-click="deselect()"><i class="fa fa-minus"></i>&nbsp;&nbsp;{% trans "Deselect" %}</button>
         </div>
     </div>
     </div>
@@ -289,7 +289,7 @@
                 </div>
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h4>Objects</h4>
+                        <h4>{% trans "Objects" %}</h4>
                     </div>
                     <div class="box-body">
                         <div class="row">
