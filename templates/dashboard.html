@@ -127,7 +127,7 @@
                                 <p>{% trans "An .mp4 video file or multiple images in a single zip file" %} <a href="https://github.com/AKSHAYUBHAT/DeepVideoAnalytics/blob/master/tests/exampledataset.zip" target="_blank">{% trans "(example of a zip file)" %}</a> {% trans 'or an exported ".dva_export.zip".' %}</p>
                                 <form role="form"  method="post" enctype="multipart/form-data" action="#" >
                                     <div class="form-group">
-                                    <input id="id_name" name="name" class="form-control" type="text" required="" placeholder="provide a name">
+                                    <input id="id_name" name="name" class="form-control" type="text" required="" placeholder="{% trans "provide a name" %}">
                                     </div>
                                     <div class="row">
                                     <div class="col-xs-10 col-xs-offset-1">
@@ -145,7 +145,7 @@
                                     </div>
                                     <div class="col-xs-6">
                                         <div class="form-group">
-                                        <label for="rescale">{% trans "Rescale frames to width" %} <input id="rescale" class="form-control" name="rescale" type="number" placeholder="Default original width"></label>
+                                        <label for="rescale">{% trans "Rescale frames to width" %} <input id="rescale" class="form-control" name="rescale" type="number" placeholder="{% trans "Default original width" %}"></label>
                                         </div>
                                     </div>
                                     </div>
@@ -162,10 +162,10 @@
                             <div class="modal-body"><p> <span style="font-weight:bold">{#  there is something I can't solve yet #}{% trans "Legal disclaimer:" %}</span>Its your responsibility to abide by laws governing <a target="_blank" href="https://www.youtube.com/static?template=terms">Youtube TOS</a> in your jurisdiction. We use <a target="_blank" href="https://rg3.github.io/youtube-dl/">youtube-dl</a> to process urls.</p>
                                 <form role="form"  method="post" action="/youtube" >
                                 <div class="form-group">
-                                    <input id="id_ytname" name="name" class="form-control" type="text" required="" placeholder="provide a name">
+                                    <input id="id_ytname" name="name" class="form-control" type="text" required="" placeholder="{% trans "provide a name" %}">
                                 </div>
                                 <div class="form-group">
-                                    <input id="id_yturl" name="url" class="form-control" type="text" required="" placeholder="url of youtube video">
+                                    <input id="id_yturl" name="url" class="form-control" type="text" required="" placeholder="{% trans "url of youtube video" %}">
                                 </div>
                                 <div class="row">
                                 <div class="col-xs-6">
@@ -175,7 +175,7 @@
                                 </div>
                                 <div class="col-xs-6">
                                     <div class="form-group">
-                                    <label for="rescale">{% trans "Rescale frames to width" %} <input id="rescale" class="form-control" name="rescale" type="number" placeholder="Default original width"></label>
+                                    <label for="rescale">{% trans "Rescale frames to width" %} <input id="rescale" class="form-control" name="rescale" type="number" placeholder="{% trans "Default original width" %}"></label>
                                     </div>
                                 </div>
                                 </div>

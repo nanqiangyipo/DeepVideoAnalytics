@@ -48,7 +48,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="args">{% trans "Additional JSON arguments for customizing options such as number of phase 1/2 epochs, etc." %}</label>
-                                <textarea class="form-control" name="args" rows="2" placeholder="Additional arguments as JSON { phase_2_epochs:50 } etc."></textarea>
+                                <textarea class="form-control" name="args" rows="2" placeholder="{% trans "Additional arguments as JSON { phase_2_epochs:50 } etc." %}"></textarea>
                             </div>
                             {% csrf_token %}
                             <div style="text-align: center">

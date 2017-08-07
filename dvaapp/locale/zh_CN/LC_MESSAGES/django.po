@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-31 16:44+0800\n"
+"POT-Creation-Date: 2017-08-02 17:16+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -214,7 +214,7 @@ msgstr "深度视频分析"
 
 #: templates/base.html:66
 msgid "Dashboard"
-msgstr "仪表盘"
+msgstr "搜索"
 
 #: templates/base.html:67
 msgid "Videos / Datasets"
@@ -605,11 +605,11 @@ msgstr "以应用标签分隔域列表"
 msgid ""
 "Additional JSON arguments for customizing options such as number of phase "
 "1/2 epochs, etc."
-msgstr "自定义json参数"
+msgstr "自定义json参数，例如1/2epochs等等"
 
-#: templates/detectors.html:51
+#: templates/detectors.html:51 templates/training.html:51
 msgid "Additional arguments as JSON { phase_2_epochs:50 } etc."
-msgstr "自定义json参数"
+msgstr "自定义json参数,例如{phase_2_epochs:50}"
 
 #: templates/detectors.html:55 templates/training.html:55
 msgid "Estimate training set"
@@ -894,7 +894,7 @@ msgid "retry task"
 msgstr "重试任务"
 
 #: templates/dvaapp/tevent_list.html:54
-msgid "mark as failed<"
+msgid "mark as failed"
 msgstr "标记失败"
 
 #: templates/dvaapp/tevent_list.html:68 templates/dvaapp/tevent_list.html:107
@@ -1479,7 +1479,7 @@ msgstr "训练设置索引"
 
 #: templates/training.html:68
 msgid "Coming soon"
-msgstr "即将更新"
+msgstr "待开发"
 
 #~ msgid ""
 #~ "\n"

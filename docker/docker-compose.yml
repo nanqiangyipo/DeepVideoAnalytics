@@ -19,7 +19,7 @@
      volumes:
        - dvarabbit:/var/lib/rabbitmq
    dva:
-#     build: .
+     build: .
      image: dva/cpu
      container_name: dva-server
      environment:
@@ -41,18 +41,15 @@
        - LAUNCH_Q_qfacedetector=1
        - LAUNCH_Q_qclusterer=1
        - AUTH_DISABLED=1
-#     command: bash -c "youtube-dl -U && git pull && fab start_container"
-#     command: bash -c "fab start_container"
+     command: bash -c "python manage.py runserver 0.0.0.0:8002"
      ports:
-       - "8000:8000"
+         - "8002:8002"
      depends_on:
        - db
        - rabbit
-#     volumes:
-#       - /home/czm/workingDirectory/dva:/root/DVA
-#       - dvadata:/root/DVA/dva/media
+     volumes:
+       - /home/czm/workingDirectory/dva:/root/DVA
  volumes:
-#  dvadata:
   dvapgdata:
   dvarabbit:
 
