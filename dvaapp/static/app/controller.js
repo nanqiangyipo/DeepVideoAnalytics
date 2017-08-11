@@ -447,10 +447,12 @@ $scope.search = function (approximate) {
     $scope.setFreeDrawingMode(false,$scope.current_mode);
     $scope.check_movement();
     if (approximate){
-        $scope.status = "Starting Approximate Search";
+        // $scope.status = "Starting Approximate Search";
+        $scope.status = "开始模糊查询";
     }
     else{
-        $scope.status = "Starting Exact Search can take up to a minute";
+        // $scope.status = "Starting Exact Search can take up to a minute";
+        $scope.status = "开始精确查询请稍等";
     }
     if(canvas.isDrawingMode){
         canvas.isDrawingMode = false;
@@ -477,7 +479,8 @@ $scope.search = function (approximate) {
             'csrfmiddlewaretoken':$(csrf_token).val()
         },
         success: function (response) {
-            $scope.status = "Search Completed";
+            // $scope.status = "Search Completed";
+            $scope.status = "查询完成";
             $scope.alert_status = false;
             console.log(response);
             $scope.results = response.results;
