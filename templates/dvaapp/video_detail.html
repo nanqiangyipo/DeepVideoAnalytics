@@ -93,26 +93,26 @@
     </div>
 
 <div class="col-lg-6">
-    <div class="box " >
+    <div class="box box-primary" >
         <div class="box-header with-border"><h3>{% trans "Task status" %}</h3></div>
         <div class="box-body">
             <div class="row text-center">
                     <div class="col-xs-3">
-                        <a class="btn btn-warning btn-block" href="{% url 'video_tasks_status' object.pk 'pending' %}" style="margin: 10px auto" > <i class="fa fa-clock-o"></i> {{ pending_tasks }} {% trans "pending" %}</a>
+                        <a class="btn btn-warning btn-block" href="{% url 'video_tasks_status' object.pk 'pending' %}" style="margin: 10px auto" > <i class="fa fa-clock-o"></i>  {% trans "pending" %} {{ pending_tasks }}</a>
                     </div>
                     <div class="col-xs-3">
-                        <a class="btn btn-primary btn-block" href="{% url 'video_tasks_status' object.pk 'running' %}" style="margin: 10px auto" > <i class="fa fa-gears"></i> {{ running_tasks }} {% trans "running" %}</a>
+                        <a class="btn btn-primary btn-block" href="{% url 'video_tasks_status' object.pk 'running' %}" style="margin: 10px auto" > <i class="fa fa-gears"></i>  {% trans "running" %} {{ running_tasks }}</a>
                     </div>
                     <div class="col-xs-3">
-                        <a class="btn btn-success btn-block" href="{% url 'video_tasks_status' object.pk 'successful' %}" style="margin: 10px auto" > <i class="fa fa-check"></i> {{ successful_tasks }} {% trans "done" %}</a>
+                        <a class="btn btn-success btn-block" href="{% url 'video_tasks_status' object.pk 'successful' %}" style="margin: 10px auto" > <i class="fa fa-check"></i>  {% trans "done" %} {{ successful_tasks }}</a>
                     </div>
                     <div class="col-xs-3">
-                        <a class="btn btn-danger btn-block" href="{% url 'video_tasks_status' object.pk 'failed' %}" style="margin: 10px auto" > <i class="fa fa-close"></i> {{ errored_tasks }} {% trans "failed" %}</a>
+                        <a class="btn btn-danger btn-block" href="{% url 'video_tasks_status' object.pk 'failed' %}" style="margin: 10px auto" > <i class="fa fa-close"></i> {% trans "failed" %} {{ errored_tasks }} </a>
                     </div>
             </div>
         </div>
     </div>
-    <div class="box ">
+    <div class="box box-primary">
         <div class="box-header with-border"><h3>{% trans "Admin actions" %}</h3></div>
         <div class="box-body">
             <div class="row">
@@ -131,7 +131,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <input name="name" type="text" placeholder="New name for {{ object.name }}" required="required" class="form-control" />
+                                    <input name="name" type="text" placeholder="{% blocktrans with vname=object.name %}New name for {{ vname }}{% endblocktrans %}" required="required" class="form-control" />
                                 </div>
                             </div>
                             <div class="col-sm-6 text-center">
@@ -144,13 +144,13 @@
             </div>
             <form action="/export_video" method="post">
             <div class="row m-t" style="margin-top:25px">
-                <div class="col-sm-3"><div class="form-group"><label for="bucket">{% trans "S3 Bucket" %} <input name="bucket" type="text" placeholder="bucket" required="required" class="form-control" /></label></div></div>
-                <div class="col-sm-3"><div class="form-group"><label for="key">{% trans "S3 Key" %} <input name="key" type="text" placeholder="key_prefix" required="required" class="form-control" /></label></div></div>
-                <div class="col-sm-3"><div class="form-group"><label for="region">{% trans "Region" %} <input name="region" type="text" placeholder="region" required="required" value="us-east-1" class="form-control" /></label></div></div>
+                <div class="col-sm-3"><div class="form-group"><label for="bucket">{% trans "S3 Bucket" %} <input name="bucket" type="text" placeholder="{% trans "bucket" %}" required="required" class="form-control" /></label></div></div>
+                <div class="col-sm-3"><div class="form-group"><label for="key">{% trans "S3 Key" %} <input name="key" type="text" placeholder="{% trans "key_prefix" %}" required="required" class="form-control" /></label></div></div>
+                <div class="col-sm-3"><div class="form-group"><label for="region">{% trans "Region" %} <input name="region" type="text" placeholder="{% trans "region" %}" required="required" value="us-east-1" class="form-control" /></label></div></div>
                 <div class="col-sm-3">{% csrf_token %}
                     <input type="hidden" value="{{ object.pk }}" name="video_id">
                     <input type="hidden" value="s3" name="export_method">
-                    <button type="submit" class="btn btn-block btn-primary" style="margin-top:20px"> <i class="fa fa-cloud-upload"></i> Backup to S3</button>
+                    <button type="submit" class="btn btn-block btn-primary" style="margin-top:20px"> <i class="fa fa-cloud-upload"></i> {% trans "Backup to S3" %}</button>
                 </div>
             </div>
             <h5 class="text-center">{% trans "Delete currently requires retrieval workers to be restarted to purge index loaded in memory (a fix is pending)" %}</h5>
@@ -186,12 +186,12 @@
             </form>
             </div>
         </div>
-        <div class="box box-primary" >
+        <div class="box" >
         <div class="box-body">
         <div class="row">
             {% if not video.vdn_dataset %}
                 <div class="col-sm-12 text-center">
-                    <a href="/push/{{ video.id }}" class="btn btn-primary"> <i class="fa fa-upload"></i>  {% trans "Push video/dataset to remote VDN server" %}</a>
+                    <a href="/push/{{ video.id }}" class="btn btn-primary single-btn-primary"> <i class="fa fa-upload"></i>  {% trans "Push video/dataset to remote VDN server" %}</a>
                 </div>
             {% else %}
                 {% if exportable_annotation_count %}
@@ -211,7 +211,7 @@
 </div>
 <div class="row">
 <div class="col-lg-12">
-            <div class="box">
+            <div class="box box-primary">
             <div class="box-header with-border">
             <h3>{% trans "List of frames/images & detection" %}</h3>
             </div>
@@ -295,10 +295,10 @@
     <div class="col-lg-6">
         <div class="box box-primary">
         <div class="box-body with-border">
-            <h4>Assign label to entire video</h4>
+            <h4>{% trans "Assign label to entire video" %}</h4>
             <form role="form"  method="post" action="/assign_video_labels" >
                     <div class="form-group">
-                        <input id="labels" style="margin:10px auto" name="labels" class="form-control" type="text-area" rows="3" width="80%" required="" placeholder="provide a single label name, or a comma separated list">
+                        <input id="labels" style="margin:10px auto" name="labels" class="form-control" type="text-area" rows="3" width="80%" required="" placeholder="{% trans "provide a single label name, or a comma separated list" %}">
                     </div>
                         <input name="video_pk" class="form-control" type="hidden" value="{{ object.pk }}">
                     <div class="form-group">
@@ -310,7 +310,7 @@
         </div>
     </div>
     <div class="col-lg-6">
-            <div class="box">
+            <div class="box box-primary">
             <div class="box-body">
                 <h3>{% trans "Metadata" %}</h3>
                 <textarea style="width:100%;height:300px;">

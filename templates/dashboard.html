@@ -3,7 +3,8 @@
 {% load static from staticfiles %}
 {% block ng_control %}ng-controller="CanvasControls"{% endblock %}
 {% block status_bar %}
-    <div id="status" ng-model="status" ng-show="checkStatus()" class="alert alert-dismissable"
+<!-- header内部上传数据部分 -->
+    <div id="status" ng-model="status" ng-show="checkStatus()" class="alert alert-dismissable round-ract round-ract-width-seven-hundred"
          ng-class="alert_status ? 'alert-warning' : 'alert-info'" xmlns="http://www.w3.org/1999/html"><h4 class="h4status">{[ status ]}</h4>
     <button type="button" class="close" ng-click="disableStatus()" aria-hidden="true">x</button>
     </div>
@@ -13,60 +14,61 @@
 </section>
 <section class="content">
 
-<div class="row large-margin">
-    <div class="col-xs-1 col-sm-1 m-t" object-buttons-enabled="getSelected()" id="side_options">
+<div class="row large-margin ">
+  
+    <div class="col-xs-1 m-t left-fixed-part" object-buttons-enabled="getSelected()" id="side_options">
         <div class="outer">
-        <div class="middle">
-        <div class="inner">
-        <form id="image-form" style="width:100%;"  onsubmit="return false;">
-            <input type='file'  id='imgfile' style="display:none"/>
-            <a type='button' class="btn btn-primary btn-move" id='btnLoad' ng-click='load_image();'><i class="fa fa-image"></i>&nbsp;&nbsp;{% trans "Add image" %}</a>
-        </form>
-        <button type="button" class="btn btn-info  btn-move"  id="reset_zoom" ng-click="resetZoom()"><i class="fa fa-refresh"></i>&nbsp;{% trans "Reset Zoom" %}</button>
-        <button type="button" class="btn btn-danger  btn-move"  id="clear" ng-click="confirmClear()"><i class="fa fa-trash"></i>&nbsp;&nbsp;{% trans "Clean editor" %}</button>
-        <button type="button" class="btn btn-warning  btn-move"  id="clear_mask" ng-click="confirmClearMasks()"><i class="fa fa-trash"></i>&nbsp;{% trans "Clear masks" %}</button>
-        <button id="drawing-mode_b"
-          ng-click="setFreeDrawingMode(!getFreeDrawingMode(2),2)"
-          ng-class="{'btn-inverse': getFreeDrawingMode(2)}" class="btn btn-move btn-warning ">
-          <i class="fa fa-pencil"></i>&nbsp;&nbsp;{% trans "Exclude" %} </button>
-        <div ng-show="getFreeDrawingMode(1)" class="drawing-mode">
-            <button id="drawing-mode_x" ng-click="setFreeDrawingMode(!getFreeDrawingMode(1),1)" class="btn bg-red btn-move stop_btn"> <i class="fa fa-close"></i>&nbsp;&nbsp;{% trans "Stop Drawing!" %}</button>
-        </div>
-        <div ng-show="getFreeDrawingMode(2)" class="drawing-mode">
-            <button id="drawing-mode_x_2" ng-click="setFreeDrawingMode(!getFreeDrawingMode(2),2)" class="btn btn-warning btn-move stop_btn"> <i class="fa fa-close"></i>&nbsp;{% trans "Stop Drawing!" %}&nbsp;</button>
-        </div>
-        <div id="drawing-mode-wrapper"  class="drawing-mode">
-        <div id="drawing-mode-options"  ng-show="getFreeDrawingMode()">
-          <h5 style="text-align: center">{% trans "Brush width" %}</h5>
-          <input type="range" value="30" min="0" max="150" bind-value-to="drawingLineWidth">
-        </div>
-        </div>
-        <div ng-show="canvas.getActiveGroup()">
-            <button type="button" class="btn  btn-danger btn-object-action bg-maroon btn-move" id="remove-selected-group" ng-click="removeSelected()"><i class="fa fa-trash"></i>&nbsp;&nbsp;{% trans "Delete" %}</button>
-            <button type="button" class="btn  btn-object-action btn-move" id="deselect_group" ng-click="deselect()"><i class="fa fa-minus"></i>&nbsp;&nbsp;{% trans "Deselect" %}</button>
-        </div>
-        <div ng-show="canvas.getActiveObject()">
-            <button type="button" class="btn  btn-danger btn-object-action bg-maroon btn-move" id="remove-selected" ng-click="removeSelected()"><i class="fa fa-minus"></i>&nbsp;&nbsp;{% trans "Delete" %}</button>
-            <button type="button" class="btn  btn-info btn-object-action btn-move" id="duplicate" ng-click="duplicate()"><i class="fa fa-copy"></i>&nbsp;&nbsp;{% trans "Duplicate" %}</button>
-            <button id="send-backwards" class="btn btn-info  btn-object-action btn-move" ng-click="sendBackwards()"><i class="fa fa-step-backward"></i>&nbsp;&nbsp;{% trans "Move back" %}</button>
-            <button id="bring-forward" class="btn btn-info  btn-object-action btn-move"  ng-click="bringForward()"><i class="fa fa-step-forward"></i>&nbsp;&nbsp;{% trans "Move forward" %}</button>
-            <button id="send-to-back" class="btn btn-info  btn-object-action btn-move"  ng-click="sendToBack()"><i class="fa fa-backward"></i>&nbsp;&nbsp;{% trans "Send to back" %}</button>
-            <button id="bring-to-front" class="btn btn-info  btn-object-action btn-move"  ng-click="bringToFront()"><i class="fa fa-forward"></i>&nbsp;&nbsp;{% trans "Bring to front" %}</button>
-            <h5 style="text-align: center">{% trans "Scale" %}</h5>
-            <input value="100" max="200" type="range" bind-value-to="scale">
-            <div id="color-opacity-controls" ng-show="canvas.getActiveObject()">
-                <h5 style="text-align: center">{% trans "Opacity" %}</h5>
-                <input value="100" type="range" bind-value-to="opacity">
+            <div class="middle">
+                <div class="inner">
+                <form id="image-form" style="width:100%;"  onsubmit="return false;" class='left-rect'>
+                    <input type='file'  id='imgfile' style="display:none"/>
+                    <a type='button' class="btn btn-primary btn-move" id='btnLoad' ng-click='load_image();'><i class="fa fa-image"></i>&nbsp;&nbsp;{% trans "Add image" %}</a>
+                </form>
+                <button type="button" class="btn btn-info  btn-move left-rect"  id="reset_zoom" ng-click="resetZoom()"><i class="fa fa-refresh"></i>&nbsp;{% trans "Reset Zoom" %}</button>
+                <button type="button" class="btn btn-danger  btn-move left-rect"  id="clear" ng-click="confirmClear()"><i class="fa fa-trash"></i>&nbsp;&nbsp;{% trans "Clean editor" %}</button>
+                <button type="button" class="btn btn-warning  btn-move left-rect"  id="clear_mask" ng-click="confirmClearMasks()"><i class="fa fa-trash"></i>&nbsp;{% trans "Clear masks" %}</button>
+                <button id="drawing-mode_b"
+                  ng-click="setFreeDrawingMode(!getFreeDrawingMode(2),2)"
+                  ng-class="{'btn-inverse': getFreeDrawingMode(2)}" class="btn btn-move btn-warning left-rect">
+                  <i class="fa fa-pencil"></i>&nbsp;&nbsp;{% trans "Exclude" %} </button>
+                <div ng-show="getFreeDrawingMode(1)" class="drawing-mode">
+                    <button id="drawing-mode_x" ng-click="setFreeDrawingMode(!getFreeDrawingMode(1),1)" class="btn bg-red btn-move stop_btn"> <i class="fa fa-close"></i>&nbsp;&nbsp;{% trans "Stop Drawing!" %}</button>
+                </div>
+                <div ng-show="getFreeDrawingMode(2)" class="drawing-mode">
+                    <button id="drawing-mode_x_2" ng-click="setFreeDrawingMode(!getFreeDrawingMode(2),2)" class="btn btn-warning btn-move stop_btn"> <i class="fa fa-close"></i>&nbsp;{% trans "Stop Drawing!" %}&nbsp;</button>
+                </div>
+                <div id="drawing-mode-wrapper"  class="drawing-mode">
+                <div id="drawing-mode-options"  ng-show="getFreeDrawingMode()">
+                  <h5 style="text-align: center">{% trans "Brush width" %}</h5>
+                  <input type="range" value="30" min="0" max="150" bind-value-to="drawingLineWidth">
+                </div>
+                </div>
+                <div ng-show="canvas.getActiveGroup()">
+                    <button type="button" class="btn  btn-danger btn-object-action bg-maroon btn-move" id="remove-selected-group" ng-click="removeSelected()"><i class="fa fa-trash"></i>&nbsp;&nbsp;{% trans "Delete" %}</button>
+                    <button type="button" class="btn  btn-object-action btn-move" id="deselect_group" ng-click="deselect()"><i class="fa fa-minus"></i>&nbsp;&nbsp;{% trans "Deselect" %}</button>
+                </div>
+                <div ng-show="canvas.getActiveObject()">
+                    <button type="button" class="btn  btn-danger btn-object-action bg-maroon btn-move" id="remove-selected" ng-click="removeSelected()"><i class="fa fa-minus"></i>&nbsp;&nbsp;{% trans "Delete" %}</button>
+                    <button type="button" class="btn  btn-info btn-object-action btn-move" id="duplicate" ng-click="duplicate()"><i class="fa fa-copy"></i>&nbsp;&nbsp;{% trans "Duplicate" %}</button>
+                    <button id="send-backwards" class="btn btn-info  btn-object-action btn-move" ng-click="sendBackwards()"><i class="fa fa-step-backward"></i>&nbsp;&nbsp;{% trans "Move back" %}</button>
+                    <button id="bring-forward" class="btn btn-info  btn-object-action btn-move"  ng-click="bringForward()"><i class="fa fa-step-forward"></i>&nbsp;&nbsp;{% trans "Move forward" %}</button>
+                    <button id="send-to-back" class="btn btn-info  btn-object-action btn-move"  ng-click="sendToBack()"><i class="fa fa-backward"></i>&nbsp;&nbsp;{% trans "Send to back" %}</button>
+                    <button id="bring-to-front" class="btn btn-info  btn-object-action btn-move"  ng-click="bringToFront()"><i class="fa fa-forward"></i>&nbsp;&nbsp;{% trans "Bring to front" %}</button>
+                    <h5 style="text-align: center">{% trans "Scale" %}</h5>
+                    <input value="100" max="200" type="range" bind-value-to="scale">
+                    <div id="color-opacity-controls" ng-show="canvas.getActiveObject()">
+                        <h5 style="text-align: center">{% trans "Opacity" %}</h5>
+                        <input value="100" type="range" bind-value-to="opacity">
+                    </div>
+                    <button type="button" class="btn  btn-object-action bg-yellow btn-move" id="deselect" ng-click="deselect()"><i class="fa fa-minus"></i>&nbsp;&nbsp;{% trans "Deselect" %}</button>
+                    </div>
+                </div>
             </div>
-            <button type="button" class="btn  btn-object-action bg-yellow btn-move" id="deselect" ng-click="deselect()"><i class="fa fa-minus"></i>&nbsp;&nbsp;{% trans "Deselect" %}</button>
         </div>
     </div>
-    </div>
-    </div>
-    </div>
-    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4  m-t input">
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4  m-t input middle-adaptive">
         <div id="canvas-wrapper">
-            <canvas id="canvas"  width="500" height="500"></canvas>
+            <canvas id="canvas"  width="612" height="600"></canvas>
         </div>
         <div class="m-t row">
             <div class="col-xs-4 text-right">
@@ -98,23 +100,24 @@
             <label for="entire_image">{% trans "Send entire image (ignore zoom/pan)" %}</label>
             <input style="display:inline-block; margin-right:5px" type="checkbox" ng-model="send_entire_image" class="checkbox">
         </div>
-        <div>
-            <button href="" class="btn btn-info" id="segment" ng-click="search(true)"><i class="fa fa-search-plus"></i>&nbsp;&nbsp;{% trans "Approximate Search" %}</button>
-            <button href="" class="btn btn-primary" id="search_quick" ng-click="search(false)"><i class="fa fa-search"></i>&nbsp;&nbsp;{% trans "Exact Search" %}</button>
+        <div class='m-t'>
+            <button href="" class="btn btn-info round-ract searct-round-ract" id="segment" ng-click="search(true)"><i class="fa fa-search-plus"></i>&nbsp;&nbsp;{% trans "Approximate Search" %}</button>
+            <button href="" class="btn btn-primary round-ract searct-round-ract" id="search_quick" ng-click="search(false)"><i class="fa fa-search"></i>&nbsp;&nbsp;{% trans "Exact Search" %}</button>
         </div>
     </div>
-    <div class=" col-xs-12 col-sm-12 col-md-6 col-lg-4 m-t uploadmenu">
+  
+    <div class=" col-xs-12 col-sm-12 col-md-6 col-lg-4 m-t uploadmenu right-fixed-part">
             <div class="row">
             <div class="col-lg-12">
                 <div class="box box-primary">
                     <div class="box-body with_border">
                         <div class="row">
-                            <div class="col-xs-7 text-center"><a class="btn btn-primary" data-toggle="modal" data-target="#allowed" href="#" ><i class="fa fa-upload"></i> {% trans "Upload video, dataset or an export" %}</a></div>
-                            <div class="col-xs-5 text-center"><a class="btn btn-primary" data-toggle="modal" data-target="#ytdisclaimer" href="#" ><i class="fa fa-youtube"></i> {% trans "Submit youtube url" %}</a></div>
+                            <div class="col-xs-7 text-center round-ract round-ract-width-threefortyhundred"><a class="btn btn-primary" data-toggle="modal" data-target="#allowed" href="#" ><i class="fa fa-upload"></i> {% trans "Upload video, dataset or an export" %}</a></div>
+                            <div class="col-xs-5 text-center round-ract round-ract-width-threefortyhundred"><a class="btn btn-primary" data-toggle="modal" data-target="#ytdisclaimer" href="#" ><i class="fa fa-youtube"></i> {% trans "Submit youtube url" %}</a></div>
                         </div>
                         <div class="row m-t">
-                            <p div class="col-xs-7 text-center"><a class="btn btn-primary" data-toggle="modal" data-target="#awscreds" href="#" ><i class="fa fa-cloud-download"></i> {% trans "Bulk import from AWS S3 bucket" %}</a></p>
-                            <p div class="col-xs-5 text-center"><a class="btn btn-primary" href="/external" ><i class="fa fa-globe"></i> {% trans "Import from VDN" %}</a></p>
+                            <p div class="col-xs-7 text-center round-ract round-ract-width-threefortyhundred"><a class="btn btn-primary" data-toggle="modal" data-target="#awscreds" href="#" ><i class="fa fa-cloud-download"></i> {% trans "Bulk import from AWS S3 bucket" %}</a></p>
+                            <p div class="col-xs-5 text-center round-ract round-ract-width-threefortyhundred"><a class="btn btn-primary" href="/external" ><i class="fa fa-globe"></i> {% trans "Import from VDN" %}</a></p>
                         </div>
 
                         <div class="modal fade" tabindex="-1" role="dialog" id="allowed">
@@ -222,10 +225,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="box box-primary">
+                <div class="box box-primary box-primary-two">
                     <div class="box-header with-border">
-                        <h4 style="margin-top:10px;display:inline-block">{% trans "Tasks status" %}</h4>
-                        <a class="btn btn-primary" style="float:right" data-toggle="modal" data-target="#tasksubmit" href="#" ><i class="fa fa-play"></i> {% trans "Manually run task" %}</a>
+                        <h4 className='taskStatus' style="margin-top:10px;display:inline-block">{% trans "Tasks status" %}</h4>
+                        <a class="btn btn-primary round-ract" style="float:right" data-toggle="modal" data-target="#tasksubmit" href="#" ><i class="fa fa-play"></i> {% trans "Manually run task" %}</a>
 
                     </div>
                     <div class="box-body">

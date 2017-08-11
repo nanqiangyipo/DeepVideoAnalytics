@@ -10,7 +10,7 @@
     </style>
 {% endblock %}
 {% block status_bar %}
-<div id="status" ng-model="status" ng-show="checkStatus()" class="alert alert-dismissable" ng-class="alert_status ? 'alert-warning' : 'alert-info'"><h4 class="h4status">{% trans "{[ status ]}" %}</h4>
+<div id="status" ng-model="status" ng-show="checkStatus()" class="alert alert-dismissable" ng-class="alert_status ? 'alert-warning' : 'alert-info'"><h4 class="h4status">{[ status ]}</h4>
 <button type="button" class="close" ng-click="disableStatus()" aria-hidden="true">x</button>
 </div>
 {% endblock %}
@@ -37,7 +37,7 @@
                     <div class="row">
                         <div class="col-xs-1">
                             <div class="form-group">
-                                <label for="top">{% trans top %}</label>
+                                <label for="top">{% trans "top" %}</label>
                                 <input name="top" class="form-control" type="text" required="" placeholder="top" value="{[ box.top]}" disabled="disabled" >
                             </div>
                             <div class="form-group">
@@ -68,7 +68,7 @@
                         <div class="col-xs-5">
                             <div class="form-group">
                                 <label for="name" style="font-weight:bold">{% trans "Name" %}</label>
-                                <input name="name" class="form-control" value="UI_annotation"  id="{[ box.id ]}_object_name" required="required" />
+                                <input name="name" class="form-control" value="{% trans "UI_annotation" %}"  id="{[ box.id ]}_object_name" required="required" />
                             </div>
                             <div class="form-group">
                                 <label for="labels" style="font-weight:bold">{% trans "Assign labels :" %}</label>
@@ -140,13 +140,13 @@
         </tr></thead>
         <tbody>
         <tr ng-repeat="box in existing_boxes" >
-            <td>{% trans "{[ box.box_type]}" %}</td>
-            <td>{% trans "{[ box.label]}" %}</td>
-            <td class="text-right">{% trans "{[ box.top]}" %}</td>
-            <td class="text-right">{% trans "{[ box.left]}" %}</td>
-            <td class="text-right">{% trans "{[ box.height*box.scaleY ]}" %}</td>
-            <td class="text-right">{% trans "{[ box.width*box.scaleX ]}" %}</td>
-            <td class="text-center">{% trans "{[ box.full_frame ]}" %}</td>
+            <td>{[ box.box_type]}</td>
+            <td>{[ box.label]}</td>
+            <td class="text-right">{[ box.top]}</td>
+            <td class="text-right">{[ box.left]}</td>
+            <td class="text-right">{[ box.height*box.scaleY ]}</td>
+            <td class="text-right">{[ box.width*box.scaleX ]}</td>
+            <td class="text-center">{[ box.full_frame ]}</td>
             <td class="text-center"><input type="checkbox" ng-model="box.visible" ng-click="toggle_visibility(box.id)"></td>
             <td class="text-center"><a ng-show="{[ box.annotation ]}" class="btn btn-warning" ng-click="delete_object(box.id,box.pk,box.box_type)"><i class="fa fa-trash"></i> {% trans "Delete" %}</a></td>
         </tr>
@@ -163,11 +163,11 @@
 {% block page_js %}
     <script src={% static 'jsoneditor/jsoneditor.min.js' %}></script>
     <script>
-        var status = "Please add bounding box to annotate.";
+        var status = "{% trans "Please add bounding box to annotate." %}";
         var payload = "{{ payload }}";
         var existing = JSON.parse('{{ existing|safe }}');
         var csrf_token = "{% csrf_token %}";
-        var alert_status = "add bounding box";
+        var alert_status = "{% trans "add bounding box" %}";
         var annotation_mode = true;
         {% if initial_url %}
             var initial_url="{{ initial_url }}";

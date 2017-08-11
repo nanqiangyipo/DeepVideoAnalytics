@@ -67,7 +67,7 @@
                                 <td><a href="{{ dataset.download_url }}">{{ dataset.download_url }}</a></td>
                                 {% if dataset.aws_requester_pays %}
                                 <td class="text-center"><form action="/import_dataset" method="post">{% csrf_token %}<input type="hidden" name="dataset_url" value="{{ dataset.url }}"/>
-                                    <p class="text-danger"> AWS account will be charged for bandwidth.</p>
+                                    <p class="text-danger"> {% trans "AWS account will be charged for bandwidth." %}</p>
                                     <input type="hidden" name="server_pk" value="{{ server.pk }}"/><button type="submit" class="btn btn-danger"> Pull </button></form>
                                 </td>
 

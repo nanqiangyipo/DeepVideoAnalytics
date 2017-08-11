@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load staticfiles %}
 
 {% block page_content %}
@@ -6,7 +7,7 @@
 <div class="row">
     <div class="box box-info">
         <div class="box-header">
-            <h4> Segment {{ object.segment_index }} in  <a href="/videos/{{ object.video.pk }}" style="font-weight:bold">{{ object.video.name }}</a></h4>
+            <h4> {% blocktrans with segment_index=object.segment_index video_pk=object.video.pk video_name=object.video.name %}Segment {{ segment_index }} in  <a href="/videos/{{ video_pk }}" style="font-weight:bold">{{ video_name }}</a>{% endblocktrans %}</h4>
         </div>
     </div>
     </div>
@@ -16,9 +17,9 @@
     <div class="col-lg-6">
         <div class="box">
         <div class="box-header with-border text-center" >
-            {% if previous_segment_index is not None %}<a class="btn btn-info" href="/segments/by_index/{{ video.pk }}/{{ previous_segment_index }}" style="float:left"><i class="fa fa-backward"></i> Previous segment</a>{% endif %}
-            {% if next_segment_index %}<a class="btn btn-info" href="/segments/by_index/{{ video.pk }}/{{ next_segment_index }}" style="float:right"><i class="fa fa-forward"></i> Next segment</a>{% endif %}
-            <h3 style="margin-top:5px">Segment {{ object.segment_index }}</h3>
+            {% if previous_segment_index is not None %}<a class="btn btn-info" href="/segments/by_index/{{ video.pk }}/{{ previous_segment_index }}" style="float:left"><i class="fa fa-backward"></i> {% trans "Previous segment" %}</a>{% endif %}
+            {% if next_segment_index %}<a class="btn btn-info" href="/segments/by_index/{{ video.pk }}/{{ next_segment_index }}" style="float:right"><i class="fa fa-forward"></i> {% trans "Next segment" %}</a>{% endif %}
+            <h3 style="margin-top:5px">{% trans "Segment" %} {{ object.segment_index }}</h3>
         </div>
         <div class="box-body" style="text-align:center">
             <video controls="" preload="metadata" name="media" style="width:90%;margin-left:auto;margin-right:auto">
@@ -55,10 +56,10 @@
     <div class="col-lg-6">
         <div class="box box-primary">
         <div class="box-body with-border">
-            <h4>Assign label to entire segment</h4>
+            <h4>{% trans "Assign label to entire segment" %}</h4>
             <form role="form"  method="post" action="/assign_segment_labels" >
                     <div class="form-group">
-                        <input id="labels" style="margin:10px auto" name="labels" class="form-control" type="text-area" rows="3" width="80%" required="" placeholder="provide a single label name, or a comma separated list">
+                        <input id="labels" style="margin:10px auto" name="labels" class="form-control" type="text-area" rows="3" width="80%" required="" placeholder="{% trans "provide a single label name, or a comma separated list" %}">
                     </div>
                         <input name="video_pk" class="form-control" type="hidden" value="{{ object.pk }}">
                     <div class="form-group">
@@ -82,7 +83,7 @@
 <div class="col-lg-12">
             <div class="box">
             <div class="box-header with-border">
-            <h3>List of frames/images & detection</h3>
+            <h3>{% trans "List of frames/images & detection" %}</h3>
             </div>
             <div class="box-body">
                 {% if frame_first and frame_last %}
@@ -94,15 +95,15 @@
                 <table class="table dataTables">
                 <thead>
                 <tr>
-                        <th class="text-center">type</th>
-                        <th class="text-center">file / annotation / object name</th>
-                        <th class="text-center">confidence</th>
-                        <th class="text-center">x</th>
-                        <th class="text-center">y</th>
-                        <th class="text-center">w</th>
-                        <th class="text-center">h</th>
-                        <th class="text-center">frame index</th>
-                        <th class="text-center">view</th>
+                        <th class="text-center">{% trans "type" %}</th>
+                        <th class="text-center">{% trans "file / annotation / object name" %}</th>
+                        <th class="text-center">{% trans "confidence" %}</th>
+                        <th class="text-center">{% trans "x" %}</th>
+                        <th class="text-center">{% trans "y" %}</th>
+                        <th class="text-center">{% trans "w" %}</th>
+                        <th class="text-center">{% trans "h" %}</th>
+                        <th class="text-center">{% trans "frame index" %}</th>
+                        <th class="text-center">{% trans "view" %}</th>
                 </tr>
                 </thead>
                 <tbody>

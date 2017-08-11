@@ -43,9 +43,9 @@
                 </div></div>
                 <div class="col-sm-12">
                     <label style="font-weight:bold">{% trans "Name" %}</label>
-                    <input type="text" class="form-control" placeholder="optional otherwise frame_metadata is used" name="object_name" id="object_name" />
+                    <input type="text" class="form-control" placeholder="{% trans "optional otherwise frame_metadata is used" %}" name="object_name" id="object_name" />
                     <label style="font-weight:bold">{% trans "Assign tags/labels" %}</label>
-                    <textarea class="form-control" name="tags" id="tags" rows="2" placeholder="you can seperate multiple labels using a comma" style="width:100%"></textarea>
+                    <textarea class="form-control" name="tags" id="tags" rows="2" placeholder="{% trans "you can seperate multiple labels using a comma" %}" style="width:100%"></textarea>
                 </div>
                 <div class="col-sm-4 col-sm-offset-4" style="margin-top:15px">
                     <div class="form-group">
@@ -178,7 +178,7 @@
             <img class="img-responsive" src="{{ MEDIA_URL }}{{ object.video.pk }}/regions/{{ d.pk }}.jpg" style="margin-left:auto;margin-right: auto">
         </div>
         <div class="box-footer text-center">
-            <h5>Confidence: {{ d.confidence|floatformat }}</h5>
+            <h5>{% trans "Confidence" %}: {{ d.confidence|floatformat }}</h5>
             <a href="/query_detection/{{ d.pk }}/" class="btn btn-info"><i class="fa fa-search"></i> {% trans "Query using this detection" %}</a>
         </div>
     </div>
