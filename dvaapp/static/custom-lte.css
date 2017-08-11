@@ -1,15 +1,23 @@
 .main-header .logo {
-    width: 400px !important;
+    width: 20.8% !important;
     font-weight: bold !important;
-    color: rgb(3, 60, 100) !important;
+    /*color: rgb(3, 60, 100) !important;*/
+    /*color: #fff !important;*/
     font-size: 32px;
     text-align: left;
-    font-family:"open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    line-height: 80px;
+
+    font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: bold !important;
+    color: #337ab7;
+    background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(rgba(205, 220, 232, 1)), to(rgba(29, 168, 193, 1)));
+    -webkit-background-clip: text;
 }
 
 .status-bar{
     display:inline-block;
-    width:600px
+    width:36.45%;
+    margin-left: 10.4%;
 }
 
 .main-header .navbar{
@@ -18,7 +26,7 @@
 @media (max-width: 1300px) {
     .status-bar {
         display: inline-block;
-        width: 400px;
+        width: 20.8%;
     }
     .h4status{
             font-size: 12pt;
@@ -53,3 +61,473 @@ body{
    width:1000px;             /* As IE ignores !important it will set width as 1000px; */
    overflow-x: scroll;
 }
+
+
+/*20170808——wyx添加*/
+
+
+.skin-black .main-header .navbar {
+    background-color: #343536;
+}
+
+.main-header .sidebar-toggle {
+    padding: 27px 15px!important;
+    
+}
+
+/*.navbar-custom-menu > .navbar-nav > li {
+    padding: 25px 20px;
+}*/
+.navbar-nav>li>a {
+    padding-top: 0!important;
+    padding-bottom: 0!important;
+}
+.navbar-custom-menu > .navbar-nav > li:hover {
+    background: #fff;
+}
+
+.content-header .row .box .box-header h2 {
+    padding-left: 30px;
+}
+.content .row .col-lg-12 .box.box-primary:last-child {
+    margin-bottom: 0!important;
+}
+
+.main-footer .pull-right {
+    float:none!important;
+    width: 100%;
+    height: 100%;
+    line-height: 38px;
+    text-align: center;
+}
+
+
+/*video_list.html*/
+.pagination>.active>a {
+    background: #31404d!important;
+    border:1px solid #31404d!important;
+}
+.pagination>.active>a:hover{
+     background: #337ab7!important;
+    border:1px solid #337ab7!important;
+}
+
+div.dataTables_length select {
+    margin: 0 15px;
+    border-radius: 3px;
+}
+div.dataTables_filter input{
+
+    border-radius:5px;
+    margin-left: 15px;
+
+
+}
+.box.box-primary .box-header {
+    padding: 0!important;
+    padding-bottom: 10px!important;
+    /*padding: 30px 0!important;*/
+}
+.col-lg-12 .box.box-primary .box-header h3 {
+       
+    margin-top: 0!important;
+    font-size: 36px;
+    margin-bottom: 16px;
+    font-family: "DIN";
+    color: rgb(153, 153, 153);
+}
+
+/*以下video2 标题h3的样式**************************/
+.col-lg-6 .box.box-primary .box-header h3,
+.col-lg-12 .box.box-primary .box-header h3 {
+
+    margin-top: 0!important;
+    font-size: 24px;
+    margin-bottom: 16px;
+    color: rgb(153, 153, 153);
+    font-family: "FZLTHK";
+
+}
+
+.col-lg-6 .box.box-primary .box-body h3 {
+     font-size: 24px;
+    font-family: "SourceHanSansCN";
+    color: rgb(153, 153, 153);
+    margin-top: 0;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 33px;
+}
+.col-lg-6 .box.box-primary .box-body .textarea {
+    border: 2px solid #e5e5e5;
+    border-radius: 5px;
+}
+/*以上video2 标题h3的样式**************************/
+ 
+.dataTables_wrapper .row {
+    position: relative;
+}
+.col-md-12 .box.box-primary:last-child .dataTables_wrapper .row .col-sm-6:last-child {
+    position:absolute;
+    top: -56px;
+    right: 0;
+}
+
+
+/*videos2*/
+
+.content-header .box-header h4,
+.content-header .box-header .col-lg-12.m-t {
+
+    padding: 10px 90px 0 106px!important;
+    
+}
+
+.content .row:first-child .col-lg-6:nth-child(2) .box.box-primary .box-body {
+    padding-top: 30px;
+    padding-bottom: 20px;
+}
+
+.col-xs-3 .btn i {
+    padding-right: 8%;
+}
+
+/*推送数据集到服务器*/
+
+ .box-body .row .col-sm-12.text-center .single-btn-primary {
+    width: 71%!important;
+    height: 62px!important;
+    line-height: 60px!important;
+    border: 1px solid #7f97ce!important;
+    box-sizing:border-box;
+    border-radius: 30px;
+    background: rgba(111,138,200,0.3)!important;
+    font-size: 20px;
+    font-family: "FZLTHK";
+    color: rgb(74, 108, 233)!important;
+    padding: 0;
+}
+
+.box-body .row .col-sm-12.text-center .single-btn-primary:hover {
+    color: #fff!important;
+    background: #4a6CE9!important;
+}
+.content .row:nth-child(1) .col-lg-6:nth-child(2) .box:nth-child(3) {
+    background: none!important;
+    box-shadow: none!important;
+}
+.content .row:nth-child(3) {
+    margin-top: 2.8vh;
+}
+.content .row:nth-child(3) .col-lg-6:nth-child(1) .box .btn {
+    width: 18.5%;
+    height: 60px;
+    line-height: 60px;
+    border: 1px solid #7f97ce!important;
+    box-sizing:border-box;
+    text-align: center;
+    background: rgba(111,138,200,0.3);
+    border-radius: 30px;
+    padding: 0;
+    border: none;
+    color: rgb(74, 108, 233)!important;
+}
+.content .row:nth-child(3) .col-lg-6:nth-child(1) .box .btn:hover {
+    color: #fff!important;
+    background: #4a6CE9!important;
+}
+
+
+
+/*video2中button字体字号*/
+.btn {
+    /*font-size: 18px!important;*/
+    /*font-size: 1.125em!important;*/
+    font-size: 0.9vw !important;
+    font-family: "FZLTHK";
+}
+
+.form-control {
+    /*font-size: 18px;*/
+    font-size: 0.9vw !important;
+    color: rgb(102, 102, 102);
+
+}
+
+.col-lg-12 .dataTables_wrapper .col-sm-12 .table tr:nth-child(2n) {
+
+    background: #f5f6f8;
+
+}
+
+.col-lg-12 .box-body .row .col-lg-6 {
+    margin-top: 30px;
+}
+.col-lg-12 .box-body .row .col-lg-6 img  {
+   height: 85%!important;
+}
+
+.dataTables_wrapper .row .col-sm-12 {
+    margin-top: 30px;
+}
+
+/*以下query_detail.html中样式修改*/
+
+.col-lg-7 .box .box-header.with-border {
+    border: none;
+    border-bottom: 2px solid #f6f6f6!important;
+    padding-bottom: 20px!important;
+    padding-top: 0!important;
+    margin-bottom: 30px;
+
+}
+
+
+.col-lg-5 .box,
+.col-lg-7 .box {
+     box-shadow: none!important;
+}
+.col-lg-7 .box .box-body textarea{
+   
+    width: 100%!important;
+    height: 42.5vh;
+}
+
+.col-lg-5 .box .box-body .img-bordered {
+    border: none!important;
+    box-shadow: 0px 13px 15px rgba(0,0,0,0.3);
+    border-radius: 5px;
+    width: 70%!important;
+    padding: 0!important;
+}
+.row .col-lg-5 .box .box-footer {
+    border-top: none!important;
+    margin: 30px auto!important;
+}
+.row .col-lg-5 .box .box-footer .btn {
+    padding: 11px 22%!important;
+}
+.box .box-header h2 {
+    font-size: 24px;
+    font-family: "SourceHanSansCN";
+    color: rgb(153, 153, 153);
+    margin-top: 12px!important;
+}
+.row .col-lg-6.box.box-primary {
+    width: 48%;
+    margin: 0 15px;
+}
+.row .col-lg-6.box.box-primary > .box.box-primary {
+    border: none!important;
+    box-shadow: none!important;
+    padding-top: 0!important;
+    padding-bottom: 0!important;
+    
+}
+
+.row .col-lg-6.box.box-primary > .box.box-primary:first-child {
+    margin-bottom: 0!important;
+}
+
+.row .col-lg-6.box.box-primary .col-sm-3.col-xs-6 .box.box-primary {
+
+    border: none!important;
+    box-shadow: 0px 0px 18px rgba(57, 93, 183, 0.5);
+
+}
+
+.row .col-lg-6.box.box-primary .row {
+    margin-top: 30px!important;
+
+}
+
+.row .col-lg-6 .col-sm-3.col-xs-6 .box .box-header.with-border {
+
+    border:none!important;
+
+}
+.row .col-lg-6 .col-sm-3.col-xs-6 .box .box-header.with-border h4{
+   font-size: 16px;
+   font-family: "FZLTHK";
+   color: rgb(51, 51, 51);
+}
+.row .col-lg-6 .col-sm-3.col-xs-6 .box .box-header.with-border p{
+   font-size: 14px;
+   font-family: "FZLTHK";
+   color: rgb(153, 153, 153);
+}
+.row .col-lg-6 .col-sm-3.col-xs-6 .box .box-body a img.img-responsive {
+
+    border: none;
+    padding: 0;
+    box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
+
+}
+.row .col-lg-6 .col-sm-3.col-xs-6 .box {
+    margin-bottom: 0!important;
+}
+/*以上query_detail.html中样式修改*/
+
+/*以下为query_list.html中的修改*/
+
+.box .box-header h2 span {
+    padding-right: 40px;
+    font-size: 18px!important;
+    font-family: "FZLTH4K";
+    color: rgb(153, 153, 153);
+    cursor: pointer;
+}
+.row .col-lg-12 .row .col-sm-3 {
+    width: 20%!important;
+}
+.col-sm-3 .box.box-success .box-header h4{
+    font-size: 16px;
+    font-family: "FZLTHK";
+    color: rgb(51, 51, 51);
+}
+.col-sm-3 .box.box-success .box-header h4:last-child{
+    font-size: 14px;
+    font-family: "FZLTHK";
+    color: rgb(102, 102, 102);
+}
+.col-sm-3 .box .box-body .img-responsive.img-bordered {
+
+    border: none!important;
+    padding: none!important;
+    box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
+}
+
+
+.box-footer {
+    border: none!important;
+}
+.col-sm-3 .box-success .box-body {
+    min-height:226px!important;
+}
+.col-sm-3 .box-success .box-body h4 a.btn-success ,
+.col-sm-3 .box-success .box-footer a.btn.btn-info {
+    padding: 2px 51px;
+    font-size: 14px;
+    font-family: "FZLTHK";
+    color: rgb(255, 255, 255);
+}
+.col-sm-3 .box-success .box-footer {
+    padding-top: 1.85vh;
+    padding-bottom: 2.22vh;
+}
+.col-sm-3 .box-success .box-footer a.btn.btn-info{
+
+        padding: 2px 25px;
+}
+.col-lg-12 .col-sm-3 .box-body .img-responsive.img-bordered {
+
+    max-height: 174px!important;
+
+}
+.col-lg-12 .col-sm-3.col-xs-6 .box-success{
+    box-shadow: 0px 0px 18px rgba(57, 93, 183, 0.5);
+}
+
+.col-sm-3.col-xs-6 .box-success .box-body h4{
+        margin-top: 20px;
+        margin-bottom: 0;
+}
+.box-header.with-border {
+    padding: 8px auto!important;
+}
+
+
+/*以上为query_list.html中的修改*/
+
+/*以下query2中内容*/
+.content>.row.box.box-primary {
+    margin-right: 0!important;
+    margin-left: 0!important;
+}
+.content .row > .col-lg-6.box.box-primary {
+    margin: 0 0.7%!important;
+}
+.content .row > .col-lg-6.box.box-primary:nth-child(2) {
+    width: 49%;
+}
+
+
+/*以上query2中内容*/
+
+/*以下requery2中内容*/
+.col-lg-6.ng-scope .col-sm-3.col-xs-6 .box {
+        margin-bottom: 30px!important;
+}
+
+.box.box-primary:last-child .box-header.with-border .ng-binding{
+    line-height: 25px;
+}
+.img-responsive.img-bordered-sm {
+    max-height: 117px!important;
+    min-height: 117px;
+}
+
+@media (min-width:1680px) {
+
+    .row .col-lg-6 .col-sm-3.col-xs-6 .box .box-header.with-border h4 {
+        font-size: 16px;
+    }
+    .row .col-lg-6 .col-sm-3.col-xs-6 .box .box-header.with-border p {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+}
+
+@media (min-width:1366px) and (max-width: 1679px) {
+
+    .row .col-lg-6 .col-sm-3.col-xs-6 .box .box-header.with-border h4 {
+        font-size: 14px;
+        margin-top: 8px;
+        margin-bottom: 8px;
+    }
+    .row .col-lg-6 .col-sm-3.col-xs-6 .box .box-header.with-border p {
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+}
+
+@media (min-width:1280px) and (max-width: 1365px) {
+
+    .row .col-lg-6 .col-sm-3.col-xs-6 .box .box-header.with-border h4 {
+        font-size: 12px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+}
+@media (min-width:960px) and (max-width: 1279px) {
+
+      .row .col-lg-6 .col-sm-3.col-xs-6 .box .box-header.with-border h4 {
+        font-size: 12px;
+        margin-top: 3px;
+        margin-bottom: 3px;
+    }
+
+}
+@media (min-width:768px) and (max-width: 959px) {
+
+      .row .col-lg-6 .col-sm-3.col-xs-6 .box .box-header.with-border h4 {
+        font-size: 12px;
+        margin-top: 3px;
+        margin-bottom: 3px;
+    }
+
+}
+@media (max-width:768px) {
+
+      .row .col-lg-6 .col-sm-3.col-xs-6 .box .box-header.with-border h4 {
+        font-size: 12px;
+        margin-top: 3px;
+        margin-bottom: 3px;
+    }
+
+}
+
+/*以上requery2中内容*/
