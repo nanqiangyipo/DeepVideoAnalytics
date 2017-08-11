@@ -6,12 +6,12 @@
     font-size: 32px;
     text-align: left;
     line-height: 80px;
-
+    -webkit-text-fill-color: transparent;
+    background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(rgba(205, 220, 232, 1)), to(rgba(29, 168, 193, 1)));
+    -webkit-background-clip: text;
     font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: bold !important;
     color: #337ab7;
-    background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(rgba(205, 220, 232, 1)), to(rgba(29, 168, 193, 1)));
-    -webkit-background-clip: text;
 }
 
 .status-bar{
@@ -241,11 +241,13 @@ div.dataTables_filter input{
 
 /*video2中button字体字号*/
 .btn {
-    /*font-size: 18px!important;*/
+    font-size: 18px!important;
     /*font-size: 1.125em!important;*/
-    font-size: 0.9vw !important;
+    /*font-size: 0.9vw !important;*/
     font-family: "FZLTHK";
 }
+
+
 
 .form-control {
     /*font-size: 18px;*/
@@ -467,6 +469,29 @@ div.dataTables_filter input{
     min-height: 117px;
 }
 
+.col-lg-12 .box.box-error{
+        padding: 10px;
+}
+/*.btn.btn-primary.btn-block {
+    width: 10.4vw;
+    height: 5.6vh;
+    line-height: 5.6vh;
+    border: 1px solid #7f97ce!important;
+    box-sizing: border-box;
+    border-radius: 30px;
+    background: rgba(111,138,200,0.3)!important;
+    font-size: 20px;
+    font-family: "FZLTHK";
+    color: rgb(74, 108, 233)!important;
+    float: left;
+    box-shadow: 0px 3px 10px rgba(78, 108, 160, 0.4);
+
+}
+.btn.btn-primary.btn-block:hover {
+        color: #fff!important;
+        background: #4a6CE9!important;
+}*/
+
 @media (min-width:1680px) {
 
     .row .col-lg-6 .col-sm-3.col-xs-6 .box .box-header.with-border h4 {
@@ -489,6 +514,9 @@ div.dataTables_filter input{
     .row .col-lg-6 .col-sm-3.col-xs-6 .box .box-header.with-border p {
         font-size: 14px;
         margin-bottom: 8px;
+    }
+    .btn {
+        font-size: 14px;
     }
 
 }
@@ -531,3 +559,7 @@ div.dataTables_filter input{
 }
 
 /*以上requery2中内容*/
+
+
+
+

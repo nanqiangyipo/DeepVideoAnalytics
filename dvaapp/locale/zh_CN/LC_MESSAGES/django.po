@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-11 17:39+0800\n"
+"POT-Creation-Date: 2017-08-11 18:23+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -901,6 +901,8 @@ msgid "frame index"
 msgstr "窗口索引"
 
 #: templates/dvaapp/segment_detail.html:106
+#: templates/dvaapp/segment_detail.html:120
+#: templates/dvaapp/segment_detail.html:133
 #: templates/dvaapp/video_detail.html:78
 #: templates/dvaapp/video_detail.html:238
 #: templates/dvaapp/video_detail.html:254

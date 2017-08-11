@@ -109,7 +109,7 @@ input[type=color] {
     /*width: 39%;*/
     width: 39%;
     /*height: 610px;*/
-    height: 56.48vh;
+    height: 61.2vh;
 }
 
 
@@ -341,6 +341,12 @@ input[type=color] {
     margin: 0 1.6%;
     padding: 0 1% !important;
 }
+
+.left-fixed-part .btn-object-action {
+    margin-bottom: 7px;
+}
+
+
 .middle-adaptive {
 
     /*width: 672px;*/
@@ -430,12 +436,12 @@ input[type=color] {
 }
 
 .btn.btn-primary{
-    /*width: 100%;
-    height: 100%;*/
+    width: 100%;
+    height: 100%;
     display: inline-block;
     background: transparent;
     border: none;
-    /*line-height: 60px;*/
+    line-height: 5.6vh;
 }
 button.btn.left-rect {
     border: none;
@@ -473,7 +479,7 @@ button.btn.left-rect {
 }
 .box.box-primary.box-primary-two {
     /*height: 350px;*/
-    height: 32.4vh;
+    height: 34.4vh;
     padding: 0px 55px;
 
 }
@@ -483,10 +489,12 @@ button.btn.left-rect {
 }
 
 
+
+
 .round-ract {
     width: 46.5%!important;
-    height: 62px !important;
-    line-height: 60px !important;
+    height: 5.7vh !important;
+    line-height: 5.56vh !important;
     border: 1px solid #7f97ce!important;
     box-sizing:border-box;
     border-radius: 30px;
@@ -496,6 +504,15 @@ button.btn.left-rect {
     color: rgb(74, 108, 233)!important;
     float: left;
     box-shadow: 0px 3px 10px rgba(78, 108, 160, 0.4);
+}
+
+.round-ract.round-ract-width-seven-hundred {
+
+    height: 62px !important;
+    line-height: 60px !important;
+
+    
+
 }
 .round-ract:nth-child(2n+1) {
     margin-right: 3.8%;
@@ -528,7 +545,7 @@ button.btn.left-rect {
 
 /*黄色*/
 .box-primary-two .text-center {
-    margin-top: 30px;
+    margin-top: 2.78vh;
 }
 .text-center .col-xs-3 {
     width: 46.5%;
@@ -594,6 +611,13 @@ button.btn.left-rect {
     padding: 0 2.7%;
 }
 
+.middle-adaptive .checkbox {
+
+    margin-top: 0.925vh!important;
+    margin-bottom: 0.925vh!important;
+
+}
+
 
 /*响应式*/
 
@@ -628,6 +652,9 @@ button.btn.left-rect {
         height: 62px;
         line-height: 60px;
     }
+     #status h4 {
+        font-size: 18px;
+     }
 
     .box.box-primary {
         height: 230px;
@@ -669,6 +696,10 @@ button.btn.left-rect {
         line-height: 60px;
     }
 
+      #status h4 {
+        font-size: 18px;
+     }
+
     .box.box-primary {
         height: 200px;
     }
@@ -705,6 +736,9 @@ button.btn.left-rect {
         height: 62px;
         line-height: 60px;
     }
+      #status h4 {
+        font-size: 16px;
+     }
      .status-bar {
 
         width: 300px;
@@ -759,6 +793,10 @@ button.btn.left-rect {
         height: 62px;
         line-height: 60px;
     }
+
+      #status h4 {
+        font-size: 14px;
+     }
      .status-bar {
 
         width: 250px;
@@ -792,7 +830,7 @@ button.btn.left-rect {
     }
     .navbar .logo .logo-lg {
 
-        font-size: 16px;
+        font-size: 20px;
 
     }
      #status{
@@ -800,6 +838,9 @@ button.btn.left-rect {
         height: 62px;
         line-height: 60px;
     }
+      #status h4 {
+        font-size: 12px;
+     }
      .status-bar {
 
         width: 250px;
@@ -826,7 +867,7 @@ button.btn.left-rect {
 
     .navbar .logo .logo-lg {
 
-        font-size: 16px;
+        font-size: 20px;
 
     }
      #status{
@@ -834,6 +875,9 @@ button.btn.left-rect {
         height: 62px;
         line-height: 60px;
     }
+      #status h4 {
+        font-size: 12px;
+     }
      .status-bar {
 
         width: 250px;
