@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.http import JsonResponse
@@ -182,9 +183,11 @@ class TEventList(UserPassesTestMixin, ListView):
         context['header'] = ""
         if self.kwargs.get('pk',None):
             context['video'] = Video.objects.get(pk=self.kwargs['pk'])
-            context['header'] = "video/dataset : {}".format(context['video'].name)
+            # context['header'] = "video/dataset : {}".format(context['video'].name.encode('utf-8'))
+            context['header'] = "{}".format(context['video'].name.encode('utf-8'))
         if self.kwargs.get('status',None):
-            context['header'] += " with status {}".format(self.kwargs['status'])
+            # context['header'] += " with status {}".format(self.kwargs['status'])
+            context['header'] += "的 {} 任务清单".format(self.kwargs['status'])
         context['settings_queues'] = set(settings.TASK_NAMES_TO_QUEUE.values())
         task_list = []
         for k, v in settings.TASK_NAMES_TO_TYPE.iteritems():
