@@ -74,7 +74,7 @@
                                 <label for="labels" style="font-weight:bold">{% trans "Assign labels :" %}</label>
                                 <textarea name="labels" class="form-control" placeholder={% trans  "specify multiple by seperating with a comma" %} rows="1" id="{[ box.id ]}_tags" ></textarea>
                             </div>
-                            <div style="margin-top:26px">
+                            <div style="margin-top:26px" class='submit-button'>
                                 <button ng-click="submit_annotation(box.id)" id="{[ box.id ]}_submit" class="btn btn-primary btn-block">{% trans "submit" %}</button>
                             </div>
                         </div>
