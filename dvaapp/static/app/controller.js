@@ -219,9 +219,11 @@ function addAccessors($scope) {
     canvas.isDrawingMode = !!value;
     canvas.freeDrawingBrush.color = mode == 1 ? 'green': 'red';
     if (value && mode == 1){
-        $scope.status = "Highlight regions of interest"
+        // $scope.status = "Highlight regions of interest"
+        $scope.status = "标出检索主体"
     }else if(value){
-        $scope.status = "Highlight regions to exclude"
+        // $scope.status = "Highlight regions to exclude"
+        $scope.status = "排除干扰区域"
     }
     if(canvas.isDrawingMode){
         //yax.show();

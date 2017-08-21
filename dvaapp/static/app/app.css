@@ -309,10 +309,14 @@ input[type=color] {
 }
 
 .main-header .logo {
-
+    /*display: flex;*/
     height: 80!important;
     line-height:80px;
 }
+.main-header  span {
+    float: left;
+}
+
 
 .alert-dismissable .close {
     top: 16px!important;
@@ -380,9 +384,24 @@ input[type=color] {
     height: 100%!important;
 }
 
-.row{
+.row.large-margin{
     margin-left: 0!important;
     margin-right: 0!important;
+}
+.content > .row.large-margin {
+    margin-bottom: 50px;
+}
+.row.large-margin .row{
+
+    margin-left: 0!important;
+    margin-right: 0!important;
+
+}
+.row {
+
+    margin-left: 0!important;
+    margin-right: 0!important;
+
 }
 .content-wrapper .content {
     padding-left: 0!important;
@@ -404,22 +423,52 @@ input[type=color] {
     border-right: none!important;
     color: #666;
 }
-/*.skin-black .main-header .navbar .navbar-nav>li>a {
-    border-left: none!important;
-}*/
+
+/*修改http://192.168.1.45:8002/annotate_frame/39/*/
+
+.content-wrapper .content-header .row .box.box-info > .box-header.text-center > a.btn {
+
+    padding: 10px!important;
+
+}
+.content-header > .text-center div:nth-child(2) button.btn{
+
+    padding: 10px!important;
+    margin-right: 10px;
+
+}
+
+/*x,y轴*/ 
+.content-header>.row .text-center .row.m-t .box .box-body .row .col-xs-1 .form-group .form-control {
+    padding: 6px 15px!important;
+}
+ .col-xs-5 .submit-button button.btn{
+
+    border: 1px solid #7f97ce!important;
+    box-sizing: border-box;
+    border-radius: 15px;
+    background: rgba(111,138,200,0.3)!important;
+
+
+}
+.col-xs-5 .submit-button  button.btn:hover {
+    background-color: rgb(74, 108, 233)!important;
+}
+
+
 
 /*左侧图形区公共样式*/
 /*宽，高，背景色，border */
 
-.left-rect {
+.left-fixed-part .left-rect {
     width: 100%;
-    height: 5.7vh;
-    line-height: 5.6vh;
+    height: 6.4vh;
+    line-height: 6.2vh;
     background: url(../dist/img/dashboard/leftRect1.png) no-repeat 100%/contain;
     margin-bottom: 9px!important;
 }
-.left-rect:hover {
-    background: url(../dist/img/dashboard/leftRect.png) no-repeat 100%/contain;
+.left-fixed-part .left-rect:hover {
+    background: url(../dist/img/dashboard/leftRect.png) no-repeat 100%/contain!important;
 }
 .btn {
     padding: 0!important;
@@ -434,8 +483,14 @@ input[type=color] {
     font-family: "Myriad Pro";
     color: rgb(74, 108, 233);
 }
+.btn.btn-info:active {
 
-.btn.btn-primary{
+    background: transparent;
+
+}
+
+.right-fixed-part .box-body .row .btn.btn-primary,
+.middle-adaptive .box-body .row .btn.btn-primary{
     width: 100%;
     height: 100%;
     display: inline-block;
@@ -443,6 +498,18 @@ input[type=color] {
     border: none;
     line-height: 5.6vh;
 }
+.col-xs-1 .outer .middle form.left-rect a.btn {
+    background: transparent;
+    border: none;
+
+}
+.col-xs-1 .outer .middle form.left-rect a.btn:hover {
+    border: none!important;
+}
+.box-header {
+    padding-right: 50px!important;
+}
+
 button.btn.left-rect {
     border: none;
 }
@@ -455,7 +522,7 @@ button.btn.left-rect {
 
 }
 .btn-primary i{
-     padding-right: 8%;
+     padding-right: 5%;
 }
 
 /*右侧样式button*/
@@ -467,10 +534,8 @@ button.btn.left-rect {
 }
 .box.box-primary {
     border-top-color: none!important;
-   /* height: 230px;
-    padding: 29px 55px;*/
-    height: 230px;
-    padding: 3.9% 7.4%;
+    /*height: 230px;*/
+    /*padding: 3.9% 7.4%;*/
     box-sizing: border-box;
 }
 .box.box-primary .box-body {
@@ -486,6 +551,29 @@ button.btn.left-rect {
 .box-primary-two .round-ract {
    
     margin-right: 2.2vw;
+}
+
+.col-lg-6.box.box-primary.ng-scope {
+    margin-top: 3.7vh!important;
+}
+
+.col-lg-6.box.box-primary.ng-scope > .row .col-lg-3 .box.box-primary .box-body{
+
+    padding-top: 3.7vh;
+    height: 16.7vh!important;
+
+}
+.col-lg-6.box.box-primary.ng-scope > .row .col-lg-3 .box.box-primary .box-header {
+    font-size: 0.73vw;
+}
+
+.content .row.m-t {
+    margin-left: 15px;
+    margin-right: 15px;
+   
+}
+.m-t.search-type{
+    margin-top: 1.3vh!important;
 }
 
 
@@ -560,9 +648,10 @@ button.btn.left-rect {
     display: inline-block;
     width: 100%;
     height: 100%;
-    line-height: 60px;
+    line-height: 6vh;
     margin: 0!important;
     border: none!important;
+    
 }
 .text-center .col-xs-3:nth-child(2n+1) {
     
@@ -617,6 +706,13 @@ button.btn.left-rect {
     margin-bottom: 0.925vh!important;
 
 }
+.content .row .left-fixed-part .btn,
+.content .row .middle-adaptive .btn,
+.content .row .right-fixed-part .btn {
+
+    font-size: 0.9375vw!important;
+
+}
 
 
 /*响应式*/
@@ -656,7 +752,7 @@ button.btn.left-rect {
         font-size: 18px;
      }
 
-    .box.box-primary {
+    .right-fixed-part .box.box-primary:first-child {
         height: 230px;
     }
 
@@ -700,7 +796,7 @@ button.btn.left-rect {
         font-size: 18px;
      }
 
-    .box.box-primary {
+    .right-fixed-part .box.box-primary:first-child {
         height: 200px;
     }
  .text-center .col-xs-3 {
@@ -748,7 +844,7 @@ button.btn.left-rect {
         font-size: 14px;
 
     }
-    .box.box-primary {
+   .right-fixed-part .box.box-primary:first-child {
         height: 160px;
     }
 .box-primary-two .text-center {
@@ -783,7 +879,7 @@ button.btn.left-rect {
         font-size: 20px;
 
     }
-    .box.box-primary {
+    .right-fixed-part .box.box-primary:first-child {
         height: 160px;
     }
 

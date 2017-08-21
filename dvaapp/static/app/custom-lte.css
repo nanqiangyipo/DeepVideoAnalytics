@@ -1,33 +1,12 @@
 .main-header .logo {
-    width: 26.8% !important;
+    width: 20.8% !important;
     font-weight: bold !important;
     /*color: rgb(3, 60, 100) !important;*/
-    /*color: #fff !important;*/
+    color: #fff !important;
     font-size: 32px;
     text-align: left;
+    font-family:"open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     line-height: 80px;
-    -webkit-text-fill-color: transparent;
-    background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(rgba(205, 220, 232, 1)), to(rgba(29, 168, 193, 1)));
-    -webkit-background-clip: text;
-    font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: bold !important;
-    color: #337ab7;
-}
-
-.main-header span.logo-lg {
-    /*width: 55%;*/
-    float:left;
-
-}
-.main-header span.logo-img {
-
-
-    background: url(./dist/img/logo.png) no-repeat 100%/contain;
-    width: 136px;
-    height: 30px;
-    display: inline-block;
-    float: left;
-    margin: 25px 10px;
 }
 
 .status-bar{
@@ -102,6 +81,9 @@ body{
     background: #fff;
 }
 
+.content-header .row .box .box-header h2 {
+    padding-left: 30px;
+}
 .content .row .col-lg-12 .box.box-primary:last-child {
     margin-bottom: 0!important;
 }
@@ -113,46 +95,6 @@ body{
     line-height: 38px;
     text-align: center;
 }
-.pagination.text-center .page-links .btn-info{
-
-    padding-right: 45px;
-
-}
-.content-header>.row >.box.box-info .box-header {
-    padding-left: 64px;
-}
-
-/*手工提交任务弹窗*/
-.modal-dialog .modal-content .modal-body .ng-valid .row .ol-sm-3 .form-actions {
-    background: rgba(111,138,200,0.3)!important;
-    width: 6.25vw;
-    height: 100%;
-}
-.modal-dialog .modal-content .modal-body .ng-valid .row .ol-sm-3 .form-actions:hover {
-    background: rgb(74, 108, 233);
-}
-.modal-dialog .modal-content .modal-body .ng-valid button.btn {
-     background: rgba(111,138,200,0.3)!important;
-     width: 6.25vw;
-     height: 30px;
-     border: 1px solid #7f97ce!important;
-     border-radius: 15px;
-}
-.modal-dialog .modal-content .modal-body .ng-valid button.btn:hover {
-    
-    background-color: rgb(74, 108, 233)!important;
-
-}
-.modal-dialog .modal-content .modal-body .ng-valid .form-group:last-child {
-    text-align: center;
-}
-
-.content-header > .row .box.box-info .box-header .pagination.text-center {
-
-    padding-right: 45px;
-
-}
-
 
 
 /*video_list.html*/
@@ -179,10 +121,7 @@ div.dataTables_filter input{
 .box.box-primary .box-header {
     padding: 0!important;
     padding-bottom: 10px!important;
-   
-}
-.col-xs-12.right-fixed-part .col-lg-12 .box.box-primary .box-header {
-     padding: 2.78vh 0!important;
+    /*padding: 30px 0!important;*/
 }
 .col-lg-12 .box.box-primary .box-header h3 {
        
@@ -235,7 +174,7 @@ div.dataTables_filter input{
 .content-header .box-header h4,
 .content-header .box-header .col-lg-12.m-t {
 
-    padding: 10px 90px 0 0px!important;
+    padding: 10px 90px 0 106px!important;
     
 }
 
@@ -302,8 +241,6 @@ div.dataTables_filter input{
     font-size: 0.9vw !important;
     font-family: "FZLTHK";
 }
-
-
 
 .form-control {
     /*font-size: 18px;*/
@@ -405,12 +342,12 @@ div.dataTables_filter input{
 
 }
 .row .col-lg-6 .col-sm-3.col-xs-6 .box .box-header.with-border h4{
-   font-size: 0.73vw;
+   font-size: 16px;
    font-family: "FZLTHK";
    color: rgb(51, 51, 51);
 }
 .row .col-lg-6 .col-sm-3.col-xs-6 .box .box-header.with-border p{
-   font-size: 0.73vw;
+   font-size: 14px;
    font-family: "FZLTHK";
    color: rgb(153, 153, 153);
 }
@@ -460,7 +397,7 @@ div.dataTables_filter input{
     border: none!important;
 }
 .col-sm-3 .box-success .box-body {
-    min-height:21vh!important;
+    min-height:226px!important;
 }
 .col-sm-3 .box-success .box-body h4 a.btn-success ,
 .col-sm-3 .box-success .box-footer a.btn.btn-info {
@@ -479,7 +416,7 @@ div.dataTables_filter input{
 }
 .col-lg-12 .col-sm-3 .box-body .img-responsive.img-bordered {
 
-    max-height: 16.1vh!important;
+    max-height: 174px!important;
 
 }
 .col-lg-12 .col-sm-3.col-xs-6 .box-success{
@@ -514,31 +451,22 @@ div.dataTables_filter input{
 
 /*以下requery2中内容*/
 .col-lg-6.ng-scope .col-sm-3.col-xs-6 .box {
-        margin-bottom: 2.78vh!important;
+        margin-bottom: 30px!important;
 }
 
 .box.box-primary:last-child .box-header.with-border .ng-binding{
     line-height: 25px;
 }
 .img-responsive.img-bordered-sm {
-    max-height: 10.83vh!important;
-    min-height: 10.83vh;
+    max-height: 117px!important;
+    min-height: 117px;
 }
-
-
-.col-lg-12 .box.box-error{
-        padding: 10px;
-}
-
 
 @media (min-width:1680px) {
 
     .row .col-lg-6 .col-sm-3.col-xs-6 .box .box-header.with-border h4 {
-        /*font-size: 16px;*/
-    }
-    .row .col-lg-6 .col-sm-3.col-xs-6 .box .box-header.with-border p {
-        /*font-size: 16px;*/
-        margin-bottom: 10px;
+        font-size: 16px;
+
     }
 
 }
@@ -546,16 +474,11 @@ div.dataTables_filter input{
 @media (min-width:1366px) and (max-width: 1679px) {
 
     .row .col-lg-6 .col-sm-3.col-xs-6 .box .box-header.with-border h4 {
-        /*font-size: 14px;*/
+        font-size: 14px;
         margin-top: 8px;
         margin-bottom: 8px;
-    }
-    .row .col-lg-6 .col-sm-3.col-xs-6 .box .box-header.with-border p {
-        /*font-size: 14px;*/
-        margin-bottom: 8px;
-    }
-    .btn {
-        /*font-size: 14px;*/
+
+
     }
 
 }
@@ -563,7 +486,7 @@ div.dataTables_filter input{
 @media (min-width:1280px) and (max-width: 1365px) {
 
     .row .col-lg-6 .col-sm-3.col-xs-6 .box .box-header.with-border h4 {
-        /*font-size: 12px;*/
+        font-size: 12px;
         margin-top: 5px;
         margin-bottom: 5px;
     }
@@ -572,7 +495,7 @@ div.dataTables_filter input{
 @media (min-width:960px) and (max-width: 1279px) {
 
       .row .col-lg-6 .col-sm-3.col-xs-6 .box .box-header.with-border h4 {
-        /*font-size: 12px;*/
+        font-size: 12px;
         margin-top: 3px;
         margin-bottom: 3px;
     }
@@ -581,7 +504,7 @@ div.dataTables_filter input{
 @media (min-width:768px) and (max-width: 959px) {
 
       .row .col-lg-6 .col-sm-3.col-xs-6 .box .box-header.with-border h4 {
-        /*font-size: 12px;*/
+        font-size: 12px;
         margin-top: 3px;
         margin-bottom: 3px;
     }
@@ -590,7 +513,7 @@ div.dataTables_filter input{
 @media (max-width:768px) {
 
       .row .col-lg-6 .col-sm-3.col-xs-6 .box .box-header.with-border h4 {
-        /*font-size: 12px;*/
+        font-size: 12px;
         margin-top: 3px;
         margin-bottom: 3px;
     }
@@ -598,7 +521,3 @@ div.dataTables_filter input{
 }
 
 /*以上requery2中内容*/
-
-
-
-

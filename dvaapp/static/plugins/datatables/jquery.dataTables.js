@@ -3202,7 +3202,6 @@
 		if ( nodes.length === 0 ) {
 			return;
 		}
-	
 		var
 			lang  = settings.oLanguage,
 			start = settings._iDisplayStart+1,
@@ -6190,12 +6189,12 @@
 			
 			// Backwards compatibility, before we apply all the defaults
 			_fnCompatOpts( oInit );
-			
-			if ( oInit.oLanguage )
+			var userLanguage = 'English';
+			if ( oInit.oLanguage && oInit.oLanguage == 'Chinese')
 			{
-				_fnLanguageCompat( oInit.oLanguage );
+				userLanguage = 'Chinese';
+				//_fnLanguageCompat( oInit.oLanguage );
 			}
-			
 			// If the length menu is given, but the init display length is not, use the length menu
 			if ( oInit.aLengthMenu && ! oInit.iDisplayLength )
 			{
@@ -6207,6 +6206,7 @@
 			// options defined from defaults and instance options.
 			oInit = _fnExtend( $.extend( true, {}, defaults ), oInit );
 			
+			oInit.oLanguage = oInit[userLanguage];
 			
 			// Map the initialisation options onto the settings object
 			_fnMap( oSettings.oFeatures, oInit, [
@@ -6323,6 +6323,7 @@
 			}
 			
 			/* Language definitions */
+
 			var oLanguage = oSettings.oLanguage;
 			$.extend( true, oLanguage, oInit.oLanguage );
 			
@@ -10945,7 +10946,33 @@
 		 *  @namespace
 		 *  @name DataTable.defaults.language
 		 */
-		"oLanguage": {
+		"Chinese": {
+			"oAria": {
+				"sSortAscending": ": 启用列升序",
+				"sSortDescending": ": 启用列降序"
+			},
+			"oPaginate": {
+				"sFirst": "第一",
+				"sLast": "持续",
+				"sNext": "下一页",
+				"sPrevious": "分页"
+			},
+			"sEmptyTable": "表格中没有数据",
+			"sInfo": "显示 _START_ 到 _END_ 共 _TOTAL_ 项",
+			"sInfoEmpty": "显示0项",
+			"sInfoFiltered": "(过滤 _MAX_ 条)",
+			"sInfoPostFix": "",
+			"sDecimal": "",
+			"sThousands": ",",
+			"sLengthMenu": "显示 _MENU_ 条",
+			"sLoadingRecords": "加载...",
+			"sProcessing": "处理...",
+			"sSearch": "搜索:",
+			"sSearchPlaceholder": "",
+			"sUrl": "",
+			"sZeroRecords": "没有找到匹配项"
+		},
+		"English": {
 			/**
 			 * Strings that are used for WAI-ARIA labels and controls only (these are not
 			 * actually visible on the page, but will be read by screenreaders, and thus
@@ -11198,26 +11225,26 @@
 			"sInfoFiltered": "(filtered from _MAX_ total entries)",
 	
 	
-			/**
-			 * If can be useful to append extra information to the info string at times,
-			 * and this variable does exactly that. This information will be appended to
-			 * the `info` (`infoEmpty` and `infoFiltered` in whatever combination they are
-			 * being used) at all times.
-			 *  @type string
-			 *  @default <i>Empty string</i>
-			 *
-			 *  @dtopt Language
-			 *  @name DataTable.defaults.language.infoPostFix
-			 *
-			 *  @example
-			 *    $(document).ready( function() {
-			 *      $('#example').dataTable( {
-			 *        "language": {
-			 *          "infoPostFix": "All records shown are derived from real information."
-			 *        }
-			 *      } );
-			 *    } );
-			 */
+			// *
+			//  * If can be useful to append extra information to the info string at times,
+			//  * and this variable does exactly that. This information will be appended to
+			//  * the `info` (`infoEmpty` and `infoFiltered` in whatever combination they are
+			//  * being used) at all times.
+			//  *  @type string
+			//  *  @default <i>Empty string</i>
+			//  *
+			//  *  @dtopt Language
+			//  *  @name DataTable.defaults.language.infoPostFix
+			//  *
+			//  *  @example
+			//  *    $(document).ready( function() {
+			//  *      $('#example').dataTable( {
+			//  *        "language": {
+			//  *          "infoPostFix": "All records shown are derived from real information."
+			//  *        }
+			//  *      } );
+			//  *    } );
+			 
 			"sInfoPostFix": "",
 	
 	
