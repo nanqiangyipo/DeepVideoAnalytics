@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-11 18:23+0800\n"
+"POT-Creation-Date: 2017-08-14 10:15+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -303,7 +303,7 @@ msgstr "已完成"
 
 #: templates/clustering.html:80 templates/dvaapp/video_detail.html:163
 msgid "Created"
-msgstr "创建时间"
+msgstr "是否创建"
 
 #: templates/clustering.html:81 templates/clustering.html:95
 #: templates/textsearch.html:82 templates/textsearch.html:109
@@ -531,7 +531,7 @@ msgstr "索引"
 
 #: templates/dashboard.html:314
 msgid "Trained detectors"
-msgstr "专业探测器"
+msgstr "自定义分析"
 
 #: templates/dashboard.html:317
 msgid "tasks"
@@ -1162,7 +1162,7 @@ msgstr "备份到AWS"
 msgid ""
 "Delete currently requires retrieval workers to be restarted to purge index "
 "loaded in memory (a fix is pending)"
-msgstr "文件删除后需要，为了确保数据准确需要重启任务清楚缓存的索引条目"
+msgstr "文件删除后，为了确保数据准确需要重启任务清楚缓存的索引条目"
 
 #: templates/dvaapp/video_detail.html:157
 msgid ""
