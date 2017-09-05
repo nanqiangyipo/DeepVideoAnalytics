@@ -50,20 +50,20 @@
                 </thead>
                 <tbody>
                 {% for v in video_list %}
-                {% if not v.query %}
-                    <tr>
-                        <td>{%  if v.dataset and v.query %} Query {% elif v.dataset %} Dataset {% else %}Video {% endif %}</td>
-                        <td>{{ v.name }} </td>
-                        <td class="text-right">{{ v.length_in_seconds }} </td>
-                        <td class="text-right">{{ v.frames }} </td>
-                        <td class="text-right">{{ v.segments }} </td>
-                        <td class="text-right">{{ v.height }} </td>
-                        <td class="text-right">{{ v.width }} </td>
-                        <td class="text-center">{{ v.created }}</td>
-                        <td class="text-center">{% if v.youtube_video %}<a href="{{ v.url }}" target="_blank">youtube link</a>{% endif %}</td>
-                        <td class="text-center">{% if v.vdn_dataset %}<a href="{{ v.vdn_dataset.url }}" target="_blank">source</a>{% endif %}</td>
-                        <td class="text-center"><a  href="/videos/{{ v.pk }}">{% trans "view" %}</a></td>
-                    </tr>
+                    {% if not v.query %}
+                        <tr>
+                            <td>{%  if v.dataset and v.query %} Query {% elif v.dataset %} Dataset {% else %}Video {% endif %}</td>
+                            <td>{{ v.name }} </td>
+                            <td class="text-right">{{ v.length_in_seconds }} </td>
+                            <td class="text-right">{{ v.frames }} </td>
+                            <td class="text-right">{{ v.segments }} </td>
+                            <td class="text-right">{{ v.height }} </td>
+                            <td class="text-right">{{ v.width }} </td>
+                            <td class="text-center">{{ v.created }}</td>
+                            <td class="text-center">{% if v.youtube_video %}<a href="{{ v.url }}" target="_blank">youtube link</a>{% endif %}</td>
+                            <td class="text-center">{% if v.vdn_dataset %}<a href="{{ v.vdn_dataset.url }}" target="_blank">source</a>{% endif %}</td>
+                            <td class="text-center"><a  href="/videos/{{ v.pk }}">{% trans "view" %}</a></td>
+                        </tr>
                     {% endif %}
                 {% endfor %}
                 </tbody>

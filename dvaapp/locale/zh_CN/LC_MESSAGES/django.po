@@ -602,7 +602,7 @@ msgstr "预测训练集"
 
 #: templates/detectors.html:56 templates/training.html:56
 msgid "Train detector"
-msgstr "深度挖掘"
+msgstr "训练模型"
 
 #: templates/detectors.html:65
 msgid "Detect objects using custom detector"

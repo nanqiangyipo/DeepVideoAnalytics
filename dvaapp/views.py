@@ -142,6 +142,10 @@ class VideoList(UserPassesTestMixin, ListView):
     model = Video
     paginate_by = 100
 
+    def get_queryset(self):
+        dataset = Video.objects.filter(query=False)
+        return dataset
+
     def get_context_data(self, **kwargs):
         context = super(VideoList, self).get_context_data(**kwargs)
         context['exports'] = TEvent.objects.all().filter(event_type=TEvent.EXPORT)
